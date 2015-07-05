@@ -1,0 +1,46 @@
+=== DESIGN DOCUMENT ===
+This design document is used for documenting and describing the inner workings of the 12Golf
+project. As well as describing in detail the user experience over the course of a game.
+
+
+=== Game Flow ===
+Server is started on the server (Single start for multiple instances of the game).
+Client is started.
+Client automatically tries to connect to "claytonrogers.ca".
+If the client can't connect, then it asks for the server.
+(Maybe debug mode auto connects to localhost?)
+Asks for a username, must be non-null (Future: Remembers username).
+It shows the playing field dealt and a message "Please wait for player 2 to connect".
+Player 2 connects.
+Player 1 goes first, selecting either the face up card, or the deck card.
+Player 2's screen shows "Waiting for other players".
+Player 1 either replaces a face down card dealt to them, or discards and flips one over.
+Then player 2 goes, completing their turn in the same way.
+Game ends when one player has all of their cards revealed, other player(s) get one more turn after this.
+(Future?) Jokers on the board allow you to switch any two cards.
+          (Can you change what a Joker is here? Or any other time other than when it is placed?)
+Score is tallied for both players.
+    Scoring works as follows:
+        - Cards are worth face value, except for the kings, which are worth zero.
+        - Jacks are worth 11, Queens 12.
+        - Cards which are a pair in a given vertical column are worth zero.
+        - Pairs of kings in a vertical column are worth negative zero.
+        - (Future) Jokers can be anything you want, you must choose when you put them down.
+          (or CPU will automatically choose to give you a pair, except when the other card is un-flipped?)
+Final game state is shown for both players along with Score Screen button.
+Clicking Score Screen button shows the Score Screen to that player.
+Score Screen also contains a Next Round button, which will take the player to the next round.
+If the other player has not pressed Next Round,
+    the message "Waiting for other player(s) to join next round" will be displayed.
+Next round will continue as the first round did.
+Ten rounds total are played.
+When the last round is played, the button on the score screen will be Exit
+        instead of Next Round, which will close the app.
+Future: there will also be a rematch and a new game button.
+
+
+=== Input Handling ===
+
+=== Networking ===
+
+=== GUI Handling ===
