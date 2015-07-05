@@ -40,7 +40,73 @@ Future: there will also be a rematch and a new game button.
 
 
 === Input Handling ===
+The only GUI events that will be handled are click events and window close events.
+Window close event will be handled by the application, and will terminate connection to the server
+and kill the application.
+Click events will also be handled by the application.
+Each click event will be placed in a LinkedBlockingQueue for the input loop to handle.
+The drawing is done separately and simply uses the state which is updated by the input loop.
+
+In the input handling loop, the input clicks will be checked one at a time to see if they
+intersect with any of the buttons.
+If the click does not intersect with anything, it is simply thrown out.
+Intersection is determined based on calling a clicked(int x, int y) method on the object,
+it will return true if it has in fact been clicked.
+The GUI object is required to know:
+    - where it is
+    - it's bounds
+    - whether it is visible
+    - whether it is clickable
+The input then deals with the fact that something has been clicked.
+The input and the GUI loop share the same GUIObject list.
+
 
 === Networking ===
+Server will start listening on port 60093.
+As soon as a client start it tries to connect to the server.
+When the client connects, it is expected to immediately send it's version information.
+If this version information matches that of the server, it is accepted into the player pool and the
+server sends an authentication passed message which also contains the players number.
+If the version does not match, it is disconnected with an version number error message,
+and a message containing the version numbers of both the client and the server.
+The client is also expected to give a username.
+When a second player is added to the pool, a game is started with both of the players.
+The game does not start until both players have given a username.
+The username is distributed with the state.
+The server shuffles the deck and deals the cards into a State class, then sends the State class to
+the players.
+It then sends a your turn to the next player.
+The player then clicks on either the discard, or draw.
+If they click on the draw, then the card will be sent to the server and then distributed to the
+clients, so they can see what the player picked up.
+If the player doesn't want the card, they click the discard pile, then click on one of their piles.
+In this case, the client tells the server that the draw was discarded, and which card was flipped.
+If the player does want the card, they click on the card they want to replace it with.
+In this case, the clients sends a draw replaced message.
+If the player wants the discard, they click it, then the card to be replaced.
+In this case, the client sends a discard replaced message.
+When the server has all the information for a players turn, it sends a turn complete message to the
+client.
+It then sends a your turn message to the next player.
+When the server finds that a player is out, it sends a last turn message to all the clients.
+When the round is over, the server sends a round over message which includes the score to all the
+clients.
+It then waits for a ready message from each of the players before starting the next round.
+If the game is over, after sending the round over message with the score, the server will also send
+a game over message, and terminate the connection.
+(Future: The server will allow for rematch. Or maybe this will be handled client side with a
+reconnection to the server)
+
 
 === GUI Handling ===
+Client is double buffered, and locked to roughly 60 FPS.
+All things to be printed to the screen will be descendants of the GUIObject class which implements
+the basic functionality:
+    - Upon creation, sets the position, visibility and click-ability are defaulted to off
+    - Drag the object given a graphics parameter
+    - Set the visibility
+    - Set the click-ability
+    - CheckClicked to see if the object was hit by a click
+Each loop, every GUI object will be drawn, it is up to the object to know if it is visible, and if
+it is, where to place the drawing.
+The application will keep a list of GUIObjects which it will iterate over for drawing.
