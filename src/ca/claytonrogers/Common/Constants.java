@@ -5,7 +5,7 @@ package ca.claytonrogers.Common;
  */
 public class Constants {
 
-    public static final String VERSION = "v0.1";
+    public static final int VERSION = 1;
 
     public static final IntVector CARD_SIZE = new IntVector(30,60);
     public static final IntVector DECK_SIZE = CARD_SIZE.add(new IntVector(3,3));
