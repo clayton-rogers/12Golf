@@ -29,7 +29,7 @@ public abstract class GUIObject {
         this.isClickable = isClickable;
     }
 
-    public abstract void draw (Graphics2D g);
+    public abstract void draw (Graphics g);
 
     public boolean checkClicked (IntVector clickLocation) {
         if (clickLocation.x > location.x && clickLocation.x < location.x + size.x) {

@@ -20,7 +20,7 @@ public class GUIDeck extends GUIObject {
     }
 
     @Override
-    public void draw(Graphics2D g) {
+    public void draw(Graphics g) {
         // TODO
     }
 }

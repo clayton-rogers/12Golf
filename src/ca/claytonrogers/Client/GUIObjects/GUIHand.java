@@ -46,7 +46,7 @@ public class GUIHand extends GUIObject {
     }
 
     @Override
-    public void draw(Graphics2D g) {
+    public void draw(Graphics g) {
         switch (position) {
             case 0:
                 // TODO draw down position
