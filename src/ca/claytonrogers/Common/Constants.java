@@ -6,6 +6,7 @@ package ca.claytonrogers.Common;
 public class Constants {
 
     public static final int VERSION = 1;
+    public static final int PORT_NUMBER = 60093;
     public static final int NUMBER_OF_CARDS = 12;
     public static final boolean DEBUG = false;
     public static final boolean NET_DEBUG = false;
