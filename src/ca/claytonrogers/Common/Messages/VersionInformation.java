@@ -11,22 +11,24 @@ public class VersionInformation extends Message {
 
     private int versionNumber = 0;
 
-    public VersionInformation(DataInputStream reader) throws IOException {
+    public VersionInformation(DataInputStream in) throws IOException {
         super(MessageType.VersionInformation);
 
-        versionNumber = reader.readInt();
+        versionNumber = in.readInt();
     }
 
     public VersionInformation(int versionNumber) {
         super(MessageType.VersionInformation);
+
         this.versionNumber = versionNumber;
     }
 
     @Override
-    public void send(DataOutputStream writer) throws IOException {
-        super.send(writer);
-        writer.writeInt(versionNumber);
-        writer.flush();
+    public void send(DataOutputStream out) throws IOException {
+        super.send(out);
+
+        out.writeInt(versionNumber);
+        out.flush();
     }
 
     public int getVersionNumber() {
