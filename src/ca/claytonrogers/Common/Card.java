@@ -7,4 +7,11 @@ package ca.claytonrogers.Common;
 public class Card {
     public int value;
     public boolean isFrontSideUp = true;
+
+    public Card() {
+    }
+
+    public Card(int value) {
+        this.value = value;
+    }
 }

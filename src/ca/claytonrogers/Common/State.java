@@ -5,16 +5,29 @@ package ca.claytonrogers.Common;
  */
 public class State {
 
+    private int    numberOfPlayers = 0;
     private Deck   discardPile = new Deck();
     private Deck   drawPile    = new Deck();
-    private Hand[] playerHands = new Hand[4];
+    private Hand[] playerHands;
 
-    public State() {
-        for (int i = 0; i < 4; i++) {
+    public State(int numberOfPlayers) {
+        this.numberOfPlayers = numberOfPlayers;
+
+        playerHands = new Hand[numberOfPlayers];
+        for (int i = 0; i < numberOfPlayers; i++) {
             playerHands[i] = new Hand();
         }
 
-        // TODO Create a full deck and deal it out.
+        drawPile = Deck.getShuffledDeck();
+        // Deal the players
+        for (int cardIndex = 0; cardIndex < 12; cardIndex++) {
+            for (int player = 0; player < numberOfPlayers; player++) {
+                playerHands[player].setCard(cardIndex, drawPile.pop());
+            }
+        }
+        // Add a card to the discard
+        discardPile.push(drawPile.pop());
+        // What remains of the deck is in the draw pile
     }
 
     public Deck getDiscardPile() {
@@ -27,5 +40,9 @@ public class State {
 
     public Hand[] getPlayerHands() {
         return playerHands;
+    }
+
+    public int getNumberOfPlayers() {
+        return numberOfPlayers;
     }
 }
