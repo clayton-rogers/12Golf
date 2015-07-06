@@ -1,4 +1,4 @@
-package ca.claytonrogers.Client;
+package ca.claytonrogers.Client.GUIObjects;
 
 import ca.claytonrogers.Common.State;
 
