@@ -7,4 +7,8 @@ import ca.claytonrogers.Common.State;
  */
 public class GUIState extends State {
     // TODO
+
+    public GUIState(int numberOfPlayers) {
+        super(numberOfPlayers);
+    }
 }

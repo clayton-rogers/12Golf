@@ -9,16 +9,16 @@ import java.util.List;
  */
 public class Hand {
 
-    private List<Card> hand = new ArrayList<>(12);
+    private List<Integer> hand = new ArrayList<>(12);
 
-    public void setCard(int index, Card card) {
+    public void setCard(int index, int card) {
         if (index < 0 || index > 11) {
             throw new IllegalStateException("Tried to set an out of range card of a hand.");
         }
         hand.set(index,card);
     }
 
-    public Card getCard(int index) {
+    public int getCard(int index) {
         if (index < 0 || index > 11) {
             throw new IllegalStateException("Tried to get an out of range card of a hand.");
         }

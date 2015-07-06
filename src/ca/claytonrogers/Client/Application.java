@@ -9,10 +9,11 @@ import javax.swing.*;
  */
 public class Application extends JFrame implements Runnable{
 
+    private static final int NUMBER_OF_PLAYERS = 2;
     private static final IntVector WINDOW_BOUNDS = new IntVector(700,700);
 
     private InputLoop inputLoop;
-    private final GUIState guiState = new GUIState();
+    private final GUIState guiState = new GUIState(NUMBER_OF_PLAYERS);
 
     public Application() {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);

@@ -11,11 +11,13 @@ import java.io.IOException;
  */
 public class StateUpdate extends Message {
 
-    private State state = new State();
+    private State state;
 
     public StateUpdate(DataInputStream in) throws IOException {
         super(MessageType.StateUpdate);
 
+        int numberOfPlayers = in.readByte();
+        state = new State(numberOfPlayers);
         // TODO read in into state
     }
 

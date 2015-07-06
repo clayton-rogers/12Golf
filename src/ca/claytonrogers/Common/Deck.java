@@ -9,17 +9,17 @@ import java.util.LinkedList;
  */
 public class Deck {
 
-    private Deque<Card> cards = new LinkedList<>();
+    private Deque<Integer> cards = new LinkedList<>();
 
-    public void push(Card card) {
+    public void push(int card) {
         cards.push(card);
     }
 
-    public Card peek() {
+    public int peek() {
         return cards.peek();
     }
 
-    public Card pop() {
+    public int pop() {
         return cards.pop();
     }
 
@@ -32,7 +32,7 @@ public class Deck {
 
         for (int i = 1; i <= 13; i++) {
             for (int j = 0; j < 4; j++) {
-                Card card = new Card(i);
+                int card = i;
                 deck.push(card);
             }
         }
