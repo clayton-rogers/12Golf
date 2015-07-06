@@ -1,17 +1,22 @@
 package ca.claytonrogers.Common;
 
+import ca.claytonrogers.Common.Messages.Message;
+
 import java.io.*;
 import java.net.Socket;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  * Created by clayton on 2015-07-04.
  */
-public class Connection extends Thread{
+public class Connection extends Thread implements Closeable {
 
     private DataInputStream reader;
     private DataOutputStream writer;
     private Socket socket;
-    private volatile boolean isGood = false;
+    private boolean isGood = false;
+    private Queue<Message> messageQueue = new ConcurrentLinkedQueue<>();
 
     public Connection (Socket socket) {
         this.socket = socket;
@@ -34,6 +39,48 @@ public class Connection extends Thread{
     public void run() {
         super.run();
 
+        try {
+            while (isGood) {
+                Message message = Message.parse(reader);
+                messageQueue.add(message);
+                if (Constants.NET_DEBUG) {
+                    System.out.println("Received message type: " + message.getMessageType());
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("There was a problem on the message reading thread: " + e);
+        }
+    }
 
+    public void send (Message message) {
+        if (!isGood) {
+            System.out.println("Tried sending a message when not good.");
+            return;
+        }
+
+        try {
+            message.send(writer);
+            if (Constants.NET_DEBUG) {
+                System.out.println("Sending message type: " + message.getMessageType());
+            }
+        } catch (IOException e) {
+            isGood = false;
+            System.out.println("There was an issue sending a message: " + e);
+        }
+    }
+
+    public boolean isGood() {
+        return isGood;
+    }
+
+    public Message getMessage () {
+        return messageQueue.poll();
+    }
+
+    @Override
+    public void close() throws IOException {
+        writer.close();
+        reader.close();
+        socket.close();
     }
 }

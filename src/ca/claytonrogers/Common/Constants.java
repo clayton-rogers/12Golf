@@ -7,6 +7,8 @@ public class Constants {
 
     public static final int VERSION = 1;
     public static final int NUMBER_OF_CARDS = 12;
+    public static final boolean DEBUG = false;
+    public static final boolean NET_DEBUG = false;
 
     public static final IntVector CARD_SIZE = new IntVector(30,60);
     public static final IntVector DECK_SIZE = CARD_SIZE.add(new IntVector(3,3));
