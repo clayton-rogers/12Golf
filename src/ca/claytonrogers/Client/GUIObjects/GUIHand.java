@@ -26,7 +26,7 @@ public class GUIHand extends GUIObject {
             throw new IllegalArgumentException("Called getClickedCard for a position outside of its bounds.");
         }
 
-        IntVector relativePos = clickLocation.sub(this.getLocation());
+        IntVector relativePos = clickLocation.sub(location);
 
         // TODO find the card that was actually clicked
         switch (position) {

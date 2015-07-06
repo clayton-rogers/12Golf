@@ -22,4 +22,8 @@ public class IntVector {
     public IntVector add (IntVector otherVector) {
         return new IntVector(x + otherVector.x, y + otherVector.y);
     }
+
+    public IntVector sub (IntVector otherVector) {
+        return new IntVector(x - otherVector.x, y - otherVector.y);
+    }
 }

@@ -9,7 +9,7 @@ import java.awt.*;
  */
 public abstract class GUIObject {
 
-    private IntVector location;
+    IntVector location;
     private IntVector size;
     private boolean isVisible;
     private boolean isClickable;
