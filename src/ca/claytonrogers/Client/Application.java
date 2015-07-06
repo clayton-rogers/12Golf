@@ -1,6 +1,5 @@
 package ca.claytonrogers.Client;
 
-import ca.claytonrogers.Common.GUIObject;
 import ca.claytonrogers.Common.IntVector;
 
 import javax.swing.*;

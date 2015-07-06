@@ -1,4 +1,6 @@
-package ca.claytonrogers.Common;
+package ca.claytonrogers.Client.GUIObjects;
+
+import ca.claytonrogers.Common.IntVector;
 
 import java.awt.*;
 

@@ -5,5 +5,27 @@ package ca.claytonrogers.Common;
  */
 public class State {
 
-    // TODO
+    private Deck   discardPile = new Deck();
+    private Deck   drawPile    = new Deck();
+    private Hand[] playerHands = new Hand[4];
+
+    public State() {
+        for (int i = 0; i < 4; i++) {
+            playerHands[i] = new Hand();
+        }
+
+        // TODO Create a full deck and deal it out.
+    }
+
+    public Deck getDiscardPile() {
+        return discardPile;
+    }
+
+    public Deck getDrawPile() {
+        return drawPile;
+    }
+
+    public Hand[] getPlayerHands() {
+        return playerHands;
+    }
 }
