@@ -9,25 +9,25 @@ import java.util.LinkedList;
  */
 public class Deck {
 
-    private Deque<Integer> cards = new LinkedList<>();
+    private Deque<Card> cards = new LinkedList<>();
 
     public Deck() {}
 
     public Deck (Deck copy) {
-        for (Integer card : copy.cards) {
+        for (Card card : copy.cards) {
             cards.push(card);
         }
     }
 
-    public void push(int card) {
+    public void push(Card card) {
         cards.push(card);
     }
 
-    public int peek() {
+    public Card peek() {
         return cards.peek();
     }
 
-    public int pop() {
+    public Card pop() {
         return cards.pop();
     }
 
@@ -40,7 +40,7 @@ public class Deck {
 
         for (int i = 1; i <= 13; i++) {
             for (int j = 0; j < 4; j++) {
-                deck.push(i);
+                deck.push(new Card(i, false));
             }
         }
         //deck.add(new Card(14));   // TODO FUTURE And the jokers

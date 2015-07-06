@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class Hand {
 
-    private int[] hand = new int[Constants.NUMBER_OF_CARDS];
+    private Card[] hand = new Card[Constants.NUMBER_OF_CARDS];
 
     public Hand() {}
 
@@ -19,14 +19,14 @@ public class Hand {
         }
     }
 
-    public void setCard(int index, int card) {
+    public void setCard(int index, Card card) {
         if (index < 0 || index > Constants.NUMBER_OF_CARDS-1) {
             throw new IllegalStateException("Tried to set an out of range card of a hand.");
         }
-        hand[index] = card;
+        hand[index] = new Card(card);
     }
 
-    public int getCard(int index) {
+    public Card getCard(int index) {
         if (index < 0 || index > Constants.NUMBER_OF_CARDS-1) {
             throw new IllegalStateException("Tried to get an out of range card of a hand.");
         }
