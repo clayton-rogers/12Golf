@@ -9,21 +9,29 @@ import java.util.List;
  */
 public class Hand {
 
-    private List<Integer> hand = new ArrayList<>(12);
+    private int[] hand = new int[Constants.NUMBER_OF_CARDS];
+
+    public Hand() {}
+
+    public Hand(Hand copy) {
+        for (int i = 0; i < Constants.NUMBER_OF_CARDS; i++) {
+            hand[i] = copy.hand[i];
+        }
+    }
 
     public void setCard(int index, int card) {
-        if (index < 0 || index > 11) {
+        if (index < 0 || index > Constants.NUMBER_OF_CARDS-1) {
             throw new IllegalStateException("Tried to set an out of range card of a hand.");
         }
-        hand.set(index,card);
+        hand[index] = card;
     }
 
     public int getCard(int index) {
-        if (index < 0 || index > 11) {
+        if (index < 0 || index > Constants.NUMBER_OF_CARDS-1) {
             throw new IllegalStateException("Tried to get an out of range card of a hand.");
         }
 
-        return hand.get(index);
+        return hand[index];
     }
 
 

@@ -30,6 +30,16 @@ public class State {
         // What remains of the deck is in the draw pile
     }
 
+    public State (State copy) {
+        numberOfPlayers = copy.getNumberOfPlayers();
+        discardPile = new Deck(copy.getDiscardPile());
+        drawPile    = new Deck(copy.getDrawPile());
+        playerHands = new Hand[numberOfPlayers];
+        for (int i = 0; i < numberOfPlayers; i++) {
+            playerHands[i] = new Hand(copy.getPlayerHands()[i]);
+        }
+    }
+
     public Deck getDiscardPile() {
         return discardPile;
     }

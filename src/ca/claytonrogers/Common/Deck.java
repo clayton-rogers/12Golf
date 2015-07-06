@@ -11,6 +11,14 @@ public class Deck {
 
     private Deque<Integer> cards = new LinkedList<>();
 
+    public Deck() {}
+
+    public Deck (Deck copy) {
+        for (Integer card : copy.cards) {
+            cards.push(card);
+        }
+    }
+
     public void push(int card) {
         cards.push(card);
     }
@@ -32,8 +40,7 @@ public class Deck {
 
         for (int i = 1; i <= 13; i++) {
             for (int j = 0; j < 4; j++) {
-                int card = i;
-                deck.push(card);
+                deck.push(i);
             }
         }
         //deck.add(new Card(14));   // TODO FUTURE And the jokers
