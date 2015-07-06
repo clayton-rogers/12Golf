@@ -20,7 +20,7 @@ public class State {
 
         drawPile = Deck.getShuffledDeck();
         // Deal the players
-        for (int cardIndex = 0; cardIndex < 12; cardIndex++) {
+        for (int cardIndex = 0; cardIndex < Constants.NUMBER_OF_CARDS; cardIndex++) {
             for (int player = 0; player < numberOfPlayers; player++) {
                 playerHands[player].setCard(cardIndex, drawPile.pop());
             }

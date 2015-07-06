@@ -13,11 +13,18 @@ public class Constants {
 
     public static final IntVector CARD_SIZE = new IntVector(30,60);
     public static final IntVector DECK_SIZE = CARD_SIZE.add(new IntVector(3,3));
+    public static final int       SPACE_BETWEEN_CARDS = 10;
+    public static final IntVector HAND_SIZE =
+            new IntVector(
+                    6*CARD_SIZE.x + 5*SPACE_BETWEEN_CARDS,
+                    2*CARD_SIZE.y +   SPACE_BETWEEN_CARDS);
 
     public static final IntVector NULL_LOCATION         = new IntVector(0,0);
     public static final IntVector FIELD_OFFSET          = new IntVector(15,45);
     public static final IntVector DISCARD_PILE_LOCATION = FIELD_OFFSET.add(new IntVector(300, 300));
     public static final IntVector DRAW_PILE_LOCATION    = FIELD_OFFSET.add(new IntVector(350, 300));
+    public static final IntVector TOP_HAND_OFFSET       = FIELD_OFFSET;
+    public static final IntVector BOTTOM_HAND_OFFSET    = FIELD_OFFSET.add(new IntVector(0,500));
     public static final IntVector[] HAND_LOCATIONS      = new IntVector[4];
 
     static {
