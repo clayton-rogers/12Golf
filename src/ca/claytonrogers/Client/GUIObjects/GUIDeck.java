@@ -14,8 +14,8 @@ public class GUIDeck extends GUIObject {
     private Deck deck;
     private boolean isFaceUp = false;
 
-    public GUIDeck(IntVector location, Deck deck) {
-        super(location, Constants.DECK_SIZE);
+    public GUIDeck(IntVector location, Deck deck, Type type) {
+        super(location, Constants.DECK_SIZE, type);
         this.deck = deck;
     }
 

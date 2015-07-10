@@ -9,14 +9,24 @@ import java.awt.*;
  */
 public abstract class GUIObject {
 
+    public enum Type {
+        Hand,
+        DrawPile,
+        DiscardPile,
+        Other
+    }
+
     IntVector location;
     private IntVector size;
+    private Type type;
     private boolean isVisible;
     private boolean isClickable;
 
-    public GUIObject (IntVector location, IntVector size) {
+
+    public GUIObject (IntVector location, IntVector size, Type type) {
         this.location = new IntVector(location);
         this.size = new IntVector(size);
+        this.type = type;
         isVisible = false;
         isClickable = false;
     }
@@ -41,5 +51,9 @@ public abstract class GUIObject {
         }
 
         return false;
+    }
+
+    public Type getType() {
+        return type;
     }
 }

@@ -16,7 +16,8 @@ public class GUIHand extends GUIObject {
 
     public GUIHand(Hand hand, int position) {
         super(position == 0 ? Constants.BOTTOM_HAND_OFFSET : Constants.TOP_HAND_OFFSET,
-                Constants.HAND_SIZE);
+                Constants.HAND_SIZE,
+                Type.Hand);
         this.hand = hand;
         this.position = position;
     }
