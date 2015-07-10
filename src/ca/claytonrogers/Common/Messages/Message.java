@@ -8,7 +8,7 @@ import java.io.IOException;
  * Created by clayton on 2015-07-05.
  */
 public abstract class Message {
-    enum MessageType {
+    public enum MessageType {
         VersionInformation,  // Includes the version number
         VersionInformationMismatch, // Includes the version of both the server and client
         Username,            // Includes the username

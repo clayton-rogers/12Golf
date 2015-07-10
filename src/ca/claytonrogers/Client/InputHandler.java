@@ -1,15 +1,9 @@
 package ca.claytonrogers.Client;
 
-import ca.claytonrogers.Client.GUIObjects.GUIState;
 import ca.claytonrogers.Common.IntVector;
 
 import javax.swing.event.MouseInputAdapter;
 import java.awt.event.MouseEvent;
-import java.io.IOException;
-import java.util.Queue;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by clayton on 2015-07-05.
