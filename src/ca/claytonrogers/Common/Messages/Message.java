@@ -10,6 +10,7 @@ import java.io.IOException;
 public abstract class Message {
     public enum MessageType {
         VersionInformation,  // Includes the version number
+        VersionInformationAuthenticated,
         VersionInformationMismatch, // Includes the version of both the server and client
         Username,            // Includes the username
         StateUpdate,         // Includes the entire state
