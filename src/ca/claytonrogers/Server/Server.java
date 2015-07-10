@@ -25,7 +25,8 @@ public class Server {
                     socket = serverSocket.accept();
                     Connection player2 = new Connection(socket);
 
-                    // TODO start the game
+                    GameRunner gameRunner = new GameRunner(new Connection[]{player1, player2});
+                    gameRunner.start();
                 }
             } catch (IOException e) {
                 System.out.println("Something when wrong while the server was listening: " + e);
