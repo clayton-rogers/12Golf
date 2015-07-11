@@ -1,5 +1,6 @@
 package ca.claytonrogers.Client.GUIObjects;
 
+import ca.claytonrogers.Common.Card;
 import ca.claytonrogers.Common.Constants;
 import ca.claytonrogers.Common.Deck;
 import ca.claytonrogers.Common.IntVector;
@@ -21,6 +22,13 @@ public class GUIDeck extends GUIObject {
 
     @Override
     protected void internalDraw(Graphics g) {
-        // TODO
+        IntVector offsetLocation = new IntVector(location);
+        offsetLocation = offsetLocation.add(Constants.DECK_OFFSET); // The offset location should work like a drop shadow
+
+        Card bottomCard = new Card(1, true); // So that no part of the value will be visible under the second card
+        Card topCard = new Card(deck.peek().value,isFaceUp);
+
+        Drawer.drawCard(g, bottomCard, offsetLocation);
+        Drawer.drawCard(g, topCard, location);
     }
 }
