@@ -26,11 +26,11 @@ public class Application extends JFrame implements Runnable {
     private InputHandler inputHandler;
     private Queue<IntVector> mouseClickList = new ConcurrentLinkedQueue<>();
     private Connection serverConnection;
-    private String username;
-    private int playerNumber;
-    //private State state;
     private List<GUIObject> guiObjectList = new ArrayList<>(6);
-    //private GameState gameState = GameState.Not_my_turn;
+
+    private String[] usernames;
+    private int playerNumber;
+    private int totalPlayers;
     private GolfGame game;
 
     public Application() {
@@ -45,7 +45,7 @@ public class Application extends JFrame implements Runnable {
 
     @Override
     public void run() {
-        username = JOptionPane.showInputDialog("Enter a username:");
+        String username = JOptionPane.showInputDialog("Enter a username:");
 
         // Try to get a socket open with the server
         Socket socket;
@@ -69,20 +69,15 @@ public class Application extends JFrame implements Runnable {
         // Create a connection object from the socket
         serverConnection = new Connection(socket);
 
+        // By now, we're connected, so tell the user we're just waiting on the other users.
+        drawWaitingForOtherPlayersScreen();
+
         // Send the version information
         VersionInformation version = new VersionInformation(Constants.VERSION);
         serverConnection.send(version);
 
-        // Wait around to see that a version mismatch is not returned
-        Message message = null;
-        while (message == null) {
-            message = serverConnection.getMessage();
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                System.out.println("Interrupted while waiting for version message");
-            }
-        }
+        // Get the next message and deal with version mismatch if it occurs.
+        Message message = serverConnection.waitForNextMessage();
         switch (message.getMessageType()) {
             case VersionInformationMismatch:
                 VersionInformationMismatch msg = (VersionInformationMismatch) message;
@@ -93,15 +88,23 @@ public class Application extends JFrame implements Runnable {
                 return;
             case VersionInformationAuthenticated:
                 playerNumber = ((VersionInformationAuthenticated) message).getPlayerNumber();
+                totalPlayers = ((VersionInformationAuthenticated) message).getTotalPlayers();
                 break;
             default:
-                System.out.println("Recived something other than version validation: " + message.getMessageType());
+                System.out.println("Received something other than version validation: " + message.getMessageType());
                 return;
         }
 
         // Send the username
         Username usernameMessage = new Username(username, playerNumber);
         serverConnection.send(usernameMessage);
+
+        // Fill out the username database
+        usernames[playerNumber] = username;
+        for (int i = 0; i < totalPlayers-1; i++) {
+            usernameMessage = (Username)serverConnection.waitForNextMessage();
+            usernames[usernameMessage.getPlayerNumber()] = usernameMessage.getUsername();
+        }
 
         drawLoop();
     }
@@ -215,5 +218,9 @@ public class Application extends JFrame implements Runnable {
         }
         guiObjectList.add(drawPile);
         guiObjectList.add(discardPile);
+    }
+
+    private void drawWaitingForOtherPlayersScreen() {
+        // TODO
     }
 }
