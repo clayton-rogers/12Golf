@@ -16,6 +16,7 @@ public abstract class Message {
         StateUpdate,         // Includes the entire state
         YourTurn,
         DrawCardClicked,
+        DiscardCardClicked,
         DrawCardDiscarded,    // Includes the card that was flipped in place
         DrawCardReplaced,     // Includes the hand card that was replaced
         DiscardCardReplaced,  // Includes the hand card that was replaced
@@ -48,6 +49,8 @@ public abstract class Message {
                 return new YourTurn();
             case DrawCardClicked:
                 return new DrawCardClicked();
+            case DiscardCardClicked:
+                return new DiscardCardClicked();
             case DrawCardDiscarded:
                 return new DrawCardDiscarded(in);
             case DrawCardReplaced:
