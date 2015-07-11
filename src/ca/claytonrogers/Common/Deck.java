@@ -1,8 +1,7 @@
 package ca.claytonrogers.Common;
 
 
-import java.util.Deque;
-import java.util.LinkedList;
+import java.util.*;
 
 /**
  * Created by clayton on 2015-07-04.
@@ -32,7 +31,11 @@ public class Deck {
     }
 
     public void shuffle() {
-        // TODO
+        // We have to convert the Deque to a list in order to shuffle it.
+        // Note that the elements themselves are not copied.
+        List<Card> temp = new LinkedList<>(cards);
+        Collections.shuffle(temp);
+        cards = new LinkedList<>(temp);
     }
 
     public static Deck getShuffledDeck() {
