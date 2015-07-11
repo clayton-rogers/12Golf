@@ -10,17 +10,20 @@ import java.io.IOException;
 public class Username extends Message {
 
     private String username = "";
+    private int playerNumber;
 
     public Username(DataInputStream in) throws IOException {
         super(MessageType.Username);
 
         username = in.readUTF();
+        playerNumber = in.readInt();
     }
 
-    public Username(String username) {
+    public Username(String username, int playerNumber) {
         super(MessageType.Username);
 
         this.username = username;
+        this.playerNumber = playerNumber;
     }
 
     @Override
@@ -28,10 +31,15 @@ public class Username extends Message {
         super.send(out);
 
         out.writeUTF(username);
+        out.writeInt(playerNumber);
         out.flush();
     }
 
     public String getUsername() {
         return username;
+    }
+
+    public int getPlayerNumber() {
+        return playerNumber;
     }
 }

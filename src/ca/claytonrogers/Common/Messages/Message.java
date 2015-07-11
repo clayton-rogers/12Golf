@@ -14,17 +14,11 @@ public abstract class Message {
         VersionInformationMismatch, // Includes the version of both the server and client
         Username,            // Includes the username
         StateUpdate,         // Includes the entire state
-        YourTurn,
         DrawCardClicked,
         DiscardCardClicked,
-        DrawCardDiscarded,    // Includes the card that was flipped in place
-        DrawCardReplaced,     // Includes the hand card that was replaced
-        DiscardCardReplaced,  // Includes the hand card that was replaced
-        TurnComplete,
-        LastTurn,
-        RoundOver,            // Includes the score
-        ReadyForNextRound,
-        GameOver
+        DrawCardDiscarded,
+        HandSelection,        // Informs which card was selected from the hand
+        ReadyForNextRound
     }
 
     private MessageType messageType;
@@ -45,28 +39,16 @@ public abstract class Message {
                 return new Username(in);
             case StateUpdate:
                 return new StateUpdate(in);
-            case YourTurn:
-                return new YourTurn();
             case DrawCardClicked:
                 return new DrawCardClicked();
             case DiscardCardClicked:
                 return new DiscardCardClicked();
             case DrawCardDiscarded:
-                return new DrawCardDiscarded(in);
-            case DrawCardReplaced:
-                return new DrawCardReplaced(in);
-            case DiscardCardReplaced:
-                return new DiscardCardReplaced(in);
-            case TurnComplete:
-                return new TurnComplete();
-            case LastTurn:
-                return new LastTurn();
-            case RoundOver:
-                return new RoundOver(in);
+                return new DrawCardDiscarded();
+            case HandSelection:
+                return new HandSelection(in);
             case ReadyForNextRound:
                 return new ReadyForNextRound();
-            case GameOver:
-                return new GameOver();
         }
 
         throw new IllegalStateException("Could not determine the message type.");

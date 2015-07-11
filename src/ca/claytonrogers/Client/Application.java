@@ -73,10 +73,6 @@ public class Application extends JFrame implements Runnable {
         VersionInformation version = new VersionInformation(Constants.VERSION);
         serverConnection.send(version);
 
-        // Send the username
-        Username usernameMessage = new Username(username);
-        serverConnection.send(usernameMessage);
-
         // Wait around to see that a version mismatch is not returned
         Message message = null;
         while (message == null) {
@@ -102,6 +98,10 @@ public class Application extends JFrame implements Runnable {
                 System.out.println("Recived something other than version validation: " + message.getMessageType());
                 return;
         }
+
+        // Send the username
+        Username usernameMessage = new Username(username, playerNumber);
+        serverConnection.send(usernameMessage);
 
         drawLoop();
     }
