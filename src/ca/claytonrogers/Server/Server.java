@@ -70,7 +70,7 @@ public class Server {
                 player.send(new VersionInformationMismatch(clientVersion, Constants.VERSION));
                 return false;
             } else {
-                player.send(new VersionInformationAuthenticated(i));
+                player.send(new VersionInformationAuthenticated(i, players.length));
             }
         }
 
