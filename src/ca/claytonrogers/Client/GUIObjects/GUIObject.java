@@ -16,12 +16,11 @@ public abstract class GUIObject {
         None
     }
 
-    IntVector location;
-    private IntVector size;
-    private Type type;
-    private boolean isVisible;
-    private boolean isClickable;
-
+    protected IntVector location;
+    protected IntVector size;
+    protected Type type;
+    protected boolean isVisible;
+    protected boolean isClickable;
 
     public GUIObject (IntVector location, IntVector size, Type type) {
         this.location = new IntVector(location);
@@ -39,7 +38,12 @@ public abstract class GUIObject {
         this.isClickable = isClickable;
     }
 
-    public abstract void draw (Graphics g);
+    public final void draw (Graphics g) {
+        if (isVisible) {
+            internalDraw(g);
+        }
+    }
+    protected abstract void internalDraw (Graphics g);
 
     public boolean checkClicked (IntVector clickLocation) {
         if (clickLocation.x > location.x && clickLocation.x < location.x + size.x) {

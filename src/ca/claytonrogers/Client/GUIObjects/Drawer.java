@@ -11,11 +11,7 @@ import java.awt.*;
  */
 public class Drawer {
 
-
-
     public static void drawCard(Graphics g, Card card, IntVector location) {
-        // TODO
-
         // Draw the outline
         g.setColor(Color.BLACK);
         g.drawRoundRect(

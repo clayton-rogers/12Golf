@@ -20,7 +20,7 @@ public class GUIDeck extends GUIObject {
     }
 
     @Override
-    public void draw(Graphics g) {
+    protected void internalDraw(Graphics g) {
         // TODO
     }
 }

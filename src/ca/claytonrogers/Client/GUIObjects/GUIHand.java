@@ -50,7 +50,7 @@ public class GUIHand extends GUIObject {
     }
 
     @Override
-    public void draw(Graphics g) {
+    protected void internalDraw(Graphics g) {
         switch (position) {
             case 0:
                 // TODO draw down position
@@ -63,9 +63,5 @@ public class GUIHand extends GUIObject {
             case 3:
                 throw new IllegalStateException("Cannot be a player 3");
         }
-    }
-
-    private void drawCard(Graphics2D g, int cardIndex) {
-        // TODO draw card.
     }
 }
