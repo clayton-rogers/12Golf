@@ -23,7 +23,6 @@ public class Application extends JFrame implements Runnable {
     private static final int FRAME_TIME = 17;  // Frame time in ms
     private static final IntVector WINDOW_BOUNDS = new IntVector(700,700);
 
-    private InputHandler inputHandler;
     private Queue<IntVector> mouseClickList = new ConcurrentLinkedQueue<>();
     private Connection serverConnection;
     private List<GUIObject> guiObjectList = new ArrayList<>(6);
@@ -37,7 +36,7 @@ public class Application extends JFrame implements Runnable {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setSize(WINDOW_BOUNDS.x, WINDOW_BOUNDS.y);
         setVisible(true);
-        inputHandler = new InputHandler(this);
+        InputHandler inputHandler = new InputHandler(this);
         addMouseListener(inputHandler);
 
         createBufferStrategy(2);
@@ -59,7 +58,7 @@ public class Application extends JFrame implements Runnable {
             System.out.println("Could not connect to the default server.");
             try {
                 String address = JOptionPane.showInputDialog("Enter the server address:");
-                socket = new Socket(Constants.ADDRESS, Constants.PORT_NUMBER);
+                socket = new Socket(address, Constants.PORT_NUMBER);
             } catch (IOException e2) {
                 System.out.println("Could not connect to the user entered server.");
                 return;
@@ -120,33 +119,8 @@ public class Application extends JFrame implements Runnable {
         while (!gameOver) {
             long frameStartTime = System.currentTimeMillis();
 
-            // TODO handle inputs
-            while (!mouseClickList.isEmpty()) {
-                IntVector clickLocation = mouseClickList.poll();
-
-                for (GUIObject object : guiObjectList) {
-                    if (object.checkClicked(clickLocation)) {
-                        // TODO handle what happens next based on type of hit and
-                        switch (object.getType()) {
-                            case DrawPile:
-                                break;
-                            case DiscardPile:
-                                break;
-                            case Hand:
-                                break;
-                        }
-                    }
-                }
-            }
-
-            // TODO handle server messages
-            while (true) {
-                Message message = serverConnection.getMessage();
-                if (message == null) {
-                    break;
-                }
-            }
-
+            handleMouseInputs();
+            handleServerMessages();
             drawScreen();
 
             long frameEndTime = System.currentTimeMillis();
@@ -188,18 +162,27 @@ public class Application extends JFrame implements Runnable {
     }
 
     private void initialiseGame() {
-        // Should be guaranteed to have a message by here because we waited for it in run()
-        Message message = serverConnection.getMessage();
 
-        if (message.getMessageType() != Message.MessageType.StateUpdate) {
-            System.out.println("Did not receive initial state from server.");
-            return;
+        // Player 0 will always be the one to create the initial game state.
+        Message message;
+        State state;
+        if (playerNumber == 0) {
+            state = new State(totalPlayers);
+            message = new StateUpdate(state);
+            serverConnection.send(message);
+        } else {
+            message = serverConnection.waitForNextMessage();
+            if (message.getMessageType() != Message.MessageType.StateUpdate) {
+                System.out.println("Did not receive initial state from server. " + message.getMessageType());
+                return;
+            }
+            state = ((StateUpdate)message).getState();
         }
-        State state = ((StateUpdate)message).getState();
+
         game = new GolfGame(state);
 
-        // Initialise the objects
-        GUIHand[] guiHands = new GUIHand[state.getNumberOfPlayers()];
+        // Initialise the GUI objects and add them to the draw list
+        GUIHand[] guiHands = new GUIHand[totalPlayers];
         if (state.getNumberOfPlayers() == 2) {
             // if there's only two players, we want them sitting across from each other.
             guiHands[0] = new GUIHand(state.getPlayerHands()[0],0);
@@ -209,18 +192,49 @@ public class Application extends JFrame implements Runnable {
                 guiHands[i] = new GUIHand(state.getPlayerHands()[i], i);
             }
         }
-        GUIDeck drawPile = new GUIDeck(Constants.DRAW_PILE_LOCATION, state.getDrawPile(), GUIObject.Type.DrawPile);
-        GUIDeck discardPile = new GUIDeck(Constants.DISCARD_PILE_LOCATION, state.getDiscardPile(), GUIObject.Type.DiscardPile);
-
-        // Add the objects to the draw list
         for (GUIHand hand : guiHands) {
             guiObjectList.add(hand);
         }
+
+        GUIDeck drawPile = new GUIDeck(Constants.DRAW_PILE_LOCATION, state.getDrawPile(), GUIObject.Type.DrawPile);
         guiObjectList.add(drawPile);
+
+        GUIDeck discardPile = new GUIDeck(Constants.DISCARD_PILE_LOCATION, state.getDiscardPile(), GUIObject.Type.DiscardPile);
         guiObjectList.add(discardPile);
     }
 
     private void drawWaitingForOtherPlayersScreen() {
         // TODO
+    }
+
+    private void handleMouseInputs() {
+        // TODO handle inputs
+        while (!mouseClickList.isEmpty()) {
+            IntVector clickLocation = mouseClickList.poll();
+
+            for (GUIObject object : guiObjectList) {
+                if (object.checkClicked(clickLocation)) {
+                    // TODO handle what happens next based on type of hit and
+                    switch (object.getType()) {
+                        case DrawPile:
+                            break;
+                        case DiscardPile:
+                            break;
+                        case Hand:
+                            break;
+                    }
+                }
+            }
+        }
+    }
+
+    private void handleServerMessages() {
+        // TODO handle server messages
+        while (true) {
+            Message message = serverConnection.getMessage();
+            if (message == null) {
+                break;
+            }
+        }
     }
 }
