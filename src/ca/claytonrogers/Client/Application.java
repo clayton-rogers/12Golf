@@ -121,6 +121,7 @@ public class Application extends JFrame implements Runnable {
 
             handleMouseInputs();
             handleServerMessages();
+            updateClickability();
             drawScreen();
 
             long frameEndTime = System.currentTimeMillis();
@@ -208,24 +209,56 @@ public class Application extends JFrame implements Runnable {
     }
 
     private void handleMouseInputs() {
-        // TODO handle inputs
-        while (!mouseClickList.isEmpty()) {
-            IntVector clickLocation = mouseClickList.poll();
+        // If it is not our turn then getNextGoodClick should not return anything.
 
-            for (GUIObject object : guiObjectList) {
-                if (object.checkClicked(clickLocation)) {
-                    // TODO handle what happens next based on type of hit and
-                    switch (object.getType()) {
-                        case DrawPile:
-                            break;
-                        case DiscardPile:
-                            break;
-                        case Hand:
-                            break;
-                    }
+        GUIObject.Type clickType = getNextGoodClickLocation();
+        if (clickType == GUIObject.Type.None) {
+            return;
+        }
+
+        Message msg;
+        switch (clickType) {
+            case DrawPile:
+                game.chooseDrawPile();
+                msg = new DrawCardClicked();
+                serverConnection.send(msg);
+                break;
+            case DiscardPile:
+                game.chooseDiscardPile();
+                msg = new DiscardCardClicked();
+                serverConnection.send(msg);
+                break;
+            case Hand:
+                int cardIndex = getHandClick();
+                game.chooseHandCard(cardIndex);
+                msg = new HandSelection(cardIndex);
+                serverConnection.send(msg);
+                break;
+        }
+    }
+
+    private GUIObject.Type getNextGoodClickLocation() {
+        // TODO
+        IntVector clickLocation = mouseClickList.poll();
+        for (GUIObject object : guiObjectList) {
+            if (object.checkClicked(clickLocation)) {
+                // TODO handle what happens next based on type of hit and
+                switch (object.getType()) {
+                    case DrawPile:
+                        break;
+                    case DiscardPile:
+                        break;
+                    case Hand:
+                        break;
                 }
             }
         }
+        return GUIObject.Type.None;
+    }
+
+    private int getHandClick() {
+        // TODO
+        return 0;
     }
 
     private void handleServerMessages() {
@@ -236,5 +269,9 @@ public class Application extends JFrame implements Runnable {
                 break;
             }
         }
+    }
+
+    private void updateClickability() {
+        // TODO
     }
 }
