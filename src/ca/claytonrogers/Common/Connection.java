@@ -77,6 +77,22 @@ public class Connection extends Thread implements Closeable {
         return messageQueue.poll();
     }
 
+    public Message waitForNextMessage() {
+        Message message = null;
+
+        try {
+            while (message == null) {
+                message = getMessage();
+                Thread.sleep(10L);
+            }
+        } catch (InterruptedException e) {
+            System.out.println("Connection was interrupted while waiting for next message.");
+            isGood = false;
+        }
+
+        return message;
+    }
+
     @Override
     public void close() throws IOException {
         writer.close();
