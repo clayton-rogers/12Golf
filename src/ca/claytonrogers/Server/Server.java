@@ -37,8 +37,7 @@ public class Server {
                         }
                         continue;
                     }
-                    GameRunner gameRunner = new GameRunner(players);
-                    gameRunner.start();
+                    new GameRunner(players);
                 }
             } catch (IOException e) {
                 System.out.println("Something when wrong while the server was listening: " + e);
