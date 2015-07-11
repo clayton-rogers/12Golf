@@ -30,7 +30,7 @@ public class Deck {
         return cards.pop();
     }
 
-    public void shuffle() {
+    private void shuffle() {
         // We have to convert the Deque to a list in order to shuffle it.
         // Note that the elements themselves are not copied.
         List<Card> temp = new LinkedList<>(cards);
@@ -52,5 +52,9 @@ public class Deck {
         deck.shuffle();
 
         return deck;
+    }
+
+    public int size() {
+        return cards.size();
     }
 }

@@ -16,15 +16,12 @@ public class StateUpdate extends Message {
     public StateUpdate(DataInputStream in) throws IOException {
         super(MessageType.StateUpdate);
 
-        int numberOfPlayers = in.readByte();
-        state = new State(numberOfPlayers);
-        // TODO read in into state
+        state = State.read(in);
     }
 
     public StateUpdate(State state) {
         super(MessageType.StateUpdate);
 
-        // TODO change this to copy constructor
         this.state = state;
     }
 
@@ -32,7 +29,8 @@ public class StateUpdate extends Message {
     public void send(DataOutputStream out) throws IOException {
         super.send(out);
 
-        // TODO send the state here
+        State.write(out, state);
+        out.flush();
     }
 
     public State getState() {
