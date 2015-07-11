@@ -13,7 +13,7 @@ public abstract class GUIObject {
         Hand,
         DrawPile,
         DiscardPile,
-        Other
+        None
     }
 
     IntVector location;
