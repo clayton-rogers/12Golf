@@ -262,11 +262,32 @@ public class Application extends JFrame implements Runnable {
     }
 
     private void handleServerMessages() {
-        // TODO handle server messages
         while (true) {
             Message message = serverConnection.getMessage();
             if (message == null) {
                 break;
+            }
+
+            if (game.getPlayerTurn() == playerNumber) {
+                // Why are we getting messages while it's our turn???
+                System.out.println("Received a message while it was our turn: " + message.getMessageType());
+                continue;
+            }
+
+            switch (message.getMessageType()) {
+                case DrawCardClicked:
+                    game.chooseDrawPile();
+                    break;
+                case DiscardCardClicked:
+                    game.chooseDiscardPile();
+                    break;
+                case HandSelection:
+                    int cardIndex = ((HandSelection)message).getCardSelectionIndex();
+                    game.chooseHandCard(cardIndex);
+                    break;
+                default:
+                    System.out.println("Got a message that we didn't expect: " + message.getMessageType());
+                    break;
             }
         }
     }
