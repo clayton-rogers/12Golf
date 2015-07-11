@@ -17,7 +17,7 @@ public abstract class Message {
         YourTurn,
         DrawCardClicked,
         DiscardCardClicked,
-        DrawCardDiscarded,    // Includes the card that was flipped in place
+        DrawCardDiscarded,
         DrawCardReplaced,     // Includes the hand card that was replaced
         DiscardCardReplaced,  // Includes the hand card that was replaced
         TurnComplete,
@@ -52,7 +52,7 @@ public abstract class Message {
             case DiscardCardClicked:
                 return new DiscardCardClicked();
             case DrawCardDiscarded:
-                return new DrawCardDiscarded(in);
+                return new DrawCardDiscarded();
             case DrawCardReplaced:
                 return new DrawCardReplaced(in);
             case DiscardCardReplaced:
