@@ -18,6 +18,7 @@ public abstract class Message {
         DrawCardClicked,
         DiscardCardClicked,
         DrawCardDiscarded,
+        HandSelection,        // Informs which card was selected from the hand
         DrawCardReplaced,     // Includes the hand card that was replaced
         DiscardCardReplaced,  // Includes the hand card that was replaced
         TurnComplete,
@@ -53,6 +54,8 @@ public abstract class Message {
                 return new DiscardCardClicked();
             case DrawCardDiscarded:
                 return new DrawCardDiscarded();
+            case HandSelection:
+                return new HandSelection(in);
             case DrawCardReplaced:
                 return new DrawCardReplaced(in);
             case DiscardCardReplaced:
