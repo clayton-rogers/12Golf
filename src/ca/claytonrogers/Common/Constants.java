@@ -13,6 +13,7 @@ public class Constants {
     public static final boolean NET_DEBUG = false;
 
     public static final IntVector CARD_SIZE = new IntVector(30,60);
+    public static final int       CARD_CORNER_RADIUS = 3;
     public static final IntVector DECK_SIZE = CARD_SIZE.add(new IntVector(3,3));
     public static final int       SPACE_BETWEEN_CARDS = 10;
     public static final IntVector HAND_SIZE =
