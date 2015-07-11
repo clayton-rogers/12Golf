@@ -31,13 +31,13 @@ public class Server {
                         players[i] = new Connection(socket);
                     }
 
-                    if (!authenticate(players)) {
+                    if (authenticate(players)) {
+                        new GameRunner(players);
+                    } else {
                         for (Connection player : players) {
                             player.close();
                         }
-                        continue;
                     }
-                    new GameRunner(players);
                 }
             } catch (IOException e) {
                 System.out.println("Something when wrong while the server was listening: " + e);
