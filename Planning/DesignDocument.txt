@@ -8,10 +8,10 @@ Server is started on the server (Single start for multiple instances of the game
 Client is started.
 Client automatically tries to connect to "claytonrogers.ca".
 If the client can't connect, then it asks for the server.
-(Maybe debug mode auto connects to localhost?)
+(If in DEBUG mode, connects to localhost)
 Asks for a username, must be non-null (Future: Remembers username).
-It shows the playing field dealt and a message "Please wait for player 2 to connect".
-Player 2 connects.
+It shows the playing field dealt and a message "Please wait for other players to connect".
+Other players connect.
 Player 1 goes first, selecting either the face up card, or the deck card.
 Player 2's screen shows "Waiting for other players".
 Player 1 either replaces a face down card dealt to them, or discards and flips one over.
@@ -19,7 +19,7 @@ Then player 2 goes, completing their turn in the same way.
 Game ends when one player has all of their cards revealed, other player(s) get one more turn after this.
 (Future?) Jokers on the board allow you to switch any two cards.
           (Can you change what a Joker is here? Or any other time other than when it is placed?)
-Score is tallied for both players.
+Score is tallied for all players.
     Scoring works as follows:
         - Cards are worth face value, except for the kings, which are worth zero.
         - Jacks are worth 11, Queens 12.
@@ -27,7 +27,7 @@ Score is tallied for both players.
         - Pairs of kings in a vertical column are worth negative zero.
         - (Future) Jokers can be anything you want, you must choose when you put them down.
           (or CPU will automatically choose to give you a pair, except when the other card is un-flipped?)
-Final game state is shown for both players along with Score Screen button.
+Final game state is shown for all players along with Score Screen button.
 Clicking Score Screen button shows the Score Screen to that player.
 Score Screen also contains a Next Round button, which will take the player to the next round.
 If the other player has not pressed Next Round,
@@ -43,57 +43,52 @@ Future: there will also be a rematch and a new game button.
 The only GUI events that will be handled are click events and window close events.
 Window close event will be handled by the application, and will terminate connection to the server
 and kill the application.
-Click events will also be handled by the application.
-Each click event will be placed in a LinkedBlockingQueue for the input loop to handle.
-The drawing is done separately and simply uses the state which is updated by the input loop.
+Click events will be handled by the InputHandler.
+Each click event will be placed in a ConcurrentLinkedQueue for the main game loop to handle.
 
-In the input handling loop, the input clicks will be checked one at a time to see if they
-intersect with any of the buttons.
-If the click does not intersect with anything, it is simply thrown out.
-Intersection is determined based on calling a clicked(int x, int y) method on the object,
-it will return true if it has in fact been clicked.
+The main game loop will check whether the click intersects with any of the gui objects.
+Clicks which do not hit anything will be thrown out and the next click will be gotten.
 The GUI object is required to know:
     - where it is
     - it's bounds
     - whether it is visible
     - whether it is clickable
-The input then deals with the fact that something has been clicked.
-The input and the GUI loop share the same GUIObject list.
+
+The main game loop will then change the state and send the appropriate messages for what is clicked.
+The same gui object list is used by the draw loop and click handling code.
 
 
 === Networking ===
 Server will start listening on port 60093.
 As soon as a client start it tries to connect to the server.
-When the client connects, it is expected to immediately send it's version information.
-If this version information matches that of the server, it is accepted into the player pool and the
+When the client connects, it is expected to immediately send its version information.
+The server does not respond to the client until all clients have connected, then the player numbers
+are assigned and given out.
+If the version information matches that of the server, it is accepted into the player pool and the
 server sends an authentication passed message which also contains the players number.
-If the version does not match, it is disconnected with an version number error message,
-and a message containing the version numbers of both the client and the server.
-The client is also expected to give a username.
-When a second player is added to the pool, a game is started with both of the players.
-The game does not start until both players have given a username.
-The username is distributed with the state.
-The server shuffles the deck and deals the cards into a State class, then sends the State class to
+If the version does not match, the server sends a version info mismatch message which contains both
+the client and server version number.
+This is the last of the information exchange between the server and client. After this, the
+messages the server receives from the client are simply parroted to the other clients. Basically
+P2P except there is a central server relaying all the messages.
+
+The client sends a username along with their assigned player number. Each client has a list of all
 the players.
-It then sends a your turn to the next player.
-The player then clicks on either the discard, or draw.
-If they click on the draw, then the card will be sent to the server and then distributed to the
-clients, so they can see what the player picked up.
-If the player doesn't want the card, they click the discard pile, then click on one of their piles.
-In this case, the client tells the server that the draw was discarded, and which card was flipped.
-If the player does want the card, they click on the card they want to replace it with.
-In this case, the clients sends a draw replaced message.
-If the player wants the discard, they click it, then the card to be replaced.
-In this case, the client sends a discard replaced message.
-When the server has all the information for a players turn, it sends a turn complete message to the
-client.
-It then sends a your turn message to the next player.
-When the server finds that a player is out, it sends a last turn message to all the clients.
-When the round is over, the server sends a round over message which includes the score to all the
-clients.
-It then waits for a ready message from each of the players before starting the next round.
-If the game is over, after sending the round over message with the score, the server will also send
-a game over message, and terminate the connection.
+Once player 0 has all the usernames (and presumably all other clients also have all the usernames),
+he creates deals the original state and sends it out to the others.
+It is then player 0's turn, since that is the default of the GolfGame.
+In general, a player will know when it is their turn by checking the GolfGame.PlayerNumber() against
+their player number.
+The player who's turn it is chooses either the the discard, or draw.
+Whichever they chose a message is sent out (DrawClicked, DiscardClicked).
+If the player chooses to discard the drawn card, a DrawCardDiscarded message is sent.
+In any of the above cases, a HandSelection message is sent. This will either denote the hand card
+to replace the draw/discard card by, or the card to be flipped if the draw card was discarded.
+This continues until the game is over.
+Score screen is displayed.
+When next round is clicked, a ReadyForNextRound message is sent.
+When client 0 receives ready messages from all the other clients, is deals the next and hand continues.
+This continues until the game is over, then the clients disconnect.
 (Future: The server will allow for rematch. Or maybe this will be handled client side with a
 reconnection to the server)
 
@@ -102,11 +97,11 @@ reconnection to the server)
 Client is double buffered, and locked to roughly 60 FPS.
 All things to be printed to the screen will be descendants of the GUIObject class which implements
 the basic functionality:
-    - Upon creation, sets the position, visibility and click-ability are defaulted to off
-    - Drag the object given a graphics parameter
+    - Upon creation, sets the position and size. Visibility and click-ability are defaulted to off.
+    - Draw the object given a graphics parameter.
     - Set the visibility
     - Set the click-ability
-    - CheckClicked to see if the object was hit by a click
+    - CheckClicked to see if the object was hit by a click.
 Each loop, every GUI object will be drawn, it is up to the object to know if it is visible, and if
 it is, where to place the drawing.
 The application will keep a list of GUIObjects which it will iterate over for drawing.

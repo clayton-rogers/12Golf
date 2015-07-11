@@ -4,19 +4,19 @@ soon to be implemented, or deferred for a future release.
 
 
 === Done ===
-
-
-=== Planned ===
-- 2 players
+- 2 to 4 players
 - 12 cards
-- 10 rounds
-- Dedicated server which runs the game and the clients connect to.
 - Player 1 always goes first.
 - Game board to show your cards and the opponents cards.
-- Score screen which shows between rounds.
-- Win screen which shows who won the game.
 - Auto connects to claytonrogers.ca.
 - Debug mode where it connects to localhost.
+
+=== Planned ===
+- 10 rounds
+- Server takes number of players as command line argument.
+- Server which passes messages between the clients, but does not run the game.
+- Score screen which shows between rounds.
+- Win screen which shows who won the game.
 - Highlight cards which indicate the next place to click
 
 
@@ -25,7 +25,6 @@ soon to be implemented, or deferred for a future release.
 - Instruction text line guides the player on what action to do next (to go with the card highlight).
 - Card piles visually show how many cards they contain.
 - Rock paper scissors to decide who goes first.
-- 2 to 4 players
 - Main menu (Tutorial, Play (# of players), Host, Options, Instructions?).
 - Username is saved in a file (along with any other options that are added).
 - Card sticks to the mouse after it has been clicked.
@@ -34,10 +33,10 @@ soon to be implemented, or deferred for a future release.
 - Tutorial mode which explains the game's rules.
 - Rule screen.
 - Dedicated server built into the client.
-- Game browser to view games currently being hosted by the "Host" option (note: the games are still technically hosted on the server).
+- Game browser to view games currently being hosted by the "Host" option.
 - "Quick Game" mode where it connects you to then next person to ask for a game (server lets you know how long average wait is).
 - Win screen lets you ask for a rematch.
-- Ability to change the default game server (Option menu?).
+- Ability to change the default game browser server, instead of always "claytonrogers.ca" (Option menu?).
 - Android client?
-- Better logging for server, not just STD::out. (Or just pipe STD::out to file?) (One logs file per game?)
+- Better logging for server, not just STD::out. (Or just pipe STD::out to file?) (One logs file per game?) (Logger?) (Tags?)
 - Recent games finished screen. (Client and server versions?)
