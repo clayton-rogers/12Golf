@@ -10,24 +10,28 @@ import java.io.IOException;
 public class VersionInformationAuthenticated extends Message {
 
     private int playerNumber = 0;
+    private int totalPlayers = 0;
 
     public VersionInformationAuthenticated(DataInputStream in) throws IOException{
         super(MessageType.VersionInformationAuthenticated);
 
-        playerNumber = in.readInt();
+        playerNumber = in.readByte();
+        totalPlayers = in.readByte();
     }
 
-    public VersionInformationAuthenticated(int playerNumber) {
+    public VersionInformationAuthenticated(int playerNumber, int totalPlayers) {
         super(MessageType.VersionInformationAuthenticated);
 
         this.playerNumber = playerNumber;
+        this.totalPlayers = totalPlayers;
     }
 
     @Override
     public void send(DataOutputStream out) throws IOException {
         super.send(out);
 
-        out.writeInt(playerNumber);
+        out.writeByte(playerNumber);
+        out.writeByte(totalPlayers);
         out.flush();
     }
 
@@ -35,7 +39,7 @@ public class VersionInformationAuthenticated extends Message {
         return playerNumber;
     }
 
-    public void setPlayerNumber(int playerNumber) {
-        this.playerNumber = playerNumber;
+    public int getTotalPlayers() {
+        return totalPlayers;
     }
 }
