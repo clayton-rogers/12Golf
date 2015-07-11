@@ -2,8 +2,8 @@ package ca.claytonrogers.Server;
 
 import ca.claytonrogers.Common.Connection;
 import ca.claytonrogers.Common.Messages.Message;
-import ca.claytonrogers.Common.Messages.StateUpdate;
-import ca.claytonrogers.Common.State;
+
+import java.io.IOException;
 
 /**
  * GameRunner creates the initial game state and send it to all the players. It then parrots
@@ -13,27 +13,18 @@ import ca.claytonrogers.Common.State;
  */
 public class GameRunner implements Runnable {
 
-    private Thread thread;
-    private Connection[] players;
+    private final Connection[] players;
     private volatile boolean continueGame = true;
 
     public GameRunner(Connection[] players) {
         this.players = players;
 
-        thread = new Thread(this);
-        thread.start();
-    }
-
-    public void start() {
+        Thread thread = new Thread(this);
         thread.start();
     }
 
     @Override
     public void run() {
-
-        // Create the initial state and send it to all players, they'll take it from there.
-        State state = new State(players.length);
-        sendToAllExcept(-1, new StateUpdate(state));
 
         // Keep getting message and parroting them to all players.
         while (continueGame) {
@@ -51,6 +42,15 @@ public class GameRunner implements Runnable {
                 Thread.sleep(10L);
             } catch (InterruptedException e) {
                 System.out.println("GameRunner was interrupted while waiting.");
+            }
+        }
+
+        // Once one of the players has a connection problem, disconnect all the players.
+        for (Connection player : players) {
+            try {
+                player.close();
+            } catch (IOException e) {
+                System.out.println("There was an issue disconnecting one of the players after the game. (This message is expected at least once.)");
             }
         }
     }
