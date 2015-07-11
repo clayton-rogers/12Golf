@@ -16,7 +16,6 @@ public abstract class Message {
         StateUpdate,         // Includes the entire state
         DrawCardClicked,
         DiscardCardClicked,
-        DrawCardDiscarded,
         HandSelection,        // Informs which card was selected from the hand
         ReadyForNextRound
     }
@@ -43,8 +42,6 @@ public abstract class Message {
                 return new DrawCardClicked();
             case DiscardCardClicked:
                 return new DiscardCardClicked();
-            case DrawCardDiscarded:
-                return new DrawCardDiscarded();
             case HandSelection:
                 return new HandSelection(in);
             case ReadyForNextRound:
