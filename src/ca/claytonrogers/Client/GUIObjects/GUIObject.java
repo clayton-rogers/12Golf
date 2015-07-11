@@ -27,7 +27,7 @@ public abstract class GUIObject {
         this.location = new IntVector(location);
         this.size = new IntVector(size);
         this.type = type;
-        isVisible = false;
+        isVisible = true;
         isClickable = false;
     }
 
