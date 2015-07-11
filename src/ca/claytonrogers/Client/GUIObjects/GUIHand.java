@@ -27,6 +27,9 @@ public class GUIHand extends GUIObject {
             throw new IllegalArgumentException("Called getClickedCard for a position outside of its bounds.");
         }
 
+        // TODO check where the player is sitting and move the hands around to place the player at the bottom
+
+
         IntVector relativePos = clickLocation.sub(location);
 
         // TODO find the card that was actually clicked
