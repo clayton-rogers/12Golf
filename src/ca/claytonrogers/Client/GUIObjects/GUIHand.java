@@ -12,7 +12,7 @@ import java.awt.*;
  */
 public class GUIHand extends GUIObject {
 
-    private Hand hand;
+    private final Hand hand;
     private int position = 0; // 0-3 for the different players
 
     public GUIHand(Hand hand, int position) {
@@ -27,31 +27,45 @@ public class GUIHand extends GUIObject {
     private static IntVector getHandLocation(int position) {
         return Constants.HAND_LOCATIONS[position];
     }
-
+    // TODO FUTURE check where the player is sitting and move the hands around to place the player at the bottom
     public int getClickedCard(IntVector clickLocation) {
         if (!this.checkClicked(clickLocation)) {
             throw new IllegalArgumentException("Called getClickedCard for a position outside of its bounds.");
         }
 
-        // TODO check where the player is sitting and move the hands around to place the player at the bottom
-
-
-        IntVector relativePos = clickLocation.sub(location);
-
-        // TODO find the card that was actually clicked
         switch (position) {
             case 0:
             case 2:
-                // TODO
-
-                break;
+                return getHorizontalClickedCard(clickLocation);
             case 1:
             case 3:
+                //return getVerticalClickedCard();
                 throw new IllegalStateException("No side players allowed.");
-                //break;
         }
 
         // Could not find a clicked card
+        return -1;
+    }
+
+    private int getHorizontalClickedCard(IntVector clickLocation) {
+
+        IntVector relativePos = clickLocation.sub(location);
+        final int handWidth = Constants.NUMBER_OF_CARDS/2;
+
+        for (int x = 0; x < handWidth; x++) {
+            for (int y = 0; y < 2; y++) {
+                if (
+                        relativePos.x > x*(Constants.CARD_SIZE.x+Constants.SPACE_BETWEEN_CARDS) &&
+                        relativePos.x < (x*(Constants.CARD_SIZE.x+Constants.SPACE_BETWEEN_CARDS)+Constants.CARD_SIZE.x) &&
+                        relativePos.y > y*(Constants.CARD_SIZE.y+Constants.SPACE_BETWEEN_CARDS) &&
+                        relativePos.y < (y*(Constants.CARD_SIZE.y+Constants.SPACE_BETWEEN_CARDS)+Constants.CARD_SIZE.y)
+                        ) {
+                    return x + y*handWidth;
+                }
+            }
+        }
+
+        // Click must have gone through one of the cracks
         return -1;
     }
 
