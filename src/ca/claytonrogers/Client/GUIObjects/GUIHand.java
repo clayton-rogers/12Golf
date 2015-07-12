@@ -81,8 +81,8 @@ public class GUIHand extends GUIObject {
     private void drawHorizontalHand(Graphics g) {
         final int handWidth = Constants.NUMBER_OF_CARDS/2;
         IntVector cardLocation = location;
-        for (int i = 0; i < handWidth; i++) {
-            for (int row = 0; row < 2; row ++) {
+        for (int row = 0; row < 2; row ++) {
+            for (int i = 0; i < handWidth; i++) {
                 Card card = hand.getCard(i + row*handWidth);
                 Drawer.drawCard(g, card, cardLocation);
 

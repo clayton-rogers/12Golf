@@ -23,16 +23,16 @@ public class Constants {
                     2*CARD_SIZE.y +   SPACE_BETWEEN_CARDS);
 
     public static final IntVector NULL_LOCATION         = new IntVector(0,0);
-    public static final IntVector FIELD_OFFSET          = new IntVector(15,45);
+    public static final IntVector FIELD_OFFSET          = new IntVector(50,50);
     public static final IntVector WAITING_FOR_PLAYERS   = FIELD_OFFSET.add(new IntVector(100,100));
-    public static final IntVector DISCARD_PILE_LOCATION = FIELD_OFFSET.add(new IntVector(300, 300));
-    public static final IntVector DRAW_PILE_LOCATION    = FIELD_OFFSET.add(new IntVector(350, 300));
+    public static final IntVector DISCARD_PILE_LOCATION = FIELD_OFFSET.add(new IntVector(100, 180));
+    public static final IntVector DRAW_PILE_LOCATION    = FIELD_OFFSET.add(new IntVector(150, 180));
     public static final IntVector[] HAND_LOCATIONS      = new IntVector[4];
 
     static {
-        HAND_LOCATIONS[0] = FIELD_OFFSET.add(new IntVector(0,500));  // Bottom
+        HAND_LOCATIONS[0] = FIELD_OFFSET.add(new IntVector(  0,300));  // Bottom
         HAND_LOCATIONS[1] = FIELD_OFFSET.add(new IntVector(100,100));  // Left
-        HAND_LOCATIONS[2] = FIELD_OFFSET;  // Top
+        HAND_LOCATIONS[2] = FIELD_OFFSET.add(new IntVector(  0,  0));  // Top
         HAND_LOCATIONS[3] = FIELD_OFFSET.add(new IntVector(600,100));  // Right
     }
 }
