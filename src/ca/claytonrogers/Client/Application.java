@@ -43,6 +43,14 @@ public class Application extends JFrame implements Runnable {
         InputHandler inputHandler = new InputHandler(this);
         addMouseListener(inputHandler);
 
+        // TODO FUTURE For some reason you have to sometime wait for a bit before creating
+        // the buffer strategy, otherwise it will throw an exception.
+        try {
+            Thread.sleep(20);
+        } catch (InterruptedException e) {
+            System.out.println("Interrupted while waiting for the buffer to be created.");
+        }
+
         createBufferStrategy(2);
     }
 
