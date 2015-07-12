@@ -32,6 +32,10 @@ public class Application extends JFrame implements Runnable {
     private int totalPlayers;
     private GolfGame game;
 
+    private GUIHand[] guiHands;
+    private GUIDeck drawPile;
+    private GUIDeck discardPile;
+
     public Application() {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setSize(WINDOW_BOUNDS.x, WINDOW_BOUNDS.y);
@@ -183,7 +187,7 @@ public class Application extends JFrame implements Runnable {
         game = new GolfGame(state);
 
         // Initialise the GUI objects and add them to the draw list
-        GUIHand[] guiHands = new GUIHand[totalPlayers];
+        guiHands = new GUIHand[totalPlayers];
         if (state.getNumberOfPlayers() == 2) {
             // if there's only two players, we want them sitting across from each other.
             guiHands[0] = new GUIHand(state.getPlayerHands()[0],0);
@@ -197,15 +201,34 @@ public class Application extends JFrame implements Runnable {
             guiObjectList.add(hand);
         }
 
-        GUIDeck drawPile = new GUIDeck(Constants.DRAW_PILE_LOCATION, state.getDrawPile(), GUIObject.Type.DrawPile);
+        drawPile = new GUIDeck(Constants.DRAW_PILE_LOCATION, state.getDrawPile(), GUIObject.Type.DrawPile);
         guiObjectList.add(drawPile);
 
-        GUIDeck discardPile = new GUIDeck(Constants.DISCARD_PILE_LOCATION, state.getDiscardPile(), GUIObject.Type.DiscardPile);
+        discardPile = new GUIDeck(Constants.DISCARD_PILE_LOCATION, state.getDiscardPile(), GUIObject.Type.DiscardPile);
         guiObjectList.add(discardPile);
     }
 
     private void drawWaitingForOtherPlayersScreen() {
-        // TODO
+
+        BufferStrategy bf = getBufferStrategy();
+        Graphics g = null;
+
+        try {
+            g = bf.getDrawGraphics();
+
+            g.drawString(
+                    "Waiting for other players to connect...",
+                    Constants.WAITING_FOR_PLAYERS.x,
+                    Constants.WAITING_FOR_PLAYERS.y);
+
+        } finally {
+            if (g != null) {
+                g.dispose();
+            }
+        }
+
+        bf.show();
+        Toolkit.getDefaultToolkit().sync();
     }
 
     private void handleMouseInputs() {
@@ -229,7 +252,7 @@ public class Application extends JFrame implements Runnable {
                 serverConnection.send(msg);
                 break;
             case Hand:
-                int cardIndex = getHandClick();
+                int cardIndex = guiHands[playerNumber].getClickedCard(mouseClickList.poll());
                 game.chooseHandCard(cardIndex);
                 msg = new HandSelection(cardIndex);
                 serverConnection.send(msg);
@@ -238,27 +261,25 @@ public class Application extends JFrame implements Runnable {
     }
 
     private GUIObject.Type getNextGoodClickLocation() {
-        // TODO
-        IntVector clickLocation = mouseClickList.poll();
+        IntVector clickLocation = mouseClickList.peek();
         for (GUIObject object : guiObjectList) {
             if (object.checkClicked(clickLocation)) {
-                // TODO handle what happens next based on type of hit and
                 switch (object.getType()) {
+                    // If the click was on the draw pile or discard pile,
+                    // then no more needs to be done, otherwise, we need
+                    // to leave the click in the queue to be processed.
                     case DrawPile:
-                        break;
+                        mouseClickList.poll();
+                        return GUIObject.Type.DrawPile;
                     case DiscardPile:
-                        break;
+                        mouseClickList.poll();
+                        return GUIObject.Type.DiscardPile;
                     case Hand:
-                        break;
+                        return GUIObject.Type.Hand;
                 }
             }
         }
         return GUIObject.Type.None;
-    }
-
-    private int getHandClick() {
-        // TODO
-        return 0;
     }
 
     private void handleServerMessages() {
@@ -293,6 +314,43 @@ public class Application extends JFrame implements Runnable {
     }
 
     private void updateClickability() {
-        // TODO
+
+        if (game.getPlayerTurn() != playerNumber) {
+            // It's not my turn, so nothing should be clickable.
+            setHandClick(false);
+            setDrawClick(false);
+            setDiscardClick(false);
+        } else {
+            switch (game.getGameState()) {
+                case Waiting_for_draw_selection:
+                    setHandClick(false);
+                    setDrawClick(true);
+                    setDiscardClick(true);
+                    break;
+                case Draw_card_selected:
+                    setHandClick(true);
+                    setDrawClick(false);
+                    setDiscardClick(true);
+                    break;
+                case Discard_card_selected:
+                case Draw_card_discarded:
+                    setHandClick(true);
+                    setDrawClick(false);
+                    setDiscardClick(false);
+                    break;
+            }
+        }
+    }
+
+    private void setHandClick(boolean clickability) {
+        guiHands[playerNumber].setClickability(clickability);
+    }
+
+    private void setDrawClick(boolean clickability) {
+        drawPile.setClickability(clickability);
+    }
+
+    private void setDiscardClick(boolean clickability) {
+        discardPile.setClickability(clickability);
     }
 }

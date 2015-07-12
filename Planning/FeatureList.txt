@@ -10,11 +10,11 @@ soon to be implemented, or deferred for a future release.
 - Game board to show your cards and the opponents cards.
 - Auto connects to claytonrogers.ca.
 - Debug mode where it connects to localhost.
+- Server which passes messages between the clients, but does not run the game.
 
 === Planned ===
 - 10 rounds
 - Server takes number of players as command line argument.
-- Server which passes messages between the clients, but does not run the game.
 - Score screen which shows between rounds.
 - Win screen which shows who won the game.
 - Highlight cards which indicate the next place to click

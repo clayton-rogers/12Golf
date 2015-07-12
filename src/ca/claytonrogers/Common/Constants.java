@@ -13,7 +13,9 @@ public class Constants {
     public static final boolean NET_DEBUG = false;
 
     public static final IntVector CARD_SIZE = new IntVector(30,60);
+    public static final int       CARD_CORNER_RADIUS = 3;
     public static final IntVector DECK_SIZE = CARD_SIZE.add(new IntVector(3,3));
+    public static final IntVector DECK_OFFSET = new IntVector(-2, 2);
     public static final int       SPACE_BETWEEN_CARDS = 10;
     public static final IntVector HAND_SIZE =
             new IntVector(
@@ -22,16 +24,15 @@ public class Constants {
 
     public static final IntVector NULL_LOCATION         = new IntVector(0,0);
     public static final IntVector FIELD_OFFSET          = new IntVector(15,45);
+    public static final IntVector WAITING_FOR_PLAYERS   = FIELD_OFFSET.add(new IntVector(100,100));
     public static final IntVector DISCARD_PILE_LOCATION = FIELD_OFFSET.add(new IntVector(300, 300));
     public static final IntVector DRAW_PILE_LOCATION    = FIELD_OFFSET.add(new IntVector(350, 300));
-    public static final IntVector TOP_HAND_OFFSET       = FIELD_OFFSET;
-    public static final IntVector BOTTOM_HAND_OFFSET    = FIELD_OFFSET.add(new IntVector(0,500));
     public static final IntVector[] HAND_LOCATIONS      = new IntVector[4];
 
     static {
-        HAND_LOCATIONS[0] = new IntVector(400,500);  // Bottom
-        HAND_LOCATIONS[1] = new IntVector(100,100);  // Left
-        HAND_LOCATIONS[2] = new IntVector(400,100);  // Top
-        HAND_LOCATIONS[3] = new IntVector(600,100);  // Right
+        HAND_LOCATIONS[0] = FIELD_OFFSET.add(new IntVector(0,500));  // Bottom
+        HAND_LOCATIONS[1] = FIELD_OFFSET.add(new IntVector(100,100));  // Left
+        HAND_LOCATIONS[2] = FIELD_OFFSET;  // Top
+        HAND_LOCATIONS[3] = FIELD_OFFSET.add(new IntVector(600,100));  // Right
     }
 }
