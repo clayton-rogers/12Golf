@@ -262,6 +262,9 @@ public class Application extends JFrame implements Runnable {
 
     private GUIObject.Type getNextGoodClickLocation() {
         IntVector clickLocation = mouseClickList.peek();
+        if (clickLocation == null) {
+            return GUIObject.Type.None;
+        }
         for (GUIObject object : guiObjectList) {
             if (object.checkClicked(clickLocation)) {
                 switch (object.getType()) {
@@ -276,6 +279,8 @@ public class Application extends JFrame implements Runnable {
                         return GUIObject.Type.DiscardPile;
                     case Hand:
                         return GUIObject.Type.Hand;
+                    default:
+                        throw new IllegalStateException("Successfully clicked something that wasn't on the list: " + object.getType());
                 }
             }
         }
