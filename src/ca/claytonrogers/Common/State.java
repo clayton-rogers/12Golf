@@ -82,12 +82,13 @@ public class State {
         }
 
         // Get the hands
-        Hand[] hands = new Hand[4];
+        Hand[] hands = new Hand[numberOfPlayers];
         for (int player = 0; player < numberOfPlayers; player++) {
             Hand hand = new Hand();
             for (int i = 0; i < Constants.NUMBER_OF_CARDS; i++) {
                 hand.setCard(i, new Card(in.readByte(), false));
             }
+            hands[player] = hand;
         }
 
         // Set the state to the received data
