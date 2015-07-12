@@ -27,7 +27,7 @@ public class Application extends JFrame implements Runnable {
     private Connection serverConnection;
     private List<GUIObject> guiObjectList = new ArrayList<>(6);
 
-    private String[] usernames;
+    private String[] usernames = new String[4];
     private int playerNumber;
     private int totalPlayers;
     private GolfGame game;
