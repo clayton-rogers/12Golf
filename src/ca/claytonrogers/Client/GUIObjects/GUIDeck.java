@@ -31,4 +31,8 @@ public class GUIDeck extends GUIObject {
         Drawer.drawCard(g, bottomCard, offsetLocation);
         Drawer.drawCard(g, topCard, location);
     }
+
+    public void setIsFaceUp(boolean isFaceUp) {
+        this.isFaceUp = isFaceUp;
+    }
 }
