@@ -205,7 +205,26 @@ public class Application extends JFrame implements Runnable {
     }
 
     private void drawWaitingForOtherPlayersScreen() {
-        // TODO
+
+        BufferStrategy bf = getBufferStrategy();
+        Graphics g = null;
+
+        try {
+            g = bf.getDrawGraphics();
+
+            g.drawString(
+                    "Waiting for other players to connect...",
+                    Constants.WAITING_FOR_PLAYERS.x,
+                    Constants.WAITING_FOR_PLAYERS.y);
+
+        } finally {
+            if (g != null) {
+                g.dispose();
+            }
+        }
+
+        bf.show();
+        Toolkit.getDefaultToolkit().sync();
     }
 
     private void handleMouseInputs() {
