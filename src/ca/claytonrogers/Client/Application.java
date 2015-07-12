@@ -257,18 +257,16 @@ public class Application extends JFrame implements Runnable {
     }
 
     private GUIObject.Type getNextGoodClickLocation() {
-        // TODO
         IntVector clickLocation = mouseClickList.poll();
         for (GUIObject object : guiObjectList) {
             if (object.checkClicked(clickLocation)) {
-                // TODO handle what happens next based on type of hit and
                 switch (object.getType()) {
                     case DrawPile:
-                        break;
+                        return GUIObject.Type.DrawPile;
                     case DiscardPile:
-                        break;
+                        return GUIObject.Type.DiscardPile;
                     case Hand:
-                        break;
+                        return GUIObject.Type.Hand;
                 }
             }
         }
