@@ -178,8 +178,7 @@ public class Application extends JFrame implements Runnable {
         } else {
             message = serverConnection.waitForNextMessage();
             if (message.getMessageType() != Message.MessageType.StateUpdate) {
-                System.out.println("Did not receive initial state from server. " + message.getMessageType());
-                return;
+                throw new IllegalStateException("Did not receive initial state from server. " + message.getMessageType());
             }
             state = ((StateUpdate)message).getState();
         }
