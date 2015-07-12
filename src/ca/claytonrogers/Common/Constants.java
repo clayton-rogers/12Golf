@@ -5,7 +5,7 @@ package ca.claytonrogers.Common;
  */
 public class Constants {
 
-    public static final int VERSION = 3;
+    public static final int VERSION = 4;
     public static final int PORT_NUMBER = 60093;
     public static final String ADDRESS = "claytonrogers53.ca";
     public static final int NUMBER_OF_CARDS = 12;

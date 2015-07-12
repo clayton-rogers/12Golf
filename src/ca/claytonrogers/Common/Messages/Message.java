@@ -34,6 +34,8 @@ public abstract class Message {
                 return new VersionInformation(in);
             case VersionInformationMismatch:
                 return new VersionInformationMismatch(in);
+            case VersionInformationAuthenticated:
+                return new VersionInformationAuthenticated(in);
             case Username:
                 return new Username(in);
             case StateUpdate:
@@ -48,7 +50,7 @@ public abstract class Message {
                 return new ReadyForNextRound();
         }
 
-        throw new IllegalStateException("Could not determine the message type.");
+        throw new IllegalStateException("Could not determine the message type:" + messageType);
     }
 
     public void send (DataOutputStream out) throws IOException {
