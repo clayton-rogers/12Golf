@@ -314,6 +314,43 @@ public class Application extends JFrame implements Runnable {
     }
 
     private void updateClickability() {
-        // TODO
+
+        if (game.getPlayerTurn() != playerNumber) {
+            // It's not my turn, so nothing should be clickable.
+            setHandClick(false);
+            setDrawClick(false);
+            setDiscardClick(false);
+        } else {
+            switch (game.getGameState()) {
+                case Waiting_for_draw_selection:
+                    setHandClick(false);
+                    setDrawClick(true);
+                    setDiscardClick(true);
+                    break;
+                case Draw_card_selected:
+                    setHandClick(true);
+                    setDrawClick(false);
+                    setDiscardClick(true);
+                    break;
+                case Discard_card_selected:
+                case Draw_card_discarded:
+                    setHandClick(true);
+                    setDrawClick(false);
+                    setDiscardClick(false);
+                    break;
+            }
+        }
+    }
+
+    private void setHandClick(boolean clickability) {
+        guiHands[playerNumber].setClickability(clickability);
+    }
+
+    private void setDrawClick(boolean clickability) {
+        drawPile.setClickability(clickability);
+    }
+
+    private void setDiscardClick(boolean clickability) {
+        discardPile.setClickability(clickability);
     }
 }
