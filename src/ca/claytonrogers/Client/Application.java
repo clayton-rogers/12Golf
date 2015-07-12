@@ -32,6 +32,10 @@ public class Application extends JFrame implements Runnable {
     private int totalPlayers;
     private GolfGame game;
 
+    private GUIHand[] guiHands;
+    private GUIDeck drawPile;
+    private GUIDeck discardPile;
+
     public Application() {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setSize(WINDOW_BOUNDS.x, WINDOW_BOUNDS.y);
@@ -183,7 +187,7 @@ public class Application extends JFrame implements Runnable {
         game = new GolfGame(state);
 
         // Initialise the GUI objects and add them to the draw list
-        GUIHand[] guiHands = new GUIHand[totalPlayers];
+        guiHands = new GUIHand[totalPlayers];
         if (state.getNumberOfPlayers() == 2) {
             // if there's only two players, we want them sitting across from each other.
             guiHands[0] = new GUIHand(state.getPlayerHands()[0],0);
@@ -197,10 +201,10 @@ public class Application extends JFrame implements Runnable {
             guiObjectList.add(hand);
         }
 
-        GUIDeck drawPile = new GUIDeck(Constants.DRAW_PILE_LOCATION, state.getDrawPile(), GUIObject.Type.DrawPile);
+        drawPile = new GUIDeck(Constants.DRAW_PILE_LOCATION, state.getDrawPile(), GUIObject.Type.DrawPile);
         guiObjectList.add(drawPile);
 
-        GUIDeck discardPile = new GUIDeck(Constants.DISCARD_PILE_LOCATION, state.getDiscardPile(), GUIObject.Type.DiscardPile);
+        discardPile = new GUIDeck(Constants.DISCARD_PILE_LOCATION, state.getDiscardPile(), GUIObject.Type.DiscardPile);
         guiObjectList.add(discardPile);
     }
 
@@ -248,7 +252,7 @@ public class Application extends JFrame implements Runnable {
                 serverConnection.send(msg);
                 break;
             case Hand:
-                int cardIndex = getHandClick();
+                int cardIndex = guiHands[playerNumber].getClickedCard(mouseClickList.poll());
                 game.chooseHandCard(cardIndex);
                 msg = new HandSelection(cardIndex);
                 serverConnection.send(msg);
@@ -257,13 +261,18 @@ public class Application extends JFrame implements Runnable {
     }
 
     private GUIObject.Type getNextGoodClickLocation() {
-        IntVector clickLocation = mouseClickList.poll();
+        IntVector clickLocation = mouseClickList.peek();
         for (GUIObject object : guiObjectList) {
             if (object.checkClicked(clickLocation)) {
                 switch (object.getType()) {
+                    // If the click was on the draw pile or discard pile,
+                    // then no more needs to be done, otherwise, we need
+                    // to leave the click in the queue to be processed.
                     case DrawPile:
+                        mouseClickList.poll();
                         return GUIObject.Type.DrawPile;
                     case DiscardPile:
+                        mouseClickList.poll();
                         return GUIObject.Type.DiscardPile;
                     case Hand:
                         return GUIObject.Type.Hand;
@@ -271,11 +280,6 @@ public class Application extends JFrame implements Runnable {
             }
         }
         return GUIObject.Type.None;
-    }
-
-    private int getHandClick() {
-        // TODO
-        return 0;
     }
 
     private void handleServerMessages() {
