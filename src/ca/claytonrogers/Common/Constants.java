@@ -26,14 +26,12 @@ public class Constants {
     public static final IntVector FIELD_OFFSET          = new IntVector(15,45);
     public static final IntVector DISCARD_PILE_LOCATION = FIELD_OFFSET.add(new IntVector(300, 300));
     public static final IntVector DRAW_PILE_LOCATION    = FIELD_OFFSET.add(new IntVector(350, 300));
-    public static final IntVector TOP_HAND_OFFSET       = FIELD_OFFSET;
-    public static final IntVector BOTTOM_HAND_OFFSET    = FIELD_OFFSET.add(new IntVector(0,500));
     public static final IntVector[] HAND_LOCATIONS      = new IntVector[4];
 
     static {
-        HAND_LOCATIONS[0] = new IntVector(400,500);  // Bottom
-        HAND_LOCATIONS[1] = new IntVector(100,100);  // Left
-        HAND_LOCATIONS[2] = new IntVector(400,100);  // Top
-        HAND_LOCATIONS[3] = new IntVector(600,100);  // Right
+        HAND_LOCATIONS[0] = FIELD_OFFSET.add(new IntVector(0,500));  // Bottom
+        HAND_LOCATIONS[1] = FIELD_OFFSET.add(new IntVector(100,100));  // Left
+        HAND_LOCATIONS[2] = FIELD_OFFSET;  // Top
+        HAND_LOCATIONS[3] = FIELD_OFFSET.add(new IntVector(600,100));  // Right
     }
 }
