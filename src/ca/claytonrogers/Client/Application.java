@@ -140,6 +140,9 @@ public class Application extends JFrame implements Runnable {
         try {
             g = bf.getDrawGraphics();
 
+            g.setColor(Constants.BACKGROUND_COLOR);
+            g.fillRect(0, 0, WINDOW_BOUNDS.x, WINDOW_BOUNDS.y);
+
             for (GUIObject object : guiObjectList) {
                 object.draw(g);
             }

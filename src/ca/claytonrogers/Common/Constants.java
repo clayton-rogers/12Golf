@@ -35,4 +35,8 @@ public class Constants {
         HAND_LOCATIONS[2] = FIELD_OFFSET.add(new IntVector(  0,  0));  // Top
         HAND_LOCATIONS[3] = FIELD_OFFSET.add(new IntVector(600,100));  // Right
     }
+
+    public static final Color BACKGROUND_COLOR = Color.WHITE;
+    public static final Color CARD_BACKGROUND_COLOR = Color.LIGHT_GRAY;
+    public static final Color CARD_FOREGROUND_COLOR = Color.BLACK;
 }

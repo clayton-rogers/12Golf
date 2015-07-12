@@ -12,8 +12,19 @@ import java.awt.*;
 public class Drawer {
 
     public static void drawCard(Graphics g, Card card, IntVector location) {
+
+        // Draw the background.
+        g.setColor(Constants.CARD_BACKGROUND_COLOR);
+        g.fillRoundRect(
+                location.x,
+                location.y,
+                Constants.CARD_SIZE.x,
+                Constants.CARD_SIZE.y,
+                Constants.CARD_CORNER_RADIUS,
+                Constants.CARD_CORNER_RADIUS);
+
         // Draw the outline
-        g.setColor(Color.BLACK);
+        g.setColor(Constants.CARD_FOREGROUND_COLOR);
         g.drawRoundRect(
                 location.x,
                 location.y,
