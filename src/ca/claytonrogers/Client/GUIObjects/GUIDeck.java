@@ -25,7 +25,7 @@ public class GUIDeck extends GUIObject {
         IntVector offsetLocation = new IntVector(location);
         offsetLocation = offsetLocation.add(Constants.DECK_OFFSET); // The offset location should work like a drop shadow
 
-        Card bottomCard = new Card(1, true); // So that no part of the value will be visible under the second card
+        Card bottomCard = new Card(-1, true); // Card with -1 is blank.
         Card topCard = new Card(deck.peek().value,isFaceUp);
 
         Drawer.drawCard(g, bottomCard, offsetLocation);
