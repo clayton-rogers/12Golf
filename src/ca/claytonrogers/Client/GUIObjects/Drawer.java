@@ -37,8 +37,8 @@ public class Drawer {
         if (card.isFaceUp) {
             g.drawString(
                     card.faceValue(),
-                    location.x+4,
-                    location.y+8); // TODO FUTURE these values will need to be adjusted to get the face centered
+                    location.x+12,
+                    location.y+20); // TODO FUTURE these values will need to be adjusted to get the face centered
         } else {
             // Top left to bottom right
             g.drawLine(

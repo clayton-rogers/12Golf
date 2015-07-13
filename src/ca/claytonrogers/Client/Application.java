@@ -216,6 +216,7 @@ public class Application extends JFrame implements Runnable {
 
         discardPile = new GUIDeck(Constants.DISCARD_PILE_LOCATION, state.getDiscardPile(), GUIObject.Type.DiscardPile);
         guiObjectList.add(discardPile);
+        discardPile.setIsFaceUp(true); // The discard pile should always be face up and never change.
     }
 
     private void drawWaitingForOtherPlayersScreen() {
