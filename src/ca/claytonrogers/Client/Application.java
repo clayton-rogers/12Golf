@@ -3,6 +3,7 @@ package ca.claytonrogers.Client;
 import ca.claytonrogers.Client.GUIObjects.GUIDeck;
 import ca.claytonrogers.Client.GUIObjects.GUIHand;
 import ca.claytonrogers.Client.GUIObjects.GUIObject;
+import ca.claytonrogers.Client.GUIObjects.GUIStatusString;
 import ca.claytonrogers.Common.*;
 import ca.claytonrogers.Common.Messages.*;
 
@@ -35,6 +36,7 @@ public class Application extends JFrame implements Runnable {
     private GUIHand[] guiHands;
     private GUIDeck drawPile;
     private GUIDeck discardPile;
+    private GUIStatusString statusString;
 
     public Application() {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -133,7 +135,7 @@ public class Application extends JFrame implements Runnable {
 
             handleMouseInputs();
             handleServerMessages();
-            updateClickability();
+            updateClickabilityAndStatus();
             drawScreen();
 
             long frameEndTime = System.currentTimeMillis();
@@ -215,8 +217,11 @@ public class Application extends JFrame implements Runnable {
         guiObjectList.add(drawPile);
 
         discardPile = new GUIDeck(Constants.DISCARD_PILE_LOCATION, state.getDiscardPile(), GUIObject.Type.DiscardPile);
-        guiObjectList.add(discardPile);
         discardPile.setIsFaceUp(true); // The discard pile should always be face up and never change.
+        guiObjectList.add(discardPile);
+
+        statusString = new GUIStatusString();
+        guiObjectList.add(statusString);
     }
 
     private void drawWaitingForOtherPlayersScreen() {
@@ -335,8 +340,8 @@ public class Application extends JFrame implements Runnable {
         }
     }
 
-    private void updateClickability() {
-
+    private void updateClickabilityAndStatus() {
+        // Clickability update
         if (game.getPlayerTurn() != playerNumber) {
             // It's not my turn, so nothing should be clickable.
             setHandClick(false);
@@ -362,6 +367,16 @@ public class Application extends JFrame implements Runnable {
                     break;
             }
         }
+
+        // Status update
+        String statusMsg = "";
+        if (game.getPlayerTurn() == playerNumber) {
+            statusMsg += "Your turn: ";
+        } else {
+            statusMsg += "Not your turn: ";
+        }
+        statusMsg += game.getGameState();
+        statusString.setString(statusMsg);
     }
 
     private void setHandClick(boolean clickability) {

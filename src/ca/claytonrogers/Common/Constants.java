@@ -25,10 +25,12 @@ public class Constants {
                     2*CARD_SIZE.y +   SPACE_BETWEEN_CARDS);
 
     public static final IntVector NULL_LOCATION         = new IntVector(0,0);
+    public static final IntVector NULL_SIZE             = NULL_LOCATION;
     public static final IntVector FIELD_OFFSET          = new IntVector(50,50);
-    public static final IntVector WAITING_FOR_PLAYERS   = FIELD_OFFSET.add(new IntVector(100,100));
+    public static final IntVector WAITING_FOR_PLAYERS   = FIELD_OFFSET.add(new IntVector(100, 100));
     public static final IntVector DISCARD_PILE_LOCATION = FIELD_OFFSET.add(new IntVector(100, 180));
     public static final IntVector DRAW_PILE_LOCATION    = FIELD_OFFSET.add(new IntVector(150, 180));
+    public static final IntVector STATUS_STRING_LOCATION= FIELD_OFFSET.add(new IntVector(  0, 280));
     public static final IntVector[] HAND_LOCATIONS      = new IntVector[4];
 
     static {
