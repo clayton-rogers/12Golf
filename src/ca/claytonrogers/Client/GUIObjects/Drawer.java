@@ -40,19 +40,23 @@ public class Drawer {
                     location.x+12,
                     location.y+20); // TODO FUTURE these values will need to be adjusted to get the face centered
         } else {
-            // Top left to bottom right
-            g.drawLine(
-                    location.x + Constants.CARD_CORNER_RADIUS,
-                    location.y + Constants.CARD_CORNER_RADIUS,
-                    location.x + Constants.CARD_SIZE.x - Constants.CARD_CORNER_RADIUS,
-                    location.y + Constants.CARD_SIZE.y - Constants.CARD_CORNER_RADIUS);
-
-            // Bottom left to top right
-            g.drawLine(
-                    location.x + Constants.CARD_SIZE.x - Constants.CARD_CORNER_RADIUS,
-                    location.y + Constants.CARD_CORNER_RADIUS,
-                    location.x + Constants.CARD_CORNER_RADIUS,
-                    location.y + Constants.CARD_SIZE.y - Constants.CARD_CORNER_RADIUS);
+            drawX(g, location);
         }
+    }
+
+    public static void drawX(Graphics g, IntVector location) {
+        // Top left to bottom right
+        g.drawLine(
+                location.x + Constants.CARD_CORNER_RADIUS,
+                location.y + Constants.CARD_CORNER_RADIUS,
+                location.x + Constants.CARD_SIZE.x - Constants.CARD_CORNER_RADIUS,
+                location.y + Constants.CARD_SIZE.y - Constants.CARD_CORNER_RADIUS);
+
+        // Bottom left to top right
+        g.drawLine(
+                location.x + Constants.CARD_SIZE.x - Constants.CARD_CORNER_RADIUS,
+                location.y + Constants.CARD_CORNER_RADIUS,
+                location.x + Constants.CARD_CORNER_RADIUS,
+                location.y + Constants.CARD_SIZE.y - Constants.CARD_CORNER_RADIUS);
     }
 }
