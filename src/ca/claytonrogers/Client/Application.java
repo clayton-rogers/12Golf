@@ -254,17 +254,23 @@ public class Application extends JFrame implements Runnable {
         switch (clickType) {
             case DrawPile:
                 game.chooseDrawPile();
+                drawPile.setIsFaceUp(true);
+
                 msg = new DrawCardClicked();
                 serverConnection.send(msg);
                 break;
             case DiscardPile:
                 game.chooseDiscardPile();
+                drawPile.setIsFaceUp(false);
+
                 msg = new DiscardCardClicked();
                 serverConnection.send(msg);
                 break;
             case Hand:
                 int cardIndex = guiHands[playerNumber].getClickedCard(mouseClickList.poll());
                 game.chooseHandCard(cardIndex);
+                drawPile.setIsFaceUp(false);
+
                 msg = new HandSelection(cardIndex);
                 serverConnection.send(msg);
                 break;
