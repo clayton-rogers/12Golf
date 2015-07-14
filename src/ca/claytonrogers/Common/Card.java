@@ -19,7 +19,11 @@ public class Card {
 
     public int score() {
         if (isFaceUp) {
-            return value;
+            if (value == 13) {
+                return 0;
+            } else {
+                return value;
+            }
         } else {
             return 0;
         }
