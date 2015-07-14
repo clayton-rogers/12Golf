@@ -12,8 +12,19 @@ import java.awt.*;
 public class Drawer {
 
     public static void drawCard(Graphics g, Card card, IntVector location) {
+
+        // Draw the background.
+        g.setColor(Constants.CARD_BACKGROUND_COLOR);
+        g.fillRoundRect(
+                location.x,
+                location.y,
+                Constants.CARD_SIZE.x,
+                Constants.CARD_SIZE.y,
+                Constants.CARD_CORNER_RADIUS,
+                Constants.CARD_CORNER_RADIUS);
+
         // Draw the outline
-        g.setColor(Color.BLACK);
+        g.setColor(Constants.CARD_FOREGROUND_COLOR);
         g.drawRoundRect(
                 location.x,
                 location.y,
@@ -26,22 +37,26 @@ public class Drawer {
         if (card.isFaceUp) {
             g.drawString(
                     card.faceValue(),
-                    location.x+2,
-                    location.y+6); // TODO FUTURE these values will need to be adjusted to get the face centered
+                    location.x+12,
+                    location.y+20); // TODO FUTURE these values will need to be adjusted to get the face centered
         } else {
-            // Top left to bottom right
-            g.drawLine(
-                    location.x + Constants.CARD_CORNER_RADIUS,
-                    location.y + Constants.CARD_CORNER_RADIUS,
-                    location.x + Constants.CARD_SIZE.x - Constants.CARD_CORNER_RADIUS,
-                    location.y + Constants.CARD_SIZE.y - Constants.CARD_CORNER_RADIUS);
-
-            // Bottom left to top right
-            g.drawLine(
-                    location.x + Constants.CARD_SIZE.x - Constants.CARD_CORNER_RADIUS,
-                    location.y + Constants.CARD_CORNER_RADIUS,
-                    location.x + Constants.CARD_CORNER_RADIUS,
-                    location.y + Constants.CARD_SIZE.y - Constants.CARD_CORNER_RADIUS);
+            drawX(g, location);
         }
+    }
+
+    public static void drawX(Graphics g, IntVector location) {
+        // Top left to bottom right
+        g.drawLine(
+                location.x + Constants.CARD_CORNER_RADIUS,
+                location.y + Constants.CARD_CORNER_RADIUS,
+                location.x + Constants.CARD_SIZE.x - Constants.CARD_CORNER_RADIUS,
+                location.y + Constants.CARD_SIZE.y - Constants.CARD_CORNER_RADIUS);
+
+        // Bottom left to top right
+        g.drawLine(
+                location.x + Constants.CARD_SIZE.x - Constants.CARD_CORNER_RADIUS,
+                location.y + Constants.CARD_CORNER_RADIUS,
+                location.x + Constants.CARD_CORNER_RADIUS,
+                location.y + Constants.CARD_SIZE.y - Constants.CARD_CORNER_RADIUS);
     }
 }

@@ -137,7 +137,7 @@ public class Hand {
      */
     private void validateIndex (int index) {
         if (index < 0 || index > Constants.NUMBER_OF_CARDS-1) {
-            throw new IllegalStateException("Tried to use an out of range index in a hand.");
+            throw new IllegalStateException("Tried to use an out of range index in a hand: " + index);
         }
     }
 }

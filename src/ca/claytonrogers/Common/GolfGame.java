@@ -24,6 +24,7 @@ public class GolfGame {
         if (gameState == GameState.Waiting_for_draw_selection) {
             gameState = GameState.Discard_card_selected;
         } else if (gameState == GameState.Draw_card_selected) {
+            state.getDiscardPile().push(state.getDrawPile().pop());
             gameState = GameState.Draw_card_discarded;
         } else {
             System.out.println("Tried to choose the draw pile while in state: " + gameState);
@@ -32,19 +33,23 @@ public class GolfGame {
 
     public void chooseHandCard(int cardIndex) {
         if (gameState == GameState.Discard_card_selected) {
-            Card temp = state.getPlayerHands()[playerTurn].replaceCard(cardIndex, state.getDiscardPile().pop());
-            state.getDiscardPile().push(temp);
+            Card discardedCard = state.getDiscardPile().pop();
+            discardedCard.isFaceUp = true;
+            Card cardToBeDiscarded = state.getPlayerHands()[playerTurn].replaceCard(cardIndex, discardedCard);
+            state.getDiscardPile().push(cardToBeDiscarded);
         } else if (gameState == GameState.Draw_card_selected) {
-            Card temp = state.getPlayerHands()[playerTurn].replaceCard(cardIndex, state.getDrawPile().pop());
-            state.getDiscardPile().push(temp);
+            Card drawCard = state.getDrawPile().pop();
+            drawCard.isFaceUp = true;
+            Card cardToBeDiscarded = state.getPlayerHands()[playerTurn].replaceCard(cardIndex, drawCard);
+            state.getDiscardPile().push(cardToBeDiscarded);
         } else if (gameState == GameState.Draw_card_discarded) {
-            state.getDiscardPile().push(state.getDrawPile().pop());
             state.getPlayerHands()[playerTurn].flipCard(cardIndex);
         } else {
             System.out.println("Tried to choose a card from the hand while in state: " + gameState);
             return;
         }
         nextTurn();
+        gameState = GameState.Waiting_for_draw_selection;
     }
 
     public int getPlayerTurn() {

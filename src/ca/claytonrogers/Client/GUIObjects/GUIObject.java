@@ -46,6 +46,9 @@ public abstract class GUIObject {
     protected abstract void internalDraw (Graphics g);
 
     public boolean checkClicked (IntVector clickLocation) {
+        if (!isClickable) {
+            return false;
+        }
         if (clickLocation.x > location.x && clickLocation.x < location.x + size.x) {
             // Within x bounds
             if (clickLocation.y > location.y && clickLocation.y < location.y + size.y) {

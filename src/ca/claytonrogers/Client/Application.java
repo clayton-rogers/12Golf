@@ -3,6 +3,7 @@ package ca.claytonrogers.Client;
 import ca.claytonrogers.Client.GUIObjects.GUIDeck;
 import ca.claytonrogers.Client.GUIObjects.GUIHand;
 import ca.claytonrogers.Client.GUIObjects.GUIObject;
+import ca.claytonrogers.Client.GUIObjects.GUIStatusString;
 import ca.claytonrogers.Common.*;
 import ca.claytonrogers.Common.Messages.*;
 
@@ -27,7 +28,7 @@ public class Application extends JFrame implements Runnable {
     private Connection serverConnection;
     private List<GUIObject> guiObjectList = new ArrayList<>(6);
 
-    private String[] usernames;
+    private String[] usernames = new String[4];
     private int playerNumber;
     private int totalPlayers;
     private GolfGame game;
@@ -35,6 +36,7 @@ public class Application extends JFrame implements Runnable {
     private GUIHand[] guiHands;
     private GUIDeck drawPile;
     private GUIDeck discardPile;
+    private GUIStatusString statusString;
 
     public Application() {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -43,12 +45,21 @@ public class Application extends JFrame implements Runnable {
         InputHandler inputHandler = new InputHandler(this);
         addMouseListener(inputHandler);
 
+        // TODO FUTURE For some reason you have to sometime wait for a bit before creating
+        // the buffer strategy, otherwise it will throw an exception.
+        try {
+            Thread.sleep(20);
+        } catch (InterruptedException e) {
+            System.out.println("Interrupted while waiting for the buffer to be created.");
+        }
+
         createBufferStrategy(2);
     }
 
     @Override
     public void run() {
-        String username = JOptionPane.showInputDialog("Enter a username:");
+        //String username = JOptionPane.showInputDialog("Enter a username:");
+        String username = "Joe Luigi";  // For now the username does nothing, so don't prompt the user for it.
 
         // Try to get a socket open with the server
         Socket socket;
@@ -125,7 +136,7 @@ public class Application extends JFrame implements Runnable {
 
             handleMouseInputs();
             handleServerMessages();
-            updateClickability();
+            updateClickabilityAndStatus();
             drawScreen();
 
             long frameEndTime = System.currentTimeMillis();
@@ -139,6 +150,9 @@ public class Application extends JFrame implements Runnable {
 
         try {
             g = bf.getDrawGraphics();
+
+            g.setColor(Constants.BACKGROUND_COLOR);
+            g.fillRect(0, 0, WINDOW_BOUNDS.x, WINDOW_BOUNDS.y);
 
             for (GUIObject object : guiObjectList) {
                 object.draw(g);
@@ -178,8 +192,7 @@ public class Application extends JFrame implements Runnable {
         } else {
             message = serverConnection.waitForNextMessage();
             if (message.getMessageType() != Message.MessageType.StateUpdate) {
-                System.out.println("Did not receive initial state from server. " + message.getMessageType());
-                return;
+                throw new IllegalStateException("Did not receive initial state from server. " + message.getMessageType());
             }
             state = ((StateUpdate)message).getState();
         }
@@ -205,7 +218,11 @@ public class Application extends JFrame implements Runnable {
         guiObjectList.add(drawPile);
 
         discardPile = new GUIDeck(Constants.DISCARD_PILE_LOCATION, state.getDiscardPile(), GUIObject.Type.DiscardPile);
+        discardPile.setIsFaceUp(true); // The discard pile should always be face up and never change.
         guiObjectList.add(discardPile);
+
+        statusString = new GUIStatusString();
+        guiObjectList.add(statusString);
     }
 
     private void drawWaitingForOtherPlayersScreen() {
@@ -243,17 +260,27 @@ public class Application extends JFrame implements Runnable {
         switch (clickType) {
             case DrawPile:
                 game.chooseDrawPile();
+                drawPile.setIsFaceUp(true);
+
                 msg = new DrawCardClicked();
                 serverConnection.send(msg);
                 break;
             case DiscardPile:
                 game.chooseDiscardPile();
+                drawPile.setIsFaceUp(false);
+
                 msg = new DiscardCardClicked();
                 serverConnection.send(msg);
                 break;
             case Hand:
                 int cardIndex = guiHands[playerNumber].getClickedCard(mouseClickList.poll());
+                if (cardIndex == -1) {
+                    // This means that the hand area was clicked but an actual card wasn't.
+                    break;
+                }
                 game.chooseHandCard(cardIndex);
+                drawPile.setIsFaceUp(false);
+
                 msg = new HandSelection(cardIndex);
                 serverConnection.send(msg);
                 break;
@@ -262,6 +289,9 @@ public class Application extends JFrame implements Runnable {
 
     private GUIObject.Type getNextGoodClickLocation() {
         IntVector clickLocation = mouseClickList.peek();
+        if (clickLocation == null) {
+            return GUIObject.Type.None;
+        }
         for (GUIObject object : guiObjectList) {
             if (object.checkClicked(clickLocation)) {
                 switch (object.getType()) {
@@ -276,9 +306,12 @@ public class Application extends JFrame implements Runnable {
                         return GUIObject.Type.DiscardPile;
                     case Hand:
                         return GUIObject.Type.Hand;
+                    default:
+                        throw new IllegalStateException("Successfully clicked something that wasn't on the list: " + object.getType());
                 }
             }
         }
+        mouseClickList.poll();
         return GUIObject.Type.None;
     }
 
@@ -298,13 +331,16 @@ public class Application extends JFrame implements Runnable {
             switch (message.getMessageType()) {
                 case DrawCardClicked:
                     game.chooseDrawPile();
+                    drawPile.setIsFaceUp(true);
                     break;
                 case DiscardCardClicked:
                     game.chooseDiscardPile();
+                    drawPile.setIsFaceUp(false);
                     break;
                 case HandSelection:
                     int cardIndex = ((HandSelection)message).getCardSelectionIndex();
                     game.chooseHandCard(cardIndex);
+                    drawPile.setIsFaceUp(false);
                     break;
                 default:
                     System.out.println("Got a message that we didn't expect: " + message.getMessageType());
@@ -313,8 +349,8 @@ public class Application extends JFrame implements Runnable {
         }
     }
 
-    private void updateClickability() {
-
+    private void updateClickabilityAndStatus() {
+        // Clickability update
         if (game.getPlayerTurn() != playerNumber) {
             // It's not my turn, so nothing should be clickable.
             setHandClick(false);
@@ -340,6 +376,16 @@ public class Application extends JFrame implements Runnable {
                     break;
             }
         }
+
+        // Status update
+        String statusMsg = "";
+        if (game.getPlayerTurn() == playerNumber) {
+            statusMsg += "Your turn: ";
+        } else {
+            statusMsg += "Not your turn: ";
+        }
+        statusMsg += game.getGameState();
+        statusString.setString(statusMsg);
     }
 
     private void setHandClick(boolean clickability) {

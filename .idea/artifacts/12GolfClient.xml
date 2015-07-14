@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="12GolfClient">
+    <output-path>$PROJECT_DIR$/out/artifacts/12GolfClient</output-path>
+    <root id="archive" name="12GolfClient.jar">
+      <element id="module-output" name="12Golf" />
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/src/ca/claytonrogers/Client/META-INF/MANIFEST.MF" />
+      </element>
+    </root>
+  </artifact>
+</component>

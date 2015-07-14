@@ -66,28 +66,19 @@ public class State {
         State state = new State(numberOfPlayers);
 
         // Get the discard deck
-        int numDiscardCards = in.readByte();
-        Deck discardDeck = new Deck();
-        for (int i = 0; i < numDiscardCards; i++) {
-            Card card = new Card(in.readByte(), true);
-            discardDeck.push(card);
-        }
+        Deck discardDeck = Deck.read(in);
 
         // Get the draw deck
-        int numDrawCards = in.readByte();
-        Deck drawDeck = new Deck();
-        for (int i = 0; i < numDrawCards; i++) {
-            Card card = new Card(in.readByte(), true);
-            drawDeck.push(card);
-        }
+        Deck drawDeck = Deck.read(in);
 
         // Get the hands
-        Hand[] hands = new Hand[4];
+        Hand[] hands = new Hand[numberOfPlayers];
         for (int player = 0; player < numberOfPlayers; player++) {
             Hand hand = new Hand();
             for (int i = 0; i < Constants.NUMBER_OF_CARDS; i++) {
                 hand.setCard(i, new Card(in.readByte(), false));
             }
+            hands[player] = hand;
         }
 
         // Set the state to the received data
@@ -104,20 +95,10 @@ public class State {
         out.writeByte(state.numberOfPlayers);
 
         // Write the discard deck
-        Deck discardPile = new Deck(state.getDiscardPile());
-        out.writeByte(discardPile.size());
-        for (int i = 0; i < discardPile.size(); i++) {
-            Card card = discardPile.pop();
-            out.writeByte(card.value);
-        }
+        Deck.write(out, state.getDiscardPile());
 
         // Write the draw deck
-        Deck drawPile = new Deck(state.getDrawPile());
-        out.writeByte(drawPile.size());
-        for (int i = 0; i < drawPile.size(); i++) {
-            Card card = drawPile.pop();
-            out.writeByte(card.value);
-        }
+        Deck.write(out, state.getDrawPile());
 
         // Write the hands
         for (int player = 0; player < state.getNumberOfPlayers(); player++) {

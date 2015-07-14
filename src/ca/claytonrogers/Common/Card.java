@@ -19,7 +19,11 @@ public class Card {
 
     public int score() {
         if (isFaceUp) {
-            return value;
+            if (value == 13) {
+                return 0;
+            } else {
+                return value;
+            }
         } else {
             return 0;
         }
@@ -35,7 +39,9 @@ public class Card {
         } else if (value == 13) {
             return "K";
         } else if (value == 14) {
-            return "X"; // Joker
+            return "Jo"; // Joker
+        } else if (value == -1) {
+            return ""; // This is used for a blank card face
         } else {
             System.out.println("Could not find the face value of a card: " + value);
             return "";
