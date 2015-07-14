@@ -273,6 +273,10 @@ public class Application extends JFrame implements Runnable {
                 break;
             case Hand:
                 int cardIndex = guiHands[playerNumber].getClickedCard(mouseClickList.poll());
+                if (cardIndex == -1) {
+                    // This means that the hand area was clicked but an actual card wasn't.
+                    break;
+                }
                 game.chooseHandCard(cardIndex);
                 drawPile.setIsFaceUp(false);
 
