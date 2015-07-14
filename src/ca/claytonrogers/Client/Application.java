@@ -325,13 +325,16 @@ public class Application extends JFrame implements Runnable {
             switch (message.getMessageType()) {
                 case DrawCardClicked:
                     game.chooseDrawPile();
+                    drawPile.setIsFaceUp(true);
                     break;
                 case DiscardCardClicked:
                     game.chooseDiscardPile();
+                    drawPile.setIsFaceUp(false);
                     break;
                 case HandSelection:
                     int cardIndex = ((HandSelection)message).getCardSelectionIndex();
                     game.chooseHandCard(cardIndex);
+                    drawPile.setIsFaceUp(false);
                     break;
                 default:
                     System.out.println("Got a message that we didn't expect: " + message.getMessageType());
