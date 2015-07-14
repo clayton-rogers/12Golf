@@ -17,7 +17,8 @@ soon to be implemented, or deferred for a future release.
 - Server takes number of players as command line argument.
 - Score screen which shows between rounds.
 - Win screen which shows who won the game.
-- Highlight cards which indicate the next place to click
+- Highlight cards which indicate the next place to click.
+- Send only the seed instead of the whole state.
 
 
 === Future ===
