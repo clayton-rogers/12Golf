@@ -92,6 +92,14 @@ public class GUIHand extends GUIObject {
             // Increment the card location down a row
             cardLocation = location.add(new IntVector(0,Constants.SPACE_BETWEEN_CARDS + Constants.CARD_SIZE.y));
         }
+
+        // Finally, draw the score next to the hand.
+        String score = "Score: " + hand.getHandScore();
+        IntVector scoreLocation = location.add(
+                new IntVector(
+                        handWidth*(Constants.SPACE_BETWEEN_CARDS + Constants.CARD_SIZE.x),
+                        2 * (Constants.SPACE_BETWEEN_CARDS)));
+        g.drawString(score, scoreLocation.x, scoreLocation.y);
     }
 
     private void drawVerticalHand(Graphics g) {
