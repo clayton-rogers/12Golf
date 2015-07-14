@@ -58,7 +58,8 @@ public class Application extends JFrame implements Runnable {
 
     @Override
     public void run() {
-        String username = JOptionPane.showInputDialog("Enter a username:");
+        //String username = JOptionPane.showInputDialog("Enter a username:");
+        String username = "Joe Luigi";  // For now the username does nothing, so don't prompt the user for it.
 
         // Try to get a socket open with the server
         Socket socket;
