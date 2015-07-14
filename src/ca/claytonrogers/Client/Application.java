@@ -306,6 +306,7 @@ public class Application extends JFrame implements Runnable {
                 }
             }
         }
+        mouseClickList.poll();
         return GUIObject.Type.None;
     }
 
