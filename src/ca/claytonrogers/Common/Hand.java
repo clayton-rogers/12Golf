@@ -120,6 +120,16 @@ public class Hand {
     }
 
     /**
+     * Sets all of the cards in the hand to be face up. This is used at the end of the game when
+     * players must reveal any remaining cards.
+     */
+    public void flipRestOfCards() {
+        for (int i = 0; i < Constants.NUMBER_OF_CARDS; i++) {
+            hand[i].isFaceUp = true;
+        }
+    }
+
+    /**
      * Finds the score of a column of two cards.
      *
      * @param a The first card.
