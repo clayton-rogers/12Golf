@@ -68,4 +68,8 @@ public class GolfGame {
     public GameState getGameState() {
         return gameState;
     }
+
+    public boolean isGameOver () {
+        return gameState == GameState.Game_Over;
+    }
 }

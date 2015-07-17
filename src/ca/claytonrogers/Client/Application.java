@@ -351,7 +351,8 @@ public class Application extends JFrame implements Runnable {
 
     private void updateClickabilityAndStatus() {
         // Clickability update
-        if (game.getPlayerTurn() != playerNumber) {
+        if (game.getPlayerTurn() != playerNumber ||
+                game.isGameOver()) {
             // It's not my turn, so nothing should be clickable.
             setHandClick(false);
             setDrawClick(false);
