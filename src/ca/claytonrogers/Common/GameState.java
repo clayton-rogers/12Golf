@@ -7,5 +7,6 @@ public enum GameState {
     Waiting_for_draw_selection,
     Draw_card_selected,
     Discard_card_selected,
-    Draw_card_discarded
+    Draw_card_discarded,
+    Game_Over
 }

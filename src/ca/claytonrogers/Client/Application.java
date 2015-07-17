@@ -351,7 +351,8 @@ public class Application extends JFrame implements Runnable {
 
     private void updateClickabilityAndStatus() {
         // Clickability update
-        if (game.getPlayerTurn() != playerNumber) {
+        if (game.getPlayerTurn() != playerNumber ||
+                game.isGameOver()) {
             // It's not my turn, so nothing should be clickable.
             setHandClick(false);
             setDrawClick(false);
@@ -379,12 +380,16 @@ public class Application extends JFrame implements Runnable {
 
         // Status update
         String statusMsg = "";
-        if (game.getPlayerTurn() == playerNumber) {
-            statusMsg += "Your turn: ";
+        if (!game.isGameOver()) {
+            if (game.getPlayerTurn() == playerNumber) {
+                statusMsg += "Your turn: ";
+            } else {
+                statusMsg += "Not your turn: ";
+            }
+            statusMsg += game.getGameState();
         } else {
-            statusMsg += "Not your turn: ";
+            statusMsg = "Game Over!";
         }
-        statusMsg += game.getGameState();
         statusString.setString(statusMsg);
     }
 

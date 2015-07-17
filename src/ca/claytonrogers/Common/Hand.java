@@ -104,6 +104,32 @@ public class Hand {
     }
 
     /**
+     * Tells whether all the cards in the players hand are flipped face side up. This would
+     * indicate that they have ended the game and the other players have one more turn.
+     *
+     * @return true when the hand is entirely flipped face side up.
+     */
+    public boolean isAllFlippedOver() {
+        for (int i = 0; i < Constants.NUMBER_OF_CARDS; i++) {
+            if (!hand[i].isFaceUp) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * Sets all of the cards in the hand to be face up. This is used at the end of the game when
+     * players must reveal any remaining cards.
+     */
+    public void flipRestOfCards() {
+        for (int i = 0; i < Constants.NUMBER_OF_CARDS; i++) {
+            hand[i].isFaceUp = true;
+        }
+    }
+
+    /**
      * Finds the score of a column of two cards.
      *
      * @param a The first card.
