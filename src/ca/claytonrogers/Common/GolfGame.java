@@ -7,6 +7,8 @@ public class GolfGame {
     private State state;
     private GameState gameState = GameState.Waiting_for_draw_selection;
     private int playerTurn = 0;
+    private boolean isLastTurn = false;
+    private int playerWhoEndedIt = -1;
 
     public GolfGame(State state) {
         this.state = state;
@@ -48,8 +50,28 @@ public class GolfGame {
             System.out.println("Tried to choose a card from the hand while in state: " + gameState);
             return;
         }
-        nextTurn();
         gameState = GameState.Waiting_for_draw_selection;
+        nextTurn();
+    }
+
+    private void nextTurn() {
+        if (isLastTurn) {
+            playerTurn++;
+            if (playerTurn == playerWhoEndedIt) {
+                gameState = GameState.Game_Over;
+                for (Hand hand : state.getPlayerHands()) {
+
+                }
+            }
+        } else {
+            Hand hand = state.getPlayerHands()[playerTurn];
+            if (hand.isAllFlippedOver()) {
+                playerWhoEndedIt = playerTurn;
+                isLastTurn = true;
+            }
+            playerTurn++;
+            playerTurn %= state.getNumberOfPlayers();
+        }
     }
 
     public int getPlayerTurn() {
@@ -58,11 +80,6 @@ public class GolfGame {
 
     public void setPlayerTurn(int playerTurn) {
         this.playerTurn = playerTurn;
-    }
-
-    private void nextTurn() {
-        playerTurn++;
-        playerTurn %= state.getNumberOfPlayers();
     }
 
     public GameState getGameState() {
