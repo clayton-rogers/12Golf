@@ -136,7 +136,7 @@ public class Application extends JFrame implements Runnable {
 
             handleMouseInputs();
             handleServerMessages();
-            updateClickabilityAndStatus();
+            processState();
             drawScreen();
 
             long frameEndTime = System.currentTimeMillis();
@@ -361,7 +361,7 @@ public class Application extends JFrame implements Runnable {
         }
     }
 
-    private void updateClickabilityAndStatus() {
+    private void processState() {
         // Clickability update
         if (game.getPlayerTurn() != playerNumber ||
                 game.isGameOver()) {
