@@ -23,6 +23,7 @@ public class Constants {
             new IntVector(
                     6*CARD_SIZE.x + 5*SPACE_BETWEEN_CARDS,
                     2*CARD_SIZE.y +   SPACE_BETWEEN_CARDS);
+    public static final int       BUTTON_CORNER_RADIUS = CARD_CORNER_RADIUS;
 
     public static final IntVector NULL_LOCATION         = new IntVector(0,0);
     public static final IntVector NULL_SIZE             = NULL_LOCATION;
@@ -43,4 +44,6 @@ public class Constants {
     public static final Color BACKGROUND_COLOR = Color.WHITE;
     public static final Color CARD_BACKGROUND_COLOR = Color.LIGHT_GRAY;
     public static final Color CARD_FOREGROUND_COLOR = Color.BLACK;
+    public static final Color BUTTON_BACKGROUND_COLOR = Color.WHITE;
+    public static final Color BUTTON_FOREGROUND_COLOR = Color.BLACK;
 }
