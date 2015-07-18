@@ -7,6 +7,7 @@ import java.awt.*;
  */
 public class Constants {
 
+    // Global configuration settings
     public static final int VERSION = 6;
     public static final int PORT_NUMBER = 60093;
     public static final String ADDRESS = "claytonrogers53.ca";
@@ -14,6 +15,7 @@ public class Constants {
     public static final boolean DEBUG = false;
     public static final boolean NET_DEBUG = false;
 
+    // GUI general constants
     public static final IntVector CARD_SIZE = new IntVector(30,60);
     public static final int       CARD_CORNER_RADIUS = 3;
     public static final IntVector DECK_SIZE = CARD_SIZE.add(new IntVector(3,3));
@@ -25,6 +27,7 @@ public class Constants {
                     2*CARD_SIZE.y +   SPACE_BETWEEN_CARDS);
     public static final int       BUTTON_CORNER_RADIUS = CARD_CORNER_RADIUS;
 
+    // GUI location constants
     public static final IntVector NULL_LOCATION         = new IntVector(0,0);
     public static final IntVector NULL_SIZE             = NULL_LOCATION;
     public static final IntVector FIELD_OFFSET          = new IntVector(50,50);
@@ -33,7 +36,6 @@ public class Constants {
     public static final IntVector DRAW_PILE_LOCATION    = FIELD_OFFSET.add(new IntVector(150, 180));
     public static final IntVector STATUS_STRING_LOCATION= FIELD_OFFSET.add(new IntVector(  0, 280));
     public static final IntVector[] HAND_LOCATIONS      = new IntVector[4];
-
     static {
         HAND_LOCATIONS[0] = FIELD_OFFSET.add(new IntVector(  0,300));  // Bottom
         HAND_LOCATIONS[1] = FIELD_OFFSET.add(new IntVector(100,100));  // Left
@@ -41,6 +43,7 @@ public class Constants {
         HAND_LOCATIONS[3] = FIELD_OFFSET.add(new IntVector(600,100));  // Right
     }
 
+    // GUI Color constants
     public static final Color BACKGROUND_COLOR = Color.WHITE;
     public static final Color CARD_BACKGROUND_COLOR = Color.LIGHT_GRAY;
     public static final Color CARD_FOREGROUND_COLOR = Color.BLACK;
