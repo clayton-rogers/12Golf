@@ -7,7 +7,7 @@ import java.awt.*;
  */
 public class Constants {
 
-    public static final int VERSION = 5;
+    public static final int VERSION = 6;
     public static final int PORT_NUMBER = 60093;
     public static final String ADDRESS = "claytonrogers53.ca";
     public static final int NUMBER_OF_CARDS = 12;
