@@ -250,6 +250,7 @@ public class Application extends JFrame implements Runnable {
 
     private void handleMouseInputs() {
         // If it is not our turn then getNextGoodClick should not return anything.
+        // This method handles one click each time it's called.
 
         GUIObject.Type clickType = getNextGoodClickLocation();
         if (clickType == GUIObject.Type.None) {
@@ -273,7 +274,7 @@ public class Application extends JFrame implements Runnable {
                 serverConnection.send(msg);
                 break;
             case Hand:
-                int cardIndex = guiHands[playerNumber].getClickedCard(mouseClickList.poll());
+                int cardIndex = guiHands[playerNumber].getClickedCard(mouseClickList.peek());
                 if (cardIndex == -1) {
                     // This means that the hand area was clicked but an actual card wasn't.
                     break;
@@ -285,6 +286,8 @@ public class Application extends JFrame implements Runnable {
                 serverConnection.send(msg);
                 break;
         }
+        // Since we have now handled the click, throw it out.
+        mouseClickList.poll();
     }
 
     private GUIObject.Type getNextGoodClickLocation() {
@@ -294,23 +297,10 @@ public class Application extends JFrame implements Runnable {
         }
         for (GUIObject object : guiObjectList) {
             if (object.checkClicked(clickLocation)) {
-                switch (object.getType()) {
-                    // If the click was on the draw pile or discard pile,
-                    // then no more needs to be done, otherwise, we need
-                    // to leave the click in the queue to be processed.
-                    case DrawPile:
-                        mouseClickList.poll();
-                        return GUIObject.Type.DrawPile;
-                    case DiscardPile:
-                        mouseClickList.poll();
-                        return GUIObject.Type.DiscardPile;
-                    case Hand:
-                        return GUIObject.Type.Hand;
-                    default:
-                        throw new IllegalStateException("Successfully clicked something that wasn't on the list: " + object.getType());
-                }
+                return object.getType();
             }
         }
+        // Since the mouse click did not hit anything, we throw it out and return none.
         mouseClickList.poll();
         return GUIObject.Type.None;
     }
