@@ -60,7 +60,7 @@ public class GolfGame {
             if (playerTurn == playerWhoEndedIt) {
                 gameState = GameState.Game_Over;
                 for (Hand hand : state.getPlayerHands()) {
-
+                    hand.flipRestOfCards();
                 }
             }
         } else {
