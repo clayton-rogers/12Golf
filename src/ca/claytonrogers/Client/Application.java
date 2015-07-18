@@ -25,7 +25,7 @@ public class Application extends JFrame implements Runnable {
     private Connection serverConnection;
     private List<GUIObject> guiObjectList = new ArrayList<>(6);
 
-    private String[] usernames = new String[4];
+    private String[] usernames;
     private int playerNumber;
     private int totalPlayers;
     private GolfGame game;
@@ -113,6 +113,7 @@ public class Application extends JFrame implements Runnable {
         serverConnection.send(usernameMessage);
 
         // Fill out the username database
+        usernames = new String[playerNumber];
         usernames[playerNumber] = username;
         for (int i = 0; i < totalPlayers-1; i++) {
             usernameMessage = (Username)serverConnection.waitForNextMessage();
