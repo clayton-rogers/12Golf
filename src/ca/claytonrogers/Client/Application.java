@@ -130,8 +130,7 @@ public class Application extends JFrame implements Runnable {
     private void drawLoop () {
         initialiseGame();
 
-        boolean gameOver = false;
-        while (!gameOver) {
+        while (true) {
             long frameStartTime = System.currentTimeMillis();
 
             handleMouseInputs();
