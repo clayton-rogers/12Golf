@@ -17,8 +17,8 @@ public class InputHandler extends MouseInputAdapter {
     }
 
     @Override
-    public void mouseClicked(MouseEvent e) {
-        super.mouseClicked(e);
+    public void mouseReleased(MouseEvent e) {
+        super.mouseReleased(e);
         application.addClick(new IntVector(e.getX(), e.getY()));
     }
 }
