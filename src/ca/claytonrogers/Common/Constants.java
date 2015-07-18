@@ -52,6 +52,11 @@ public class Constants {
     public static final IntVector NEXT_GAME_BUTTON_SIZE = new IntVector(100, 15);
     public static final String    NEXT_GAME_BUTTON_TEXT = "Next Game";
 
+    // GUI Score Card constants
+    public static final int SCORE_SCREEN_TAB_SIZE = 200;
+    public static final int SCORE_SCREEN_LINE_HEIGHT = 20;
+    public static final IntVector SCORE_SCREEN_INITIAL_OFFSET = FIELD_OFFSET.add(new IntVector(100,100));
+
     // GUI Color constants
     public static final Color BACKGROUND_COLOR = Color.WHITE;
     public static final Color CARD_BACKGROUND_COLOR = Color.LIGHT_GRAY;
