@@ -36,6 +36,7 @@ public class Application extends JFrame implements Runnable {
     private GUIStatusString statusString;
     private GUIButton scoreScreenButton;
     private GUIButton nextGameButton;
+    private GUIScoreCard scoreCard;
 
     public Application() {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -240,6 +241,10 @@ public class Application extends JFrame implements Runnable {
         );
         nextGameButton.setVisibility(false);
         guiObjectList.add(nextGameButton);
+
+        scoreCard = new GUIScoreCard(usernames);
+        scoreCard.setVisibility(false);
+        guiObjectList.add(scoreCard);
     }
 
     private void drawWaitingForOtherPlayersScreen() {

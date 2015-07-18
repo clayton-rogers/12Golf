@@ -21,9 +21,17 @@ public class ScoreCard {
         }
         this.scores.add(scores);
     }
-    
+
     public int getScore (int round, int player) {
         int[] roundScore = scores.get(round);
         return roundScore[player];
+    }
+
+    public int getNumberOfRoundsPlayed () {
+        return scores.size();
+    }
+
+    public int getNumPlayers () {
+        return numPlayers;
     }
 }
