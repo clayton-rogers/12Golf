@@ -13,6 +13,8 @@ public abstract class GUIObject {
         Hand,
         DrawPile,
         DiscardPile,
+        ScoreScreenButton,
+        NextGameButton,
         None
     }
 

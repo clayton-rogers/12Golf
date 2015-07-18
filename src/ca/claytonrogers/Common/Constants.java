@@ -43,6 +43,14 @@ public class Constants {
         HAND_LOCATIONS[3] = FIELD_OFFSET.add(new IntVector(600,100));  // Right
     }
 
+    // GUI Button constants
+    public static final IntVector SCORE_SCREEN_BUTTON_LOCATION = FIELD_OFFSET.add(new IntVector(100,200));
+    public static final IntVector SCORE_SCREEN_BUTTON_SIZE = new IntVector(100, 15);
+    public static final String    SCORE_SCREEN_BUTTON_TEXT = "Score Screen";
+    public static final IntVector NEXT_GAME_BUTTON_LOCATION = FIELD_OFFSET.add(new IntVector(100,200));
+    public static final IntVector NEXT_GAME_BUTTON_SIZE = new IntVector(100, 15);
+    public static final String    NEXT_GAME_BUTTON_TEXT = "Next Game";
+
     // GUI Color constants
     public static final Color BACKGROUND_COLOR = Color.WHITE;
     public static final Color CARD_BACKGROUND_COLOR = Color.LIGHT_GRAY;

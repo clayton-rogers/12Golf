@@ -1,9 +1,6 @@
 package ca.claytonrogers.Client;
 
-import ca.claytonrogers.Client.GUIObjects.GUIDeck;
-import ca.claytonrogers.Client.GUIObjects.GUIHand;
-import ca.claytonrogers.Client.GUIObjects.GUIObject;
-import ca.claytonrogers.Client.GUIObjects.GUIStatusString;
+import ca.claytonrogers.Client.GUIObjects.*;
 import ca.claytonrogers.Common.*;
 import ca.claytonrogers.Common.Messages.*;
 
@@ -37,6 +34,8 @@ public class Application extends JFrame implements Runnable {
     private GUIDeck drawPile;
     private GUIDeck discardPile;
     private GUIStatusString statusString;
+    private GUIButton scoreScreenButton;
+    private GUIButton nextGameButton;
 
     public Application() {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -223,6 +222,24 @@ public class Application extends JFrame implements Runnable {
 
         statusString = new GUIStatusString();
         guiObjectList.add(statusString);
+
+        scoreScreenButton = new GUIButton(
+                Constants.SCORE_SCREEN_BUTTON_LOCATION,
+                Constants.SCORE_SCREEN_BUTTON_SIZE,
+                Constants.SCORE_SCREEN_BUTTON_TEXT,
+                GUIObject.Type.ScoreScreenButton
+        );
+        scoreScreenButton.setVisibility(false);
+        guiObjectList.add(scoreScreenButton);
+
+        nextGameButton = new GUIButton(
+                Constants.NEXT_GAME_BUTTON_LOCATION,
+                Constants.NEXT_GAME_BUTTON_SIZE,
+                Constants.NEXT_GAME_BUTTON_TEXT,
+                GUIObject.Type.NextGameButton
+        );
+        nextGameButton.setVisibility(false);
+        guiObjectList.add(nextGameButton);
     }
 
     private void drawWaitingForOtherPlayersScreen() {
