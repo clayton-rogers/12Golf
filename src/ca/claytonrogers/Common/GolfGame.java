@@ -56,7 +56,7 @@ public class GolfGame {
 
     private void nextTurn() {
         if (isLastTurn) {
-            playerTurn++;
+            incrementPlayer();
             if (playerTurn == playerWhoEndedIt) {
                 gameState = GameState.Game_Over;
                 for (Hand hand : state.getPlayerHands()) {
@@ -69,9 +69,13 @@ public class GolfGame {
                 playerWhoEndedIt = playerTurn;
                 isLastTurn = true;
             }
-            playerTurn++;
-            playerTurn %= state.getNumberOfPlayers();
+            incrementPlayer();
         }
+    }
+
+    private void incrementPlayer() {
+        playerTurn++;
+        playerTurn %= state.getNumberOfPlayers();
     }
 
     public int getPlayerTurn() {
