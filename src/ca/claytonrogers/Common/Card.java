@@ -30,8 +30,10 @@ public class Card {
     }
 
     public String faceValue() {
-        if (value >= 1 && value <= 10) {
+        if (value >= 2 && value <= 10) {
             return String.valueOf(value);
+        } else if (value == 1) {
+            return "A";
         } else if (value == 11) {
             return "J";
         } else if (value == 12) {
