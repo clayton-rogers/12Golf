@@ -38,7 +38,7 @@ public class Drawer {
             g.drawString(
                     card.faceValue(),
                     location.x+12,
-                    location.y+20); // TODO FUTURE these values will need to be adjusted to get the face centered
+                    location.y+20);
         } else {
             drawX(g, location);
         }
