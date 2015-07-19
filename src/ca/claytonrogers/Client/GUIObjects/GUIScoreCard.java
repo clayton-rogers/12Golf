@@ -42,7 +42,7 @@ public class GUIScoreCard extends GUIObject {
 
         // Draw each line
         for (int round = 0; round < scoreCard.getNumberOfRoundsPlayed(); round++) {
-            g.drawString("Round " + round, drawLocation.x, drawLocation.y);
+            g.drawString("Round " + (round+1), drawLocation.x, drawLocation.y);
             drawLocation = nextTab(drawLocation);
             for (int player = 0; player < numPlayers; player++) {
                 g.drawString(
