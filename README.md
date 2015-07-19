@@ -5,6 +5,10 @@ Starting with an initially face down hand, your goal is to accumulate the least 
 
 
 ### Release History
+v1.2 (19 Jul 2015):
+- Added a score screen which is displayed when the round finishes.
+- A new round can be started after viewing the score screen.
+
 v1.1 (18 Jul 2015):
 - Fixed issue where game would never end. Game will now end and display game over.
 - Fixed issue where dragging the mouse, even slightly, would cause the mouse click
