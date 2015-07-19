@@ -23,6 +23,15 @@ public class ScoreCard {
     }
 
     public int getScore (int round, int player) {
+        if (round >= getNumberOfRoundsPlayed() ||
+                round < 0) {
+            throw new IllegalArgumentException("Tried to get the score from an illegal round: " + round);
+        }
+        if (player >= numPlayers ||
+                player < 0) {
+            throw new IllegalArgumentException("Tried to get the score from an illegal player: " + player);
+        }
+
         int[] roundScore = scores.get(round);
         return roundScore[player];
     }
