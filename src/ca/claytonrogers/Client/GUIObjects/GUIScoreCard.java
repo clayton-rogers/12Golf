@@ -55,6 +55,17 @@ public class GUIScoreCard extends GUIObject {
             drawLocation = nextDrawLine(drawLocation);
         }
 
+        // Draw the totals after the lines
+        g.drawString("Total:", drawLocation.x, drawLocation.y);
+        drawLocation = nextTab(drawLocation);
+        for (int player = 0; player < numPlayers; player++) {
+            g.drawString(
+                    String.valueOf(scoreCard.getTotal(player)),
+                    drawLocation.x,
+                    drawLocation.y);
+            drawLocation = nextTab(drawLocation);
+        }
+
         // Draw the header underline
         drawLocation = Constants.SCORE_SCREEN_INITIAL_OFFSET;
         g.drawLine(

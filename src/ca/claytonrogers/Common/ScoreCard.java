@@ -54,7 +54,7 @@ public class ScoreCard {
         for (int[] score : scores) {
             totalScore += score[playerNumber];
         }
-        
+
         return totalScore;
     }
 }
