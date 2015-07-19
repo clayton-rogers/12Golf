@@ -93,4 +93,13 @@ public class GolfGame {
     public boolean isGameOver () {
         return gameState == GameState.Game_Over;
     }
+
+    public int[] getScores () {
+        int[] scores = new int[state.getNumberOfPlayers()];
+        for (int i = 0; i < state.getNumberOfPlayers(); i++) {
+            scores[i] = state.getPlayerHands()[i].getHandScore();
+        }
+
+        return scores;
+    }
 }

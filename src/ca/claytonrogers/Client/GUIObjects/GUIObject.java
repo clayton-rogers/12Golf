@@ -13,6 +13,8 @@ public abstract class GUIObject {
         Hand,
         DrawPile,
         DiscardPile,
+        ScoreScreenButton,
+        NextGameButton,
         None
     }
 
@@ -46,7 +48,7 @@ public abstract class GUIObject {
     protected abstract void internalDraw (Graphics g);
 
     public boolean checkClicked (IntVector clickLocation) {
-        if (!isClickable) {
+        if (!isClickable || !isVisible) {
             return false;
         }
         if (clickLocation.x > location.x && clickLocation.x < location.x + size.x) {
