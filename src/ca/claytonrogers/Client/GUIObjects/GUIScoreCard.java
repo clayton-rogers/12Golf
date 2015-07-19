@@ -59,16 +59,16 @@ public class GUIScoreCard extends GUIObject {
         drawLocation = Constants.SCORE_SCREEN_INITIAL_OFFSET;
         g.drawLine(
                 drawLocation.x,
-                drawLocation.y + 20,
+                drawLocation.y,
                 drawLocation.x + 500,
-                drawLocation.y + 20);
+                drawLocation.y);
 
         // Draw the vertical lines
         for (int i = 0; i < numPlayers; i++) {
             g.drawLine(
-                    drawLocation.x + 40 + i * Constants.SCORE_SCREEN_TAB_SIZE,
+                    drawLocation.x + Constants.SCORE_SCREEN_TAB_SIZE + i * Constants.SCORE_SCREEN_TAB_SIZE,
                     drawLocation.y,
-                    drawLocation.x + 40 + i * Constants.SCORE_SCREEN_TAB_SIZE,
+                    drawLocation.x + Constants.SCORE_SCREEN_TAB_SIZE + i * Constants.SCORE_SCREEN_TAB_SIZE,
                     drawLocation.y + 500);
         }
     }

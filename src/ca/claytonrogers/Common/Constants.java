@@ -45,17 +45,17 @@ public class Constants {
     }
 
     // GUI Button constants
-    public static final IntVector SCORE_SCREEN_BUTTON_LOCATION = FIELD_OFFSET.add(new IntVector(100,200));
-    public static final IntVector SCORE_SCREEN_BUTTON_SIZE = new IntVector(100, 15);
+    public static final IntVector SCORE_SCREEN_BUTTON_LOCATION = FIELD_OFFSET.add(new IntVector(100,240));
+    public static final IntVector SCORE_SCREEN_BUTTON_SIZE = new IntVector(80, 15);
     public static final String    SCORE_SCREEN_BUTTON_TEXT = "Score Screen";
-    public static final IntVector NEXT_GAME_BUTTON_LOCATION = FIELD_OFFSET.add(new IntVector(100,200));
-    public static final IntVector NEXT_GAME_BUTTON_SIZE = new IntVector(100, 15);
+    public static final IntVector NEXT_GAME_BUTTON_LOCATION = FIELD_OFFSET.add(new IntVector(100,0));
+    public static final IntVector NEXT_GAME_BUTTON_SIZE = new IntVector(70, 15);
     public static final String    NEXT_GAME_BUTTON_TEXT = "Next Game";
 
     // GUI Score Card constants
-    public static final int SCORE_SCREEN_TAB_SIZE = 200;
+    public static final int SCORE_SCREEN_TAB_SIZE = 100;
     public static final int SCORE_SCREEN_LINE_HEIGHT = 20;
-    public static final IntVector SCORE_SCREEN_INITIAL_OFFSET = FIELD_OFFSET.add(new IntVector(100,100));
+    public static final IntVector SCORE_SCREEN_INITIAL_OFFSET = FIELD_OFFSET.add(new IntVector(50,50));
 
     // GUI Color constants
     public static final Color BACKGROUND_COLOR = Color.WHITE;
