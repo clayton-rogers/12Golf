@@ -29,6 +29,7 @@ public class Application extends JFrame implements Runnable {
     private int playerNumber;
     private int totalPlayers;
     private GolfGame game;
+    private boolean isOnScoreScreen = false;
 
     private GUIHand[] guiHands;
     private GUIDeck drawPile;
@@ -114,7 +115,7 @@ public class Application extends JFrame implements Runnable {
         serverConnection.send(usernameMessage);
 
         // Fill out the username database
-        usernames = new String[playerNumber];
+        usernames = new String[totalPlayers];
         usernames[playerNumber] = username;
         for (int i = 0; i < totalPlayers-1; i++) {
             usernameMessage = (Username)serverConnection.waitForNextMessage();
@@ -129,6 +130,9 @@ public class Application extends JFrame implements Runnable {
     }
 
     private void drawLoop () {
+        // Since the score card is persistent across rounds,
+        // it is initialized outsize the main initialization method.
+        scoreCard = new GUIScoreCard(usernames);
         initialiseGame();
 
         while (true) {
@@ -197,6 +201,7 @@ public class Application extends JFrame implements Runnable {
             state = ((StateUpdate)message).getState();
         }
 
+        guiObjectList.clear();
         game = new GolfGame(state);
 
         // Initialise the GUI objects and add them to the draw list
@@ -230,7 +235,6 @@ public class Application extends JFrame implements Runnable {
                 Constants.SCORE_SCREEN_BUTTON_TEXT,
                 GUIObject.Type.ScoreScreenButton
         );
-        scoreScreenButton.setVisibility(false);
         guiObjectList.add(scoreScreenButton);
 
         nextGameButton = new GUIButton(
@@ -239,11 +243,10 @@ public class Application extends JFrame implements Runnable {
                 Constants.NEXT_GAME_BUTTON_TEXT,
                 GUIObject.Type.NextGameButton
         );
-        nextGameButton.setVisibility(false);
         guiObjectList.add(nextGameButton);
 
-        scoreCard = new GUIScoreCard(usernames);
-        scoreCard.setVisibility(false);
+        // We need to re add the score card to the gui list
+        // but we do not reinitialize it.
         guiObjectList.add(scoreCard);
     }
 
@@ -307,6 +310,16 @@ public class Application extends JFrame implements Runnable {
                 msg = new HandSelection(cardIndex);
                 serverConnection.send(msg);
                 break;
+            case ScoreScreenButton:
+                isOnScoreScreen = true;
+                scoreCard.scoreCard.add(game.getScores());
+                break;
+            case NextGameButton:
+                isOnScoreScreen = false;
+                // TODO FUTURE give a message about waiting for party leader for next game
+                initialiseGame();
+
+                break;
         }
         // Since we have now handled the click, throw it out.
         mouseClickList.poll();
@@ -329,6 +342,9 @@ public class Application extends JFrame implements Runnable {
 
     private void handleServerMessages() {
         while (true) {
+            if (isOnScoreScreen) {
+                return;
+            }
             Message message = serverConnection.getMessage();
             if (message == null) {
                 break;
@@ -362,31 +378,44 @@ public class Application extends JFrame implements Runnable {
     }
 
     private void processState() {
-        // Clickability update
-        if (game.getPlayerTurn() != playerNumber ||
-                game.isGameOver()) {
-            // It's not my turn, so nothing should be clickable.
-            setHandClick(false);
-            setDrawClick(false);
-            setDiscardClick(false);
-        } else {
-            switch (game.getGameState()) {
-                case Waiting_for_draw_selection:
-                    setHandClick(false);
-                    setDrawClick(true);
-                    setDiscardClick(true);
-                    break;
-                case Draw_card_selected:
-                    setHandClick(true);
-                    setDrawClick(false);
-                    setDiscardClick(true);
-                    break;
-                case Discard_card_selected:
-                case Draw_card_discarded:
-                    setHandClick(true);
-                    setDrawClick(false);
-                    setDiscardClick(false);
-                    break;
+        // Update visibilities
+        scoreCard.setVisibility(isOnScoreScreen);
+        nextGameButton.setVisibility(isOnScoreScreen);
+
+        for (GUIObject hand : guiHands) {
+            hand.setVisibility(!isOnScoreScreen);
+        }
+        drawPile.setVisibility(!isOnScoreScreen);
+        discardPile.setVisibility(!isOnScoreScreen);
+        scoreScreenButton.setVisibility(!isOnScoreScreen && game.isGameOver());
+
+        // Clickability update]
+        if (!isOnScoreScreen) {
+            if (game.getPlayerTurn() != playerNumber ||
+                    game.isGameOver()) {
+                // It's not my turn, so nothing should be clickable.
+                guiHands[playerNumber].setClickability(false);
+                drawPile.setClickability(false);
+                discardPile.setClickability(false);
+            } else {
+                switch (game.getGameState()) {
+                    case Waiting_for_draw_selection:
+                        guiHands[playerNumber].setClickability(true);
+                        drawPile.setClickability(true);
+                        discardPile.setClickability(true);
+                        break;
+                    case Draw_card_selected:
+                        guiHands[playerNumber].setClickability(true);
+                        drawPile.setClickability(false);
+                        discardPile.setClickability(true);
+                        break;
+                    case Discard_card_selected:
+                    case Draw_card_discarded:
+                        guiHands[playerNumber].setClickability(true);
+                        drawPile.setClickability(false);
+                        discardPile.setClickability(false);
+                        break;
+                }
             }
         }
 
@@ -403,17 +432,5 @@ public class Application extends JFrame implements Runnable {
             statusMsg = "Game Over!";
         }
         statusString.setString(statusMsg);
-    }
-
-    private void setHandClick(boolean clickability) {
-        guiHands[playerNumber].setClickability(clickability);
-    }
-
-    private void setDrawClick(boolean clickability) {
-        drawPile.setClickability(clickability);
-    }
-
-    private void setDiscardClick(boolean clickability) {
-        discardPile.setClickability(clickability);
     }
 }
