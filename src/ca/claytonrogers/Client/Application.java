@@ -55,6 +55,9 @@ public class Application extends JFrame implements Runnable {
         }
 
         createBufferStrategy(2);
+
+        // Cause the window to be spawned in the middle of the screen.
+        setLocationRelativeTo(null);
     }
 
     @Override
