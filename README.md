@@ -8,6 +8,7 @@ Starting with an initially face down hand, your goal is to accumulate the least 
 vX.X ():
 - Added an info screen when waiting for the party leader to start the next game.
 - Fixed an issue where all players would show up as "Joe Luigi".
+- Made it so that a player's cards appear directly in front of them.
 
 v1.2 (19 Jul 2015):
 - Added a score screen which is displayed when the round finishes.
