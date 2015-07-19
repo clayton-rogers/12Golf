@@ -23,16 +23,24 @@ public class GUIDeck extends GUIObject {
     @Override
     protected void internalDraw(Graphics g) {
         IntVector offsetLocation = new IntVector(location);
-        offsetLocation = offsetLocation.add(Constants.DECK_OFFSET); // The offset location should work like a drop shadow
+
+
+        // This will give about 6 cards for a full draw deck, after deal
+        int numberCardsToDraw = (int) (deck.size() * 6.0/30);
 
         if (deck.size() == 0) {
-            Drawer.drawX(g, offsetLocation);
+            Drawer.drawX(g, location);
         } else {
             Card bottomCard = new Card(-1, true); // Card with -1 is blank.
             Card topCard = new Card(deck.peek().value, isFaceUp);
 
-            Drawer.drawCard(g, bottomCard, offsetLocation);
-            Drawer.drawCard(g, topCard, location);
+            // Draw all the bottom cards
+            for (int i = 0; i < numberCardsToDraw; i++) {
+                Drawer.drawCard(g, bottomCard, offsetLocation);
+                offsetLocation = offsetLocation.sub(Constants.DECK_OFFSET); // The offset location should work like a drop shadow
+            }
+            // And the top face card
+            Drawer.drawCard(g, topCard, offsetLocation);
         }
     }
 
