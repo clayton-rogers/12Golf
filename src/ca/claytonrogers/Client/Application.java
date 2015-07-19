@@ -4,9 +4,11 @@ import ca.claytonrogers.Client.GUIObjects.*;
 import ca.claytonrogers.Common.*;
 import ca.claytonrogers.Common.Messages.*;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
+import java.io.File;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.*;
@@ -61,6 +63,15 @@ public class Application extends JFrame implements Runnable {
 
         // Set the title bar
         setTitle("12Golf");
+
+        // Set the Icon
+        Image icon;
+        try {
+            icon = ImageIO.read(new File("res/Golf Icon.png"));
+            setIconImage(icon);
+        } catch (IOException e) {
+            System.out.println("Could not find the icon.");
+        }
     }
 
     @Override
