@@ -58,6 +58,9 @@ public class Application extends JFrame implements Runnable {
 
         // Cause the window to be spawned in the middle of the screen.
         setLocationRelativeTo(null);
+
+        // Set the title bar
+        setTitle("12Golf");
     }
 
     @Override
