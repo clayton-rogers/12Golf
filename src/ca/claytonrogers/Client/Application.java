@@ -410,7 +410,7 @@ public class Application extends JFrame implements Runnable {
             } else {
                 switch (game.getGameState()) {
                     case Waiting_for_draw_selection:
-                        guiHands[playerNumber].setClickability(true);
+                        guiHands[playerNumber].setClickability(false);
                         drawPile.setClickability(true);
                         discardPile.setClickability(true);
                         break;
