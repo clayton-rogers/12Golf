@@ -19,7 +19,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 public class Application extends JFrame implements Runnable {
 
     private static final int FRAME_TIME = 17;  // Frame time in ms
-    private static final IntVector WINDOW_BOUNDS = new IntVector(700,700);
+    private static final IntVector WINDOW_BOUNDS = new IntVector(400,550);
 
     private Queue<IntVector> mouseClickList = new ConcurrentLinkedQueue<>();
     private Connection serverConnection;
