@@ -43,4 +43,18 @@ public class ScoreCard {
     public int getNumPlayers () {
         return numPlayers;
     }
+
+    public int getTotal(int playerNumber) {
+        if (playerNumber >= numPlayers ||
+                playerNumber < 0) {
+            throw new IllegalArgumentException("Tried to get the total score for a player that does not exist: " + playerNumber);
+        }
+
+        int totalScore = 0;
+        for (int[] score : scores) {
+            totalScore += score[playerNumber];
+        }
+        
+        return totalScore;
+    }
 }
