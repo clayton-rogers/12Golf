@@ -6,16 +6,16 @@ soon to be implemented, or deferred for a future release.
 === Done ===
 - 2 to 4 players
 - 12 cards
+- 10 rounds
 - Player 1 always goes first.
 - Game board to show your cards and the opponents cards.
 - Auto connects to claytonrogers.ca.
 - Debug mode where it connects to localhost.
 - Server which passes messages between the clients, but does not run the game.
+- Score screen which shows between rounds.
 
 === Planned ===
-- 10 rounds
 - Server takes number of players as command line argument.
-- Score screen which shows between rounds.
 - Win screen which shows who won the game.
 - Highlight cards which indicate the next place to click.
 - Send only the seed instead of the whole state.
