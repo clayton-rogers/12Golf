@@ -258,8 +258,12 @@ public class Application extends JFrame implements Runnable {
         try {
             g = bf.getDrawGraphics();
 
+            g.setColor(Constants.BACKGROUND_COLOR);
+            g.fillRect(0, 0, WINDOW_BOUNDS.x, WINDOW_BOUNDS.y);
+
+            g.setColor(Constants.CARD_FOREGROUND_COLOR);
             g.drawString(
-                    "Waiting for other players to connect...",
+                    "Waiting for leader to start the game...",
                     Constants.WAITING_FOR_PLAYERS.x,
                     Constants.WAITING_FOR_PLAYERS.y);
 
@@ -316,7 +320,7 @@ public class Application extends JFrame implements Runnable {
                 break;
             case NextGameButton:
                 isOnScoreScreen = false;
-                // TODO FUTURE give a message about waiting for party leader for next game
+                drawWaitingForOtherPlayersScreen();
                 initialiseGame();
 
                 break;

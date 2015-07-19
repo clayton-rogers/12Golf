@@ -5,6 +5,9 @@ Starting with an initially face down hand, your goal is to accumulate the least 
 
 
 ### Release History
+vX.X ():
+- Added an info screen when waiting for the party leader to start the next game.
+
 v1.2 (19 Jul 2015):
 - Added a score screen which is displayed when the round finishes.
 - A new round can be started after viewing the score screen.
