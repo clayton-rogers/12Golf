@@ -206,12 +206,19 @@ public class Application extends JFrame implements Runnable {
         // Initialise the GUI objects and add them to the draw list
         guiHands = new GUIHand[totalPlayers];
         if (state.getNumberOfPlayers() == 2) {
-            // if there's only two players, we want them sitting across from each other.
-            guiHands[0] = new GUIHand(state.getPlayerHands()[0],0);
-            guiHands[1] = new GUIHand(state.getPlayerHands()[1],2);
+            // If there's only two players, we want them sitting across from each other.
+            // With the self player on the bottom.
+            if (playerNumber == 0) {
+                guiHands[0] = new GUIHand(state.getPlayerHands()[0], 0);
+                guiHands[1] = new GUIHand(state.getPlayerHands()[1], 2);
+            } else {
+                guiHands[0] = new GUIHand(state.getPlayerHands()[0], 2);
+                guiHands[1] = new GUIHand(state.getPlayerHands()[1], 0);
+            }
         } else {
-            for (int i = 0; i < state.getNumberOfPlayers(); i++) {
-                guiHands[i] = new GUIHand(state.getPlayerHands()[i], i);
+            int numPlayers = state.getNumberOfPlayers();
+            for (int i = 0; i < numPlayers; i++) {
+                guiHands[i] = new GUIHand(state.getPlayerHands()[i], (i-playerNumber+numPlayers)%numPlayers);
             }
         }
         for (GUIHand hand : guiHands) {

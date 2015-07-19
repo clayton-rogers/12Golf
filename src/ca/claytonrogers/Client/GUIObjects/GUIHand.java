@@ -27,7 +27,7 @@ public class GUIHand extends GUIObject {
     private static IntVector getHandLocation(int position) {
         return Constants.HAND_LOCATIONS[position];
     }
-    // TODO FUTURE check where the player is sitting and move the hands around to place the player at the bottom
+
     public int getClickedCard(IntVector clickLocation) {
         if (!this.checkClicked(clickLocation)) {
             throw new IllegalArgumentException("Called getClickedCard for a position outside of its bounds.");
@@ -103,7 +103,7 @@ public class GUIHand extends GUIObject {
     }
 
     private void drawVerticalHand(Graphics g) {
-        // TODO FUTURE
+        // TODO FUTURE 3 and 4 player games.
         throw new IllegalStateException("Cannot draw vertical hands at this time.");
     }
 }
