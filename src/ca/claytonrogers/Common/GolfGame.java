@@ -1,5 +1,7 @@
 package ca.claytonrogers.Common;
 
+import java.util.Random;
+
 /**
  * Created by clayton on 2015-07-10.
  */
@@ -71,6 +73,23 @@ public class GolfGame {
             }
             incrementPlayer();
         }
+        if (state.getDrawPile().size() == 0) {
+            shuffleDiscard();
+        }
+    }
+
+    private void shuffleDiscard() {
+        Deck discard = state.getDiscardPile();
+        Deck draw = state.getDrawPile();
+
+        Card topDiscardCard = discard.pop();
+        int discardSize = discard.size();
+        for (int i = 0; i < discardSize; i++) {
+            draw.push(discard.pop());
+        }
+        discard.push(topDiscardCard);
+        draw.shuffle(new Random(3L)); // TODO future, make it actually random
+        // 3 is a committee approved random number.
     }
 
     private void incrementPlayer() {

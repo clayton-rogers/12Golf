@@ -33,6 +33,14 @@ public class Deck {
         return cards.pop();
     }
 
+    public void shuffle (Random seed) {
+        // We have to convert the Deque to a list in order to shuffle it.
+        // Note that the elements themselves are not copied.
+        List<Card> temp = new LinkedList<>(cards);
+        Collections.shuffle(temp, seed);
+        cards = new LinkedList<>(temp);
+    }
+
     private void shuffle() {
         // We have to convert the Deque to a list in order to shuffle it.
         // Note that the elements themselves are not copied.
