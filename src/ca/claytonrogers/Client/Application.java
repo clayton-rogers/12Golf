@@ -4,9 +4,11 @@ import ca.claytonrogers.Client.GUIObjects.*;
 import ca.claytonrogers.Common.*;
 import ca.claytonrogers.Common.Messages.*;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
+import java.io.File;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.*;
@@ -19,7 +21,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 public class Application extends JFrame implements Runnable {
 
     private static final int FRAME_TIME = 17;  // Frame time in ms
-    private static final IntVector WINDOW_BOUNDS = new IntVector(700,700);
+    private static final IntVector WINDOW_BOUNDS = new IntVector(400,550);
 
     private Queue<IntVector> mouseClickList = new ConcurrentLinkedQueue<>();
     private Connection serverConnection;
@@ -55,6 +57,21 @@ public class Application extends JFrame implements Runnable {
         }
 
         createBufferStrategy(2);
+
+        // Cause the window to be spawned in the middle of the screen.
+        setLocationRelativeTo(null);
+
+        // Set the title bar
+        setTitle("12Golf");
+
+        // Set the Icon
+        Image icon;
+        try {
+            icon = ImageIO.read(new File("res/Golf Icon.png"));
+            setIconImage(icon);
+        } catch (IOException e) {
+            System.out.println("Could not find the icon.");
+        }
     }
 
     @Override

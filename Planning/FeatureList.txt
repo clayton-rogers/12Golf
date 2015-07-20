@@ -13,6 +13,8 @@ soon to be implemented, or deferred for a future release.
 - Debug mode where it connects to localhost.
 - Server which passes messages between the clients, but does not run the game.
 - Score screen which shows between rounds.
+- Card piles visually show how many cards they contain.
+- Current score is displayed for all players (with/without randoms (option set assumed random value, default 5.5)).
 
 === Planned ===
 - Server takes number of players as command line argument.
@@ -20,16 +22,13 @@ soon to be implemented, or deferred for a future release.
 - Highlight cards which indicate the next place to click.
 - Send only the seed instead of the whole state.
 
-
 === Future ===
 - Joker cards which can be anything.
 - Instruction text line guides the player on what action to do next (to go with the card highlight).
-- Card piles visually show how many cards they contain.
 - Rock paper scissors to decide who goes first.
 - Main menu (Tutorial, Play (# of players), Host, Options, Instructions?).
 - Username is saved in a file (along with any other options that are added).
 - Card sticks to the mouse after it has been clicked.
-- Current score is displayed for all players (with/without randoms (option set assumed random value, default 5.5)).
 - Single player with AI.
 - Tutorial mode which explains the game's rules.
 - Rule screen.

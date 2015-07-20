@@ -19,8 +19,8 @@ public class Constants {
     // GUI general constants
     public static final IntVector CARD_SIZE = new IntVector(30,60);
     public static final int       CARD_CORNER_RADIUS = 3;
-    public static final IntVector DECK_SIZE = CARD_SIZE.add(new IntVector(3,3));
-    public static final IntVector DECK_OFFSET = new IntVector(-2, 2);
+    public static final IntVector DECK_SIZE = CARD_SIZE.add(new IntVector(6,6)); // The 6 is to allow for the height of the deck
+    public static final IntVector DECK_OFFSET = new IntVector(-1, 1);
     public static final int       SPACE_BETWEEN_CARDS = 10;
     public static final IntVector HAND_SIZE =
             new IntVector(
@@ -31,7 +31,7 @@ public class Constants {
     // GUI location constants
     public static final IntVector NULL_LOCATION         = new IntVector(0,0);
     public static final IntVector NULL_SIZE             = NULL_LOCATION;
-    public static final IntVector FIELD_OFFSET          = new IntVector(50,50);
+    public static final IntVector FIELD_OFFSET          = new IntVector(20,50);
     public static final IntVector WAITING_FOR_PLAYERS   = FIELD_OFFSET.add(new IntVector(100, 100));
     public static final IntVector DISCARD_PILE_LOCATION = FIELD_OFFSET.add(new IntVector(100, 180));
     public static final IntVector DRAW_PILE_LOCATION    = FIELD_OFFSET.add(new IntVector(150, 180));
@@ -48,14 +48,14 @@ public class Constants {
     public static final IntVector SCORE_SCREEN_BUTTON_LOCATION = FIELD_OFFSET.add(new IntVector(100,260));
     public static final IntVector SCORE_SCREEN_BUTTON_SIZE = new IntVector(80, 15);
     public static final String    SCORE_SCREEN_BUTTON_TEXT = "Score Screen";
-    public static final IntVector NEXT_GAME_BUTTON_LOCATION = FIELD_OFFSET.add(new IntVector(60,0));
+    public static final IntVector NEXT_GAME_BUTTON_LOCATION = FIELD_OFFSET.add(new IntVector(20,0));
     public static final IntVector NEXT_GAME_BUTTON_SIZE = new IntVector(70, 15);
     public static final String    NEXT_GAME_BUTTON_TEXT = "Next Game";
 
     // GUI Score Card constants
     public static final int SCORE_SCREEN_TAB_SIZE = 80;
     public static final int SCORE_SCREEN_LINE_HEIGHT = 20;
-    public static final IntVector SCORE_SCREEN_INITIAL_OFFSET = FIELD_OFFSET.add(new IntVector(50,50));
+    public static final IntVector SCORE_SCREEN_INITIAL_OFFSET = FIELD_OFFSET.add(new IntVector(0,40));
 
     // GUI Color constants
     public static final Color BACKGROUND_COLOR = Color.WHITE;

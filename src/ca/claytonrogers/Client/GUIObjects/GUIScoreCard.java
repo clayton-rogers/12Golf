@@ -71,7 +71,7 @@ public class GUIScoreCard extends GUIObject {
         g.drawLine(
                 drawLocation.x,
                 drawLocation.y,
-                drawLocation.x + 500,
+                drawLocation.x + 400,
                 drawLocation.y);
 
         // Draw the vertical lines
