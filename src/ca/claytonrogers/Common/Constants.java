@@ -45,7 +45,7 @@ public class Constants {
     }
 
     // GUI Button constants
-    public static final IntVector SCORE_SCREEN_BUTTON_LOCATION = FIELD_OFFSET.add(new IntVector(100,260));
+    public static final IntVector SCORE_SCREEN_BUTTON_LOCATION = FIELD_OFFSET.add(new IntVector(100,144));
     public static final IntVector SCORE_SCREEN_BUTTON_SIZE = new IntVector(80, 15);
     public static final String    SCORE_SCREEN_BUTTON_TEXT = "Score Screen";
     public static final IntVector NEXT_GAME_BUTTON_LOCATION = FIELD_OFFSET.add(new IntVector(20,0));

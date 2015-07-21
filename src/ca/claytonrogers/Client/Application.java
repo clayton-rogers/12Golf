@@ -450,13 +450,21 @@ public class Application extends JFrame implements Runnable {
         String statusMsg = "";
         if (!game.isGameOver()) {
             if (game.getPlayerTurn() == playerNumber) {
-                statusMsg += "Your turn: ";
+                statusMsg = "Your turn: " + game.getGameState();
             } else {
-                statusMsg += "Not your turn: ";
+                statusMsg = "Not your turn. Waiting for " + usernames[game.getPlayerTurn()] + "...";
             }
-            statusMsg += game.getGameState();
         } else {
-            statusMsg = "Game Over!";
+            int[] scores = game.getScores();
+            int winner = -1;
+            int winnerScore = 1000; // Best scores are low
+            for (int i = 0; i < scores.length; i++) {
+                if (scores[i] < winnerScore) {
+                    winner = i;
+                    winnerScore = scores[i];
+                }
+            }
+            statusMsg = "Game Over! " + usernames[winner] + " won!";
         }
         statusString.setString(statusMsg);
     }
