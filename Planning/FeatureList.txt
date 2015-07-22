@@ -15,6 +15,7 @@ soon to be implemented, or deferred for a future release.
 - Score screen which shows between rounds.
 - Card piles visually show how many cards they contain.
 - Current score is displayed for all players (with/without randoms (option set assumed random value, default 5.5)).
+- Instruction text line guides the player on what action to do next.
 
 === Planned ===
 - Server takes number of players as command line argument.
@@ -24,7 +25,6 @@ soon to be implemented, or deferred for a future release.
 
 === Future ===
 - Joker cards which can be anything.
-- Instruction text line guides the player on what action to do next (to go with the card highlight).
 - Rock paper scissors to decide who goes first.
 - Main menu (Tutorial, Play (# of players), Host, Options, Instructions?).
 - Username is saved in a file (along with any other options that are added).
