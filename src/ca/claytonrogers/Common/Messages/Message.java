@@ -17,7 +17,8 @@ public abstract class Message {
         DrawCardClicked,
         DiscardCardClicked,
         HandSelection,        // Informs which card was selected from the hand
-        ReadyForNextRound
+        ReadyForNextRound,
+        Seed
     }
 
     private MessageType messageType;
@@ -48,6 +49,8 @@ public abstract class Message {
                 return new HandSelection(in);
             case ReadyForNextRound:
                 return new ReadyForNextRound();
+            case Seed:
+                return new Seed(in);
         }
 
         throw new IllegalStateException("Could not determine the message type:" + messageType);
