@@ -374,7 +374,7 @@ public class Application extends JFrame implements Runnable {
 
     private void handleServerMessages() {
         while (true) {
-            if (isOnScoreScreen) {
+            if (isOnScoreScreen && game.isGameOver()) {
                 return;
             }
             Message message = serverConnection.getMessage();
