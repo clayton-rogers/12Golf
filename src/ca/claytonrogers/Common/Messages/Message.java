@@ -13,11 +13,11 @@ public abstract class Message {
         VersionInformationAuthenticated,
         VersionInformationMismatch, // Includes the version of both the server and client
         Username,            // Includes the username
-        StateUpdate,         // Includes the entire state
         DrawCardClicked,
         DiscardCardClicked,
         HandSelection,        // Informs which card was selected from the hand
-        ReadyForNextRound
+        ReadyForNextRound,
+        Seed
     }
 
     private MessageType messageType;
@@ -38,8 +38,6 @@ public abstract class Message {
                 return new VersionInformationAuthenticated(in);
             case Username:
                 return new Username(in);
-            case StateUpdate:
-                return new StateUpdate(in);
             case DrawCardClicked:
                 return new DrawCardClicked();
             case DiscardCardClicked:
@@ -48,6 +46,8 @@ public abstract class Message {
                 return new HandSelection(in);
             case ReadyForNextRound:
                 return new ReadyForNextRound();
+            case Seed:
+                return new Seed(in);
         }
 
         throw new IllegalStateException("Could not determine the message type:" + messageType);

@@ -60,37 +60,12 @@ public class Deck {
         //deck.add(new Card(14));   // TODO FUTURE And the jokers
         //deck.add(new Card(14));
 
-        deck.shuffle();
+        deck.shuffle(Constants.random);
 
         return deck;
     }
 
     public int size() {
         return cards.size();
-    }
-
-    public static Deck read(DataInputStream in) throws IOException {
-
-        int numberOfCards = in.readByte();
-        LinkedList<Card> cards = new LinkedList<>();
-
-        for (int i = 0; i < numberOfCards; i++) {
-            Card card = new Card(in.readByte(), false);
-            cards.add(card);
-        }
-
-        Deck deck = new Deck();
-        deck.cards = cards;
-        return deck;
-    }
-
-    public static void write(DataOutputStream out, Deck deck) throws IOException {
-
-        List<Card> cardList = new LinkedList<>(deck.cards);
-        out.writeByte(cardList.size());
-
-        for (int i = 0; i < cardList.size(); i++) {
-            out.writeByte(cardList.get(i).value);
-        }
     }
 }

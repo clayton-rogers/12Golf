@@ -41,8 +41,6 @@ public class Application extends JFrame implements Runnable {
     private GUIButton nextGameButton;
     private GUIScoreCard scoreCard;
 
-    private StateUpdate stateUpdateMessage = null;
-
     public Application() {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setSize(WINDOW_BOUNDS.x, WINDOW_BOUNDS.y);
@@ -128,6 +126,22 @@ public class Application extends JFrame implements Runnable {
                 return;
         }
 
+        // Send/receive the game seed
+        long seed;
+        if (playerNumber == 0) {
+            seed = System.currentTimeMillis();
+            message = new Seed(seed);
+            serverConnection.send(message);
+        } else {
+            message = serverConnection.waitForNextMessage();
+            if (message.getMessageType() != Message.MessageType.Seed) {
+                System.out.println("Received something other than the game seed: " + message.getMessageType());
+                return;
+            }
+            seed = ((Seed) message).getSeed();
+        }
+        Constants.random = new Random(seed);
+
         // Send the username
         Username usernameMessage = new Username(username, playerNumber);
         serverConnection.send(usernameMessage);
@@ -204,25 +218,9 @@ public class Application extends JFrame implements Runnable {
 
     private void initialiseGame() {
 
-        // Player 0 will always be the one to create the initial game state.
-        Message message;
-        State state;
-        if (playerNumber == 0) {
-            state = new State(totalPlayers);
-            message = new StateUpdate(state);
-            serverConnection.send(message);
-        } else {
-            if (stateUpdateMessage ==  null) {
-                message = serverConnection.waitForNextMessage();
-            } else {
-                message = stateUpdateMessage;
-                stateUpdateMessage = null;
-            }
-            if (message.getMessageType() != Message.MessageType.StateUpdate) {
-                throw new IllegalStateException("Did not receive initial state from server. " + message.getMessageType());
-            }
-            state = ((StateUpdate) message).getState();
-        }
+        // The next game state can be independently generated on each client because
+        // they were all seeded with the same value and have all kept the same state.
+        State state = new State(totalPlayers);
 
         guiObjectList.clear();
         game = new GolfGame(state);
@@ -404,10 +402,6 @@ public class Application extends JFrame implements Runnable {
                     game.chooseHandCard(cardIndex);
                     drawPile.setIsFaceUp(false);
                     break;
-                case StateUpdate:
-                    // this is a hack in case we get a state update message too early
-                    // (i.e. before the player has clicked on the "Score Scree" button)
-                    stateUpdateMessage = (StateUpdate) message;
                 default:
                     System.out.println("Got a message that we didn't expect: " + message.getMessageType());
                     break;

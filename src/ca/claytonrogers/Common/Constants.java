@@ -1,6 +1,7 @@
 package ca.claytonrogers.Common;
 
 import java.awt.*;
+import java.util.Random;
 
 /**
  * Created by clayton on 2015-07-05.
@@ -8,13 +9,14 @@ import java.awt.*;
 public class Constants {
 
     // Global configuration settings
-    public static final int VERSION = 8;
+    public static final int VERSION = 10;
     public static final int PORT_NUMBER = 60093;
     public static final String ADDRESS = "claytonrogers53.ca";
     public static final int NUMBER_OF_CARDS = 12;
     public static final int NUMBER_OF_ROUNDS = 10;
     public static final boolean DEBUG = false;
     public static final boolean NET_DEBUG = false;
+    public static Random random;
 
     // GUI general constants
     public static final IntVector CARD_SIZE = new IntVector(30,60);
