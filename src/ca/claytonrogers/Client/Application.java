@@ -41,6 +41,8 @@ public class Application extends JFrame implements Runnable {
     private GUIButton nextGameButton;
     private GUIScoreCard scoreCard;
 
+    private StateUpdate stateUpdateMessage = null;
+
     public Application() {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setSize(WINDOW_BOUNDS.x, WINDOW_BOUNDS.y);
@@ -210,11 +212,16 @@ public class Application extends JFrame implements Runnable {
             message = new StateUpdate(state);
             serverConnection.send(message);
         } else {
-            message = serverConnection.waitForNextMessage();
+            if (stateUpdateMessage ==  null) {
+                message = serverConnection.waitForNextMessage();
+            } else {
+                message = stateUpdateMessage;
+                stateUpdateMessage = null;
+            }
             if (message.getMessageType() != Message.MessageType.StateUpdate) {
                 throw new IllegalStateException("Did not receive initial state from server. " + message.getMessageType());
             }
-            state = ((StateUpdate)message).getState();
+            state = ((StateUpdate) message).getState();
         }
 
         guiObjectList.clear();
@@ -397,6 +404,10 @@ public class Application extends JFrame implements Runnable {
                     game.chooseHandCard(cardIndex);
                     drawPile.setIsFaceUp(false);
                     break;
+                case StateUpdate:
+                    // this is a hack in case we get a state update message too early
+                    // (i.e. before the player has clicked on the "Score Scree" button)
+                    stateUpdateMessage = (StateUpdate) message;
                 default:
                     System.out.println("Got a message that we didn't expect: " + message.getMessageType());
                     break;

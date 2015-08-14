@@ -30,7 +30,7 @@ public class Connection extends Thread implements Closeable {
             e.printStackTrace();
             isGood = false;
         }
-        
+
         this.start();
     }
 
