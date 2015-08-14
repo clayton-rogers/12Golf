@@ -60,7 +60,7 @@ public class Deck {
         //deck.add(new Card(14));   // TODO FUTURE And the jokers
         //deck.add(new Card(14));
 
-        deck.shuffle();
+        deck.shuffle(Constants.random);
 
         return deck;
     }

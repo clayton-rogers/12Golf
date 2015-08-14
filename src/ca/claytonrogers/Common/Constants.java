@@ -1,6 +1,7 @@
 package ca.claytonrogers.Common;
 
 import java.awt.*;
+import java.util.Random;
 
 /**
  * Created by clayton on 2015-07-05.
@@ -8,7 +9,7 @@ import java.awt.*;
 public class Constants {
 
     // Global configuration settings
-    public static final int VERSION = 8;
+    public static final int VERSION = 9;
     public static final int PORT_NUMBER = 60093;
     public static final String ADDRESS = "claytonrogers53.ca";
     public static final int NUMBER_OF_CARDS = 12;
