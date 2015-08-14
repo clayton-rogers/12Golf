@@ -15,6 +15,7 @@ public class Constants {
     public static final int NUMBER_OF_ROUNDS = 10;
     public static final boolean DEBUG = false;
     public static final boolean NET_DEBUG = false;
+    public static Random random;
 
     // GUI general constants
     public static final IntVector CARD_SIZE = new IntVector(30,60);

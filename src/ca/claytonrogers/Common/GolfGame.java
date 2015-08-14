@@ -88,8 +88,7 @@ public class GolfGame {
             draw.push(discard.pop());
         }
         discard.push(topDiscardCard);
-        draw.shuffle(new Random(3L)); // TODO future, make it actually random
-        // 3 is a committee approved random number.
+        draw.shuffle(Constants.random);
     }
 
     private void incrementPlayer() {
