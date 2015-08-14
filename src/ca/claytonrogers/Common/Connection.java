@@ -24,14 +24,13 @@ public class Connection extends Thread implements Closeable {
         try {
             reader = new DataInputStream(socket.getInputStream());
             writer = new DataOutputStream(socket.getOutputStream());
+            isGood = true;
         } catch (IOException e) {
             System.out.println("There was a problem making the connection.");
             e.printStackTrace();
             isGood = false;
         }
-
-        isGood = true;
-
+        
         this.start();
     }
 
