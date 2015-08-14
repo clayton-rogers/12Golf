@@ -469,13 +469,21 @@ public class Application extends JFrame implements Runnable {
             int[] scores = game.getScores();
             int winner = -1;
             int winnerScore = 1000; // Best scores are low
+            boolean isTie = false;
             for (int i = 0; i < scores.length; i++) {
                 if (scores[i] < winnerScore) {
                     winner = i;
                     winnerScore = scores[i];
+                    isTie = false;
+                } else if (scores[i] == winnerScore) {
+                    isTie = true;
                 }
             }
-            statusMsg = "Game Over! " + usernames[winner] + " won!";
+            if (isTie) {
+                statusMsg = "Game Over! " + usernames[winner] + " won!";
+            } else {
+                statusMsg = "Game Over! Game was a tie!";
+            }
         }
         statusString.setString(statusMsg);
     }
