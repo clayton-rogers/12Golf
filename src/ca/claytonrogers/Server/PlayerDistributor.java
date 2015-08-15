@@ -35,30 +35,16 @@ public class PlayerDistributor implements Runnable {
         while (!stop) {
 
             synchronized (this) {
-                if (playerList.size() >= 2) {
+                updatedPlayerList();
+
+                if (playerList.size() >= NUM_PLAYER) {
 
                     Connection[] players = new Connection[NUM_PLAYER];
-                    boolean isGood = true;
+
                     for (int i = 0; i < NUM_PLAYER; i++) {
-                        Connection player;
-                        do {
-                            if (playerList.isEmpty()) {
-                                for (Connection p : players) {
-                                    if (p != null) {
-                                        playerList.add(p);
-                                    }
-                                }
-                                isGood = false;
-                                break;
-                            } else {
-                                player = playerList.remove(0);
-                                players[i] = player;
-                            }
-                        } while (player != null && !player.isGood());
+                        players[i] = playerList.remove(0); // Pop players off till we have enough
                     }
-                    if (isGood) {
-                        new GameRunner(players);
-                    }
+                    new GameRunner(players);
                 }
             }
 
@@ -67,6 +53,20 @@ public class PlayerDistributor implements Runnable {
             } catch (InterruptedException e) {
                 System.out.println("PlayerDistributor was interrupted: " + e);
                 stop = true;
+            }
+        }
+    }
+
+    private synchronized void updatedPlayerList() {
+
+        int index = 0;
+
+        while (index < playerList.size()) {
+            Connection player = playerList.get(index);
+            if (player == null || !player.isGood()) {
+                playerList.remove(index);
+            } else {
+                index++;
             }
         }
     }
