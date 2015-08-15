@@ -2,6 +2,7 @@ package ca.claytonrogers.Server;
 
 import ca.claytonrogers.Common.Connection;
 import ca.claytonrogers.Common.Messages.Message;
+import ca.claytonrogers.Common.Messages.PlayerInfo;
 
 import java.io.IOException;
 
@@ -19,8 +20,11 @@ public class GameRunner implements Runnable {
     public GameRunner(Connection[] players) {
         this.players = players;
 
-        Thread thread = new Thread(this);
-        thread.start();
+        for (int i = 0; i < players.length; i++) {
+            players[i].send(new PlayerInfo(i, players.length));
+        }
+
+        new Thread(this).start();
     }
 
     @Override

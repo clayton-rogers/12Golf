@@ -118,13 +118,20 @@ public class Application extends JFrame implements Runnable {
                 JOptionPane.showMessageDialog(this, error);
                 return;
             case VersionInformationAuthenticated:
-                playerNumber = ((VersionInformationAuthenticated) message).getPlayerNumber();
-                totalPlayers = ((VersionInformationAuthenticated) message).getTotalPlayers();
                 break;
             default:
                 System.out.println("Received something other than version validation: " + message.getMessageType());
                 return;
         }
+
+        // Get player info
+        message = serverConnection.waitForNextMessage();
+        if (message.getMessageType() != Message.MessageType.PlayerInfo) {
+            System.out.println("Received something other than player info: " + message.getMessageType());
+            return;
+        }
+        playerNumber = ((PlayerInfo) message).getPlayerNumber();
+        totalPlayers = ((PlayerInfo) message).getTotalPlayers();
 
         // Send/receive the game seed
         long seed;
