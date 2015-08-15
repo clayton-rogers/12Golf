@@ -49,6 +49,8 @@ public class Application extends JFrame implements Runnable {
         addMouseListener(inputHandler);
 
         // TODO FUTURE For some reason you have to sometime wait for a bit before creating
+        // Apparently the create should be called in the EDT
+        // See: http://stackoverflow.com/questions/3435994/buffers-have-not-been-created-whilst-creating-buffers
         // the buffer strategy, otherwise it will throw an exception.
         try {
             Thread.sleep(20);
@@ -118,13 +120,20 @@ public class Application extends JFrame implements Runnable {
                 JOptionPane.showMessageDialog(this, error);
                 return;
             case VersionInformationAuthenticated:
-                playerNumber = ((VersionInformationAuthenticated) message).getPlayerNumber();
-                totalPlayers = ((VersionInformationAuthenticated) message).getTotalPlayers();
                 break;
             default:
                 System.out.println("Received something other than version validation: " + message.getMessageType());
                 return;
         }
+
+        // Get player info
+        message = serverConnection.waitForNextMessage();
+        if (message.getMessageType() != Message.MessageType.PlayerInfo) {
+            System.out.println("Received something other than player info: " + message.getMessageType());
+            return;
+        }
+        playerNumber = ((PlayerInfo) message).getPlayerNumber();
+        totalPlayers = ((PlayerInfo) message).getTotalPlayers();
 
         // Send/receive the game seed
         long seed;

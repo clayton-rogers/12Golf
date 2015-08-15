@@ -47,6 +47,7 @@ public class Connection extends Thread implements Closeable {
                 }
             }
         } catch (IOException e) {
+            isGood = false;
             System.out.println("There was a problem on the message reading thread: " + e);
         }
     }
@@ -69,6 +70,9 @@ public class Connection extends Thread implements Closeable {
     }
 
     public boolean isGood() {
+        if (socket.isClosed()) {
+            isGood = false;
+        }
         return isGood;
     }
 
