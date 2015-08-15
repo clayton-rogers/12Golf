@@ -9,7 +9,7 @@ import java.util.Random;
 public class Constants {
 
     // Global configuration settings
-    public static final int VERSION = 10;
+    public static final int VERSION = 11;
     public static final int PORT_NUMBER = 60093;
     public static final String ADDRESS = "claytonrogers53.ca";
     public static final int NUMBER_OF_CARDS = 12;
