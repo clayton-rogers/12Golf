@@ -50,9 +50,9 @@ public class Constants {
     public static final IntVector SCORE_SCREEN_BUTTON_LOCATION = FIELD_OFFSET.add(new IntVector(100,144));
     public static final IntVector SCORE_SCREEN_BUTTON_SIZE = new IntVector(80, 15);
     public static final String    SCORE_SCREEN_BUTTON_TEXT = "Score Screen";
-    public static final IntVector NEXT_GAME_BUTTON_LOCATION = FIELD_OFFSET.add(new IntVector(20,0));
-    public static final IntVector NEXT_GAME_BUTTON_SIZE = new IntVector(70, 15);
-    public static final String    NEXT_GAME_BUTTON_TEXT = "Next Game";
+    public static final IntVector NEXT_ROUND_BUTTON_LOCATION = FIELD_OFFSET.add(new IntVector(20,0));
+    public static final IntVector NEXT_ROUND_BUTTON_SIZE = new IntVector(70, 15);
+    public static final String    NEXT_ROUND_BUTTON_TEXT = "Next Round";
 
     // GUI Score Card constants
     public static final int SCORE_SCREEN_TAB_SIZE = 80;

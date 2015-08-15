@@ -274,9 +274,9 @@ public class Application extends JFrame implements Runnable {
         guiObjectList.add(scoreScreenButton);
 
         nextGameButton = new GUIButton(
-                Constants.NEXT_GAME_BUTTON_LOCATION,
-                Constants.NEXT_GAME_BUTTON_SIZE,
-                Constants.NEXT_GAME_BUTTON_TEXT,
+                Constants.NEXT_ROUND_BUTTON_LOCATION,
+                Constants.NEXT_ROUND_BUTTON_SIZE,
+                Constants.NEXT_ROUND_BUTTON_TEXT,
                 GUIObject.Type.NextGameButton
         );
         guiObjectList.add(nextGameButton);
