@@ -7,8 +7,8 @@ import ca.claytonrogers.Common.Messages.VersionInformation;
 import ca.claytonrogers.Common.Messages.VersionInformationAuthenticated;
 import ca.claytonrogers.Common.Messages.VersionInformationMismatch;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  * Created by clayton on 2015-08-14.
@@ -17,13 +17,13 @@ public class PlayerDistributor implements Runnable {
 
     private final int NUM_PLAYER = 2;
 
-    private List<Connection> playerList = new LinkedList<>();
+    private Queue<Connection> playerList = new ConcurrentLinkedQueue<>();
 
     public PlayerDistributor() {
         new Thread(this).start();
     }
 
-    public synchronized void addPlayer (Connection player) {
+    public void addPlayer (Connection player) {
         if (authenticatePlayer(player)) {
             playerList.add(player);
         }
@@ -34,18 +34,15 @@ public class PlayerDistributor implements Runnable {
         boolean stop = false;
         while (!stop) {
 
-            synchronized (this) {
-                updatedPlayerList();
+            updatedPlayerList();
 
-                if (playerList.size() >= NUM_PLAYER) {
+            if (playerList.size() >= NUM_PLAYER) {
+                Connection[] players = new Connection[NUM_PLAYER];
 
-                    Connection[] players = new Connection[NUM_PLAYER];
-
-                    for (int i = 0; i < NUM_PLAYER; i++) {
-                        players[i] = playerList.remove(0); // Pop players off till we have enough
-                    }
-                    new GameRunner(players);
+                for (int i = 0; i < NUM_PLAYER; i++) {
+                    players[i] = playerList.poll(); // Pop players off till we have enough
                 }
+                new GameRunner(players);
             }
 
             try {
@@ -57,17 +54,22 @@ public class PlayerDistributor implements Runnable {
         }
     }
 
-    private synchronized void updatedPlayerList() {
+    private void updatedPlayerList() {
 
-        int index = 0;
+        Queue<Connection> backupList = new ConcurrentLinkedQueue<>();
 
-        while (index < playerList.size()) {
-            Connection player = playerList.get(index);
-            if (player == null || !player.isGood()) {
-                playerList.remove(index);
-            } else {
-                index++;
+        Connection player = playerList.poll();
+        while (player != null) {
+            if (player.isGood()) {
+                backupList.add(player);
             }
+            player = playerList.poll();
+        }
+
+        player = backupList.poll();
+        while (player != null) {
+            playerList.add(player);
+            player = backupList.poll();
         }
     }
 
