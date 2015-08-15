@@ -32,6 +32,7 @@ public class Application extends JFrame implements Runnable {
     private int totalPlayers;
     private GolfGame game;
     private boolean isOnScoreScreen = false;
+    private boolean isRunning = true;
 
     private GUIHand[] guiHands;
     private GUIDeck drawPile;
@@ -83,11 +84,7 @@ public class Application extends JFrame implements Runnable {
         // Try to get a socket open with the server
         Socket socket;
         try {
-            if (Constants.DEBUG) {
-                socket = new Socket("localhost", Constants.PORT_NUMBER);
-            } else {
-                socket = new Socket(Constants.ADDRESS, Constants.PORT_NUMBER);
-            }
+            socket = new Socket(Constants.ADDRESS, Constants.PORT_NUMBER);
         } catch (IOException e) {
             System.out.println("Could not connect to the default server.");
             try {
@@ -164,6 +161,8 @@ public class Application extends JFrame implements Runnable {
         }
 
         drawLoop();
+
+        System.exit(1);
     }
 
     public void addClick(IntVector clickLocation) {
@@ -176,7 +175,7 @@ public class Application extends JFrame implements Runnable {
         scoreCard = new GUIScoreCard(usernames);
         initialiseGame();
 
-        while (true) {
+        while (isRunning) {
             long frameStartTime = System.currentTimeMillis();
 
             handleMouseInputs();
@@ -383,6 +382,11 @@ public class Application extends JFrame implements Runnable {
 
     private void handleServerMessages() {
         while (true) {
+            if (!serverConnection.isGood()) {
+                JOptionPane.showMessageDialog(this, "Connection to the server has been lost...");
+                isRunning = false;
+                return;
+            }
             if (isOnScoreScreen && game.isGameOver()) {
                 return;
             }
