@@ -22,7 +22,10 @@ public class Server {
                     System.out.println("Waiting for players to connect...");
                     Socket socket = serverSocket.accept();
                     Connection player = new Connection(socket);
-                    playerDistributor.addPlayer(player);
+                    if (player.isGood()) {
+                        playerDistributor.addPlayer(player);
+                    }
+                    System.out.println("Player connected!");
                 }
             } catch (IOException e) {
                 System.out.println("Something when wrong while the server was listening: " + e);

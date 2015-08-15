@@ -38,20 +38,23 @@ public class PlayerDistributor implements Runnable {
                 if (playerList.size() >= 2) {
 
                     Connection[] players = new Connection[NUM_PLAYER];
-                    int playerIndex = 0;
                     boolean isGood = true;
                     for (int i = 0; i < NUM_PLAYER; i++) {
                         Connection player;
                         do {
                             if (playerList.isEmpty()) {
+                                for (Connection p : players) {
+                                    if (p != null) {
+                                        playerList.add(p);
+                                    }
+                                }
                                 isGood = false;
                                 break;
                             } else {
                                 player = playerList.remove(0);
-                                players[playerIndex] = player;
-                                playerIndex++;
+                                players[i] = player;
                             }
-                        } while (!player.isGood());
+                        } while (player != null && !player.isGood());
                     }
                     if (isGood) {
                         new GameRunner(players);
