@@ -30,7 +30,8 @@ public abstract class Scene<T> {
         Game,
         MainMenu,
         Options,
-        Quit
+        Quit,
+        LostConnection
     }
 
     /**

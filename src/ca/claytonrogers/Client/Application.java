@@ -186,16 +186,26 @@ public class Application extends JFrame implements Runnable {
                         currentScene = scoreScreen;
                         break;
                     case Game:
+                        initialiseGame();
+                        currentScene = gameScreen;
                         break;
                     case MainMenu:
                         break;
                     case Options:
                         break;
+                    case LostConnection:
+                        JOptionPane.showMessageDialog(this, "Connection to the server has been lost...");
+                        isRunning = false;
+                        currentScene = null;
+                        break;
                     case Quit:
                         isRunning = false;
+                        currentScene = null;
                         break;
                 }
-                currentScene.startScene(sceneChange);
+                if (currentScene != null) {
+                    currentScene.startScene(sceneChange);
+                }
             }
 
             long frameEndTime = System.currentTimeMillis();

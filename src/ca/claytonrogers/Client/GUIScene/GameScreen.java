@@ -89,14 +89,17 @@ public class GameScreen extends Scene<SceneChange.NullPayloadType> {
 
     @Override
     public void startScene(SceneChange<SceneChange.NullPayloadType> sceneChange) {
-        // TODO
-        System.exit(1);
+        // Don't need to do anything when switching to the game screen since it
+        // should always be a new one.
     }
 
     @Override
     public void handleInputs() {
+        internalHandleMouseInputs();
+        internalHandleServerInputs();
+    }
 
-        // *** HANDLE MOUSE/USER INPUTS *** //
+    private void internalHandleMouseInputs() {
         // If it is not our turn then getNextGoodClick should not return anything.
         // This method handles one click each time it's called.
 
@@ -139,12 +142,12 @@ public class GameScreen extends Scene<SceneChange.NullPayloadType> {
         }
         // Since we have now handled the click, throw it out.
         mouseClickList.poll();
+    }
 
-        // *** HANDLE SERVER INPUTS *** //
+    private void internalHandleServerInputs() {
         while (true) {
             if (!serverConnection.isGood()) {
-                JOptionPane.showMessageDialog(null, "Connection to the server has been lost...");
-                nextScene = new SceneChange<SceneChange.NullPayloadType>(SceneType.Quit, null);
+                nextScene = new SceneChange<SceneChange.NullPayloadType>(SceneType.LostConnection, null);
                 return;
             }
 
