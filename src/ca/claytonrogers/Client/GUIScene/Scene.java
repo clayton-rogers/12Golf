@@ -31,7 +31,8 @@ public abstract class Scene<T> {
         MainMenu,
         Options,
         Quit,
-        LostConnection
+        LostConnection,
+        Waiting
     }
 
     /**

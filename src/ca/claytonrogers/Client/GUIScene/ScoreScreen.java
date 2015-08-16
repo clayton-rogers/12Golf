@@ -45,7 +45,7 @@ public class ScoreScreen extends Scene<int[]> {
             case None:
                 break;
             case NextRoundButton:
-                nextScene = new SceneChange<>(SceneType.Game, null);
+                nextScene = new SceneChange<>(SceneType.Waiting, null);
                 break;
             default:
                 System.out.println("Got a click in the score screen that wasn't expected: " + clickType);

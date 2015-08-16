@@ -1,10 +1,7 @@
 package ca.claytonrogers.Client;
 
 import ca.claytonrogers.Client.GUIObjects.*;
-import ca.claytonrogers.Client.GUIScene.GameScreen;
-import ca.claytonrogers.Client.GUIScene.Scene;
-import ca.claytonrogers.Client.GUIScene.SceneChange;
-import ca.claytonrogers.Client.GUIScene.ScoreScreen;
+import ca.claytonrogers.Client.GUIScene.*;
 import ca.claytonrogers.Common.*;
 import ca.claytonrogers.Common.Messages.*;
 
@@ -37,6 +34,7 @@ public class Application extends JFrame implements Runnable {
     private Scene currentScene;
     private Scene scoreScreen;
     private Scene gameScreen;
+    private Scene waitingScreen;
 
     public Application() {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -170,6 +168,7 @@ public class Application extends JFrame implements Runnable {
         // Since the score card is persistent across rounds,
         // it is initialized outsize the main initialization method.
         scoreScreen = new ScoreScreen(usernames);
+        waitingScreen = new WaitingScreen(serverConnection);
         initialiseGame();
         currentScene = gameScreen;
 
@@ -192,6 +191,9 @@ public class Application extends JFrame implements Runnable {
                     case MainMenu:
                         break;
                     case Options:
+                        break;
+                    case Waiting:
+                        currentScene = waitingScreen;
                         break;
                     case LostConnection:
                         JOptionPane.showMessageDialog(this, "Connection to the server has been lost...");
