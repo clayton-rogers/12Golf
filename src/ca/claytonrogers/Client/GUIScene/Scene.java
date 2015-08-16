@@ -18,11 +18,9 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  * The T type parameter is the type of payload the scene expects when it is started using
  * startScene.
  *
- * The RET type parameter is the type of payload returned when the scene changes.
- *
  * Created by clayton on 2015-08-15.
  */
-public abstract class Scene<T,RET> {
+public abstract class Scene<T> {
 
     /**
      * The scene type denotes all the possible types of scenes in the program.
@@ -48,7 +46,7 @@ public abstract class Scene<T,RET> {
     /**
      * The next scene to load. This will be null until the scene should change.
      */
-    protected SceneChange<RET> nextScene = null;
+    protected SceneChange nextScene = null;
 
     /**
      * Clicks are added the the scene externally by the application's click handler.
@@ -115,7 +113,7 @@ public abstract class Scene<T,RET> {
      * It will return null if it does not want to change.
      * @return The scene change to be performed, or null if non is required.
      */
-    public SceneChange<RET> getNextScene() {
+    public SceneChange getNextScene() {
         return nextScene;
     }
 

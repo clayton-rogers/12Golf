@@ -10,7 +10,7 @@ import ca.claytonrogers.Common.ScoreCard;
  * This GUI scene displays the score screen for the game.
  * Created by clayton on 2015-08-16.
  */
-public class ScoreScreen extends Scene<int[], SceneChange.NullPayloadType> {
+public class ScoreScreen extends Scene<int[]> {
 
     private ScoreCard scoreCard;
 
