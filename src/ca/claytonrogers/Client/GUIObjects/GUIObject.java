@@ -14,7 +14,7 @@ public abstract class GUIObject {
         DrawPile,
         DiscardPile,
         ScoreScreenButton,
-        NextGameButton,
+        NextRoundButton,
         None
     }
 
