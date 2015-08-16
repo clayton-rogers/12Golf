@@ -150,6 +150,9 @@ public class GameScreen extends Scene<SceneChange.NullPayloadType> {
                 nextScene = new SceneChange<SceneChange.NullPayloadType>(SceneType.LostConnection, null);
                 return;
             }
+            if (game.isGameOver()) {
+                return;
+            }
 
             Message message = serverConnection.getMessage();
             if (message == null) {
