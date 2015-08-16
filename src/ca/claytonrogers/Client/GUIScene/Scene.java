@@ -29,7 +29,8 @@ public abstract class Scene<T> {
         Score,
         Game,
         MainMenu,
-        Options
+        Options,
+        Quit
     }
 
     /**
