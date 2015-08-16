@@ -31,6 +31,7 @@ public class Application extends JFrame implements Runnable {
     private int playerNumber;
     private int totalPlayers;
     private GolfGame game;
+    private ScoreCard scoreCard;
     private boolean isOnScoreScreen = false;
     private boolean isRunning = true;
 
@@ -40,7 +41,7 @@ public class Application extends JFrame implements Runnable {
     private GUIStatusString statusString;
     private GUIButton scoreScreenButton;
     private GUIButton nextGameButton;
-    private GUIScoreCard scoreCard;
+    private GUIScoreCard scoreCardGUI;
 
     public Application() {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -172,7 +173,8 @@ public class Application extends JFrame implements Runnable {
     private void drawLoop () {
         // Since the score card is persistent across rounds,
         // it is initialized outsize the main initialization method.
-        scoreCard = new GUIScoreCard(usernames);
+        scoreCard = new ScoreCard(totalPlayers);
+        scoreCardGUI = new GUIScoreCard(usernames, scoreCard);
         initialiseGame();
 
         while (isRunning) {
@@ -283,7 +285,7 @@ public class Application extends JFrame implements Runnable {
 
         // We need to re add the score card to the gui list
         // but we do not reinitialize it.
-        guiObjectList.add(scoreCard);
+        guiObjectList.add(scoreCardGUI);
     }
 
     private void drawWaitingForOtherPlayersScreen() {
@@ -352,7 +354,7 @@ public class Application extends JFrame implements Runnable {
                 break;
             case ScoreScreenButton:
                 isOnScoreScreen = true;
-                scoreCard.scoreCard.add(game.getScores());
+                scoreCard.add(game.getScores());
                 break;
             case NextGameButton:
                 isOnScoreScreen = false;
@@ -424,7 +426,7 @@ public class Application extends JFrame implements Runnable {
 
     private void processState() {
         // Update visibilities
-        scoreCard.setVisibility(isOnScoreScreen);
+        scoreCardGUI.setVisibility(isOnScoreScreen);
         nextGameButton.setVisibility(isOnScoreScreen);
 
         for (GUIObject hand : guiHands) {

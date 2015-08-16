@@ -11,17 +11,17 @@ import java.awt.*;
  */
 public class GUIScoreCard extends GUIObject {
 
-    public ScoreCard scoreCard;
+    private ScoreCard scoreCard;
     private String[] playerNames;
 
-    public GUIScoreCard(String[] playerNames) {
+    public GUIScoreCard(String[] playerNames, ScoreCard scoreCard) {
         super(Constants.FIELD_OFFSET, Constants.NULL_SIZE, Type.None);
         // Since we never need to be able to click on the score screen,
         // we set it's size to null.
         if (playerNames.length > 4 || playerNames.length < 2) {
             throw new IllegalArgumentException("List of player names was unusual: " + playerNames.length);
         }
-        scoreCard = new ScoreCard(playerNames.length);
+        this.scoreCard = scoreCard;
         this.playerNames = playerNames;
     }
 
