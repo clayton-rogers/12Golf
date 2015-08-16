@@ -15,9 +15,14 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  * This abstract class can be extended to create a GUI scene (collection of GUI elements,
  * clickables, etc.).
  *
+ * The T type parameter is the type of payload the scene expects when it is started using
+ * startScene.
+ *
+ * The RET type parameter is the type of payload returned when the scene changes.
+ *
  * Created by clayton on 2015-08-15.
  */
-public abstract class Scene {
+public abstract class Scene<T,RET> {
 
     /**
      * The scene type denotes all the possible types of scenes in the program.
@@ -43,7 +48,7 @@ public abstract class Scene {
     /**
      * The next scene to load. This will be null until the scene should change.
      */
-    protected SceneChange nextScene = null;
+    protected SceneChange<RET> nextScene = null;
 
     /**
      * Clicks are added the the scene externally by the application's click handler.
@@ -60,7 +65,7 @@ public abstract class Scene {
      *
      * @param sceneChange The sceneChange object which initiated the scene change.
      */
-    public abstract void startScene(SceneChange sceneChange);
+    public abstract void startScene(SceneChange<T> sceneChange);
 
     /**
      * This is called once every draw loop and is expected to handled any inputs in the mouse click
@@ -110,7 +115,7 @@ public abstract class Scene {
      * It will return null if it does not want to change.
      * @return The scene change to be performed, or null if non is required.
      */
-    public SceneChange getNextScene() {
+    public SceneChange<RET> getNextScene() {
         return nextScene;
     }
 

@@ -10,14 +10,12 @@ import ca.claytonrogers.Common.ScoreCard;
  * This GUI scene displays the score screen for the game.
  * Created by clayton on 2015-08-16.
  */
-public class ScoreScreen extends Scene {
+public class ScoreScreen extends Scene<int[], SceneChange.NullPayloadType> {
 
     private ScoreCard scoreCard;
 
     private GUIButton nextRoundButton;
     private GUIScoreCard scoreCardGUI;
-
-    private SceneChange<SceneChange.NullPayloadType> nextScene = null;
 
     public ScoreScreen (String[] usernames) {
         nextRoundButton = new GUIButton(
@@ -34,8 +32,9 @@ public class ScoreScreen extends Scene {
     }
 
     @Override
-    public void startScene(SceneChange sceneChange) {
-
+    public void startScene(SceneChange<int[]> sceneChange) {
+        int[] scores = sceneChange.getPayload();
+        scoreCard.add(scores);
     }
 
     @Override
