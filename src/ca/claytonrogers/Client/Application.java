@@ -279,7 +279,7 @@ public class Application extends JFrame implements Runnable {
                 Constants.NEXT_ROUND_BUTTON_LOCATION,
                 Constants.NEXT_ROUND_BUTTON_SIZE,
                 Constants.NEXT_ROUND_BUTTON_TEXT,
-                GUIObject.Type.NextGameButton
+                GUIObject.Type.NextRoundButton
         );
         guiObjectList.add(nextGameButton);
 
@@ -356,7 +356,7 @@ public class Application extends JFrame implements Runnable {
                 isOnScoreScreen = true;
                 scoreCard.add(game.getScores());
                 break;
-            case NextGameButton:
+            case NextRoundButton:
                 isOnScoreScreen = false;
                 drawWaitingForOtherPlayersScreen();
                 initialiseGame();
