@@ -12,7 +12,7 @@ import java.awt.*;
  */
 public class GUIDeck extends GUIObject {
 
-    private Deck deck;
+    private final Deck deck;
     private boolean isFaceUp = false;
 
     public GUIDeck(IntVector location, Deck deck, Type type) {

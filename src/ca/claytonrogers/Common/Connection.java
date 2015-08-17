@@ -14,9 +14,9 @@ public class Connection extends Thread implements Closeable {
 
     private DataInputStream reader;
     private DataOutputStream writer;
-    private Socket socket;
+    private final Socket socket;
     private boolean isGood = false;
-    private Queue<Message> messageQueue = new ConcurrentLinkedQueue<>();
+    private final Queue<Message> messageQueue = new ConcurrentLinkedQueue<>();
 
     public Connection (Socket socket) {
         this.socket = socket;

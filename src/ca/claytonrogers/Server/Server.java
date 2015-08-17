@@ -10,7 +10,7 @@ import java.net.Socket;
 /**
  * Created by clayton on 2015-07-04.
  */
-public class Server {
+class Server {
     public static void main (String[] args) {
         System.out.println("Server starting...");
 

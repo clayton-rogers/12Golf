@@ -20,7 +20,7 @@ public abstract class GUIObject {
 
     protected IntVector location;
     protected IntVector size;
-    protected Type type;
+    private final Type type;
     protected boolean isVisible;
     protected boolean isClickable;
 

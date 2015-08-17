@@ -9,7 +9,7 @@ import java.util.List;
 public class ScoreCard {
 
     private final int numPlayers;
-    List<int[]> scores = new ArrayList<>(Constants.NUMBER_OF_ROUNDS);
+    private final List<int[]> scores = new ArrayList<>(Constants.NUMBER_OF_ROUNDS);
 
     public ScoreCard(int numPlayers) {
         this.numPlayers = numPlayers;

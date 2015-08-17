@@ -1,9 +1,6 @@
 package ca.claytonrogers.Common;
 
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
 import java.util.*;
 
 /**
@@ -38,14 +35,6 @@ public class Deck {
         // Note that the elements themselves are not copied.
         List<Card> temp = new LinkedList<>(cards);
         Collections.shuffle(temp, seed);
-        cards = new LinkedList<>(temp);
-    }
-
-    private void shuffle() {
-        // We have to convert the Deque to a list in order to shuffle it.
-        // Note that the elements themselves are not copied.
-        List<Card> temp = new LinkedList<>(cards);
-        Collections.shuffle(temp);
         cards = new LinkedList<>(temp);
     }
 

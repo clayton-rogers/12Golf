@@ -1,6 +1,5 @@
 package ca.claytonrogers.Client;
 
-import ca.claytonrogers.Client.GUIObjects.*;
 import ca.claytonrogers.Client.GUIScene.*;
 import ca.claytonrogers.Common.*;
 import ca.claytonrogers.Common.Messages.*;
@@ -8,18 +7,15 @@ import ca.claytonrogers.Common.Messages.*;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferStrategy;
 import java.io.File;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.*;
-import java.util.List;
-import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  * Created by clayton on 2015-07-05.
  */
-public class Application extends JFrame implements Runnable {
+class Application extends JFrame implements Runnable {
 
     private static final int FRAME_TIME = 17;  // Frame time in ms
     private static final IntVector WINDOW_BOUNDS = new IntVector(400,550);
@@ -205,6 +201,7 @@ public class Application extends JFrame implements Runnable {
                         break;
                 }
                 if (currentScene != null) {
+                    // TODO FUTURE there must be a better way of using Generics here.
                     currentScene.startScene(sceneChange);
                 }
             }

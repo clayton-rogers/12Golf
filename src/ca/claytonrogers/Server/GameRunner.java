@@ -12,7 +12,7 @@ import java.io.IOException;
  *
  * Created by clayton on 2015-07-10.
  */
-public class GameRunner implements Runnable {
+class GameRunner implements Runnable {
 
     private final Connection[] players;
     private volatile boolean continueGame = true;

@@ -9,7 +9,7 @@ import java.awt.*;
 /**
  * Created by clayton on 2015-07-11.
  */
-public class Drawer {
+class Drawer {
 
     public static void drawCard(Graphics g, Card card, IntVector location) {
 

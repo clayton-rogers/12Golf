@@ -13,7 +13,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  * This abstract class can be extended to create a GUI scene (collection of GUI elements,
- * clickables, etc.).
+ * and clickable elements, etc.).
  *
  * The T type parameter is the type of payload the scene expects when it is started using
  * startScene.
@@ -39,12 +39,12 @@ public abstract class Scene<T> {
      * The GUI object list denotes all the objects which should be draw and/or checked for click
      * hits.
      */
-    protected List<GUIObject> guiObjectList = new ArrayList<>(10);
+    protected final List<GUIObject> guiObjectList = new ArrayList<>(10);
 
     /**
      * The mouse click list contains all the mouse clicks which have be queued externally.
      */
-    protected Queue<IntVector> mouseClickList = new ConcurrentLinkedQueue<>();
+    protected final Queue<IntVector> mouseClickList = new ConcurrentLinkedQueue<>();
 
     /**
      * The next scene to load. This will be null until the scene should change.

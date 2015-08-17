@@ -9,7 +9,7 @@ import java.awt.*;
  */
 public class GUIStatusString extends GUIObject {
 
-    String string = "";
+    private String string = "";
 
     public GUIStatusString() {
         super(

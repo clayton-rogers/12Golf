@@ -8,9 +8,9 @@ import java.awt.event.MouseEvent;
 /**
  * Created by clayton on 2015-07-05.
  */
-public class InputHandler extends MouseInputAdapter {
+class InputHandler extends MouseInputAdapter {
 
-    Application application;
+    private final Application application;
 
     public InputHandler(Application application) {
         this.application = application;

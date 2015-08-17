@@ -12,11 +12,6 @@ public class Card {
         this.isFaceUp = isFaceUp;
     }
 
-    public Card(Card copy) {
-        value    = copy.value;
-        isFaceUp = copy.isFaceUp;
-    }
-
     public int score() {
         if (isFaceUp) {
             if (value == 13) {

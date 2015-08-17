@@ -1,12 +1,10 @@
 package ca.claytonrogers.Common;
 
-import java.util.Random;
-
 /**
  * Created by clayton on 2015-07-10.
  */
 public class GolfGame {
-    private State state;
+    private final State state;
     private GameState gameState = GameState.Waiting_for_draw_selection;
     private int playerTurn = 0;
     private boolean isLastTurn = false;

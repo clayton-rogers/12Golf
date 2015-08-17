@@ -13,11 +13,11 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 /**
  * Created by clayton on 2015-08-14.
  */
-public class PlayerDistributor implements Runnable {
+class PlayerDistributor implements Runnable {
 
     private final int NUM_PLAYER = 2;
 
-    private Queue<Connection> playerList = new ConcurrentLinkedQueue<>();
+    private final Queue<Connection> playerList = new ConcurrentLinkedQueue<>();
 
     public PlayerDistributor() {
         new Thread(this).start();

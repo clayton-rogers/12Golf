@@ -12,13 +12,10 @@ import ca.claytonrogers.Common.ScoreCard;
  */
 public class ScoreScreen extends Scene<int[]> {
 
-    private ScoreCard scoreCard;
-
-    private GUIButton nextRoundButton;
-    private GUIScoreCard scoreCardGUI;
+    private final ScoreCard scoreCard;
 
     public ScoreScreen (String[] usernames) {
-        nextRoundButton = new GUIButton(
+        GUIButton nextRoundButton = new GUIButton(
                 Constants.NEXT_ROUND_BUTTON_LOCATION,
                 Constants.NEXT_ROUND_BUTTON_SIZE,
                 Constants.NEXT_ROUND_BUTTON_TEXT,
@@ -27,7 +24,7 @@ public class ScoreScreen extends Scene<int[]> {
         guiObjectList.add(nextRoundButton);
 
         scoreCard = new ScoreCard(usernames.length);
-        scoreCardGUI = new GUIScoreCard(usernames, scoreCard);
+        GUIScoreCard scoreCardGUI = new GUIScoreCard(usernames, scoreCard);
         guiObjectList.add(scoreCardGUI);
     }
 

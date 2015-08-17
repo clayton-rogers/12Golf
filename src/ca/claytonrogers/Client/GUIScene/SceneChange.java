@@ -6,10 +6,9 @@ package ca.claytonrogers.Client.GUIScene;
 public class SceneChange<T> {
 
     public class NullPayloadType {}
-    public NullPayloadType nullPayload;
 
-    private Scene.SceneType nextScene;
-    private T payload;
+    private final Scene.SceneType nextScene;
+    private final T payload;
 
     public SceneChange (Scene.SceneType nextScene, T payload) {
         this.nextScene = nextScene;

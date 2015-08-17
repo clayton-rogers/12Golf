@@ -15,12 +15,10 @@ public class WaitingScreen extends Scene<SceneChange.NullPayloadType> {
 
     private Connection serverConnection;
 
-    private GUIStatusString statusString;
-
     public WaitingScreen(Connection serverConnection) {
         this.serverConnection = serverConnection;
 
-        statusString = new GUIStatusString();
+        GUIStatusString statusString = new GUIStatusString();
         statusString.setString("Waiting for all players to be ready...");
         guiObjectList.add(statusString);
     }

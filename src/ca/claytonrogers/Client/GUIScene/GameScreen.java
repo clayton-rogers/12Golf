@@ -10,26 +10,25 @@ import ca.claytonrogers.Common.Messages.HandSelection;
 import ca.claytonrogers.Common.Messages.Message;
 import ca.claytonrogers.Common.State;
 
-import javax.swing.*;
-import java.io.PrintWriter;
+import java.util.Collections;
 
 /**
  * Created by clayton on 2015-08-16.
  */
 public class GameScreen extends Scene<SceneChange.NullPayloadType> {
 
-    private Connection serverConnection;
-    private String[] usernames;
-    private int playerNumber;
-    private int totalPlayers;
+    private final Connection serverConnection;
+    private final String[] usernames;
+    private final int playerNumber;
+    private final int totalPlayers;
 
-    private GolfGame game;
+    private final GolfGame game;
 
-    private GUIHand[] guiHands;
-    private GUIDeck drawPile;
-    private GUIDeck discardPile;
-    private GUIStatusString statusString;
-    private GUIButton scoreScreenButton;
+    private final GUIHand[] guiHands;
+    private final GUIDeck drawPile;
+    private final GUIDeck discardPile;
+    private final GUIStatusString statusString;
+    private final GUIButton scoreScreenButton;
 
     public GameScreen(
             Connection serverConnection,
@@ -64,9 +63,7 @@ public class GameScreen extends Scene<SceneChange.NullPayloadType> {
                 guiHands[i] = new GUIHand(state.getPlayerHands()[i], (i-playerNumber+numPlayers)%numPlayers);
             }
         }
-        for (GUIHand hand : guiHands) {
-            guiObjectList.add(hand);
-        }
+        Collections.addAll(guiObjectList, guiHands);
 
         drawPile = new GUIDeck(Constants.DRAW_PILE_LOCATION, state.getDrawPile(), GUIObject.Type.DrawPile);
         guiObjectList.add(drawPile);
@@ -220,7 +217,7 @@ public class GameScreen extends Scene<SceneChange.NullPayloadType> {
         }
 
         // Status update
-        String statusMsg = "";
+        String statusMsg;
         if (!game.isGameOver()) {
             if (game.getPlayerTurn() == playerNumber) {
                 statusMsg = "Your turn: " + game.getGameState();

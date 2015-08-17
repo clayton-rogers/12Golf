@@ -21,7 +21,7 @@ public abstract class Message {
         PlayerInfo
     }
 
-    private MessageType messageType;
+    private final MessageType messageType;
     Message (MessageType messageType) {
         this.messageType = messageType;
     }

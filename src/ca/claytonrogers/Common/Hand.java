@@ -10,15 +10,7 @@ import java.util.Arrays;
  */
 public class Hand {
 
-    private Card[] hand = new Card[Constants.NUMBER_OF_CARDS];
-
-    public Hand() {}
-
-    public Hand(Hand copy) {
-        for (int i = 0; i < Constants.NUMBER_OF_CARDS; i++) {
-            hand[i] = copy.hand[i];
-        }
-    }
+    private final Card[] hand = new Card[Constants.NUMBER_OF_CARDS];
 
     /**
      * Sets the given location with the given card. Note: only empty locations can have cards
