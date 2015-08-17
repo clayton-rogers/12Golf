@@ -4,6 +4,9 @@ import java.awt.*;
 import java.util.Random;
 
 /**
+ * A collection of constants used by the program. Can be used to easily change the appearance of
+ * the program and change other things.
+ * <p>
  * Created by clayton on 2015-07-05.
  */
 public class Constants {

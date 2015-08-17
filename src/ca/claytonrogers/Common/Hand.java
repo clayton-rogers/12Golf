@@ -5,7 +5,7 @@ import java.util.Arrays;
 
 /**
  * This class represents a hand dealt to a player.
- *
+ * <p>
  * Created by clayton on 2015-07-05.
  */
 public class Hand {

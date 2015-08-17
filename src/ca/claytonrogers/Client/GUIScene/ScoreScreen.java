@@ -8,6 +8,7 @@ import ca.claytonrogers.Common.ScoreCard;
 
 /**
  * This GUI scene displays the score screen for the game.
+ * <p>
  * Created by clayton on 2015-08-16.
  */
 public class ScoreScreen extends Scene<int[]> {

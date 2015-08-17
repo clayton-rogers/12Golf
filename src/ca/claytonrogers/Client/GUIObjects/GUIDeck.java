@@ -8,6 +8,9 @@ import ca.claytonrogers.Common.IntVector;
 import java.awt.*;
 
 /**
+ * This is the GUI representation of a deck. It handles whether the deck is face up and the drawing
+ * and placement of the deck.
+ * <p>
  * Created by clayton on 2015-07-05.
  */
 public class GUIDeck extends GUIObject {

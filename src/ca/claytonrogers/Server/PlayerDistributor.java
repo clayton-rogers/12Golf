@@ -11,6 +11,9 @@ import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
+ * This class takes input into its player list and then distributes them into a game when there is
+ * sufficient players. It runs in its own thread.
+ * <p>
  * Created by clayton on 2015-08-14.
  */
 class PlayerDistributor implements Runnable {

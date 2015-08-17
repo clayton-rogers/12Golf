@@ -13,6 +13,8 @@ import ca.claytonrogers.Common.State;
 import java.util.Collections;
 
 /**
+ * This scene shows the score screen and waits for the player to click the next round button.
+ * <p>
  * Created by clayton on 2015-08-16.
  */
 public class GameScreen extends Scene<SceneChange.NullPayloadType> {

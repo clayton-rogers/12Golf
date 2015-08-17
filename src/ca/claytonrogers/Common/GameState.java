@@ -1,6 +1,8 @@
 package ca.claytonrogers.Common;
 
 /**
+ * Represents what part of the game the game is in so that it knows what actions to expect next.
+ * <p>
  * Created by clayton on 2015-07-09.
  */
 public enum GameState {

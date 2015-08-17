@@ -5,6 +5,10 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 
 /**
+ * This message is sent from the client to the server so that the server can verify the client has
+ * the correct version information. The server responds with either a version authenticated or
+ * mismatch message.
+ * <p>
  * Created by clayton on 2015-07-05.
  */
 public class VersionInformation extends Message {

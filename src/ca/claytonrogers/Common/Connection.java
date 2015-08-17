@@ -8,6 +8,14 @@ import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
+ * Represents a single socket connection between two points. It receives messages asynchronously
+ * which can then be retrieved with the {@link #getMessage()} and {@link #waitForNextMessage()}
+ * methods. Messages can be sent out on the link using {@link #send(Message)}.
+ * <p>
+ * The connection can be checked with {@link #isGood()}.
+ * <p>
+ * The connection can be closed with {@link #close()}.
+ * <p>
  * Created by clayton on 2015-07-04.
  */
 public class Connection extends Thread implements Closeable {

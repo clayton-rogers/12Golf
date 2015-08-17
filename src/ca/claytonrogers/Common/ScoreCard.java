@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * This is the internal data representation of the score screen. It keeps track of round numbers
+ * and totals and can be queried for its information.
+ * <p>
  * Created by clayton on 2015-07-18.
  */
 public class ScoreCard {

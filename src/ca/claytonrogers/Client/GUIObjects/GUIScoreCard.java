@@ -7,6 +7,9 @@ import ca.claytonrogers.Common.ScoreCard;
 import java.awt.*;
 
 /**
+ * This is the GUI representation of the entire score card. It draws all the information from the
+ * internal {@link ScoreCard} object.
+ * <p>
  * Created by clayton on 2015-07-18.
  */
 public class GUIScoreCard extends GUIObject {

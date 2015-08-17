@@ -5,6 +5,9 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 
 /**
+ * This message is one of the few messages actually sent by the server. It informs the players how
+ * many of them there are, and which index a given player is.
+ * <p>
  * Created by clayton on 2015-07-09.
  */
 public class PlayerInfo extends Message {

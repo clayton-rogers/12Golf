@@ -9,7 +9,7 @@ import java.io.IOException;
 /**
  * GameRunner creates the initial game state and send it to all the players. It then parrots
  * information from any given client to all the other clients.
- *
+ * <p>
  * Created by clayton on 2015-07-10.
  */
 class GameRunner implements Runnable {

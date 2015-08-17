@@ -1,6 +1,8 @@
 package ca.claytonrogers.Common;
 
 /**
+ * This holds the entire state of the game.
+ * <p>
  * Created by clayton on 2015-07-05.
  */
 public class State {

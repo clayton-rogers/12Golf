@@ -6,6 +6,10 @@ import ca.claytonrogers.Common.IntVector;
 import java.awt.*;
 
 /**
+ * This is a simple button that can be used to do stuff. To use it you will need to create a type
+ * in the {@link ca.claytonrogers.Client.GUIObjects.GUIObject.Type} enum. Then create a button of
+ * that type, then listen for hits of that type.
+ * <p>
  * Created by clayton on 2015-07-18.
  */
 public class GUIButton extends GUIObject {

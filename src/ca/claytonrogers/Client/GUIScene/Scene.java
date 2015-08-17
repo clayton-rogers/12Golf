@@ -14,10 +14,10 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 /**
  * This abstract class can be extended to create a GUI scene (collection of GUI elements,
  * and clickable elements, etc.).
- *
+ * <p>
  * The T type parameter is the type of payload the scene expects when it is started using
  * startScene.
- *
+ * <p>
  * Created by clayton on 2015-08-15.
  */
 public abstract class Scene<T> {

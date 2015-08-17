@@ -7,6 +7,8 @@ import ca.claytonrogers.Common.IntVector;
 import java.awt.*;
 
 /**
+ * This is a general purpose drawing class since cards do not have GUI objects.
+ * <p>
  * Created by clayton on 2015-07-11.
  */
 class Drawer {

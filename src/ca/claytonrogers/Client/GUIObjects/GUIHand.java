@@ -8,6 +8,9 @@ import ca.claytonrogers.Common.IntVector;
 import java.awt.*;
 
 /**
+ * This is the GUI representation of a hand (typically 12 cards). It handles the drawing as well as
+ * the individual click detection for the cards.
+ * <p>
  * Created by clayton on 2015-07-05.
  */
 public class GUIHand extends GUIObject {

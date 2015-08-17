@@ -5,6 +5,8 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 
 /**
+ * This message is sent to tell the other clients what the username of this client is.
+ * <p>
  * Created by clayton on 2015-07-05.
  */
 public class Username extends Message {

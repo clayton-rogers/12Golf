@@ -4,6 +4,8 @@ package ca.claytonrogers.Common;
 import java.util.*;
 
 /**
+ * Represents a deck of cards.
+ * <p>
  * Created by clayton on 2015-07-04.
  */
 public class Deck {

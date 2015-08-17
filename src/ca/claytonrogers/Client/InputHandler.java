@@ -6,6 +6,8 @@ import javax.swing.event.MouseInputAdapter;
 import java.awt.event.MouseEvent;
 
 /**
+ * This is a short class to handle input into the program so that we can use the mouse adaptor.
+ * <p>
  * Created by clayton on 2015-07-05.
  */
 class InputHandler extends MouseInputAdapter {

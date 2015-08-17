@@ -8,6 +8,9 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 /**
+ * This is the server which listens for new connections and creates players from them. It then
+ * passes the new players to the distributor to handle.
+ * <p>
  * Created by clayton on 2015-07-04.
  */
 class Server {

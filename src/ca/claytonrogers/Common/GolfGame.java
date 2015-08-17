@@ -1,6 +1,9 @@
 package ca.claytonrogers.Common;
 
 /**
+ * This class handles the meat of the game. It figures out what to do for any inputs and advances
+ * the game state appropriately.
+ * <p>
  * Created by clayton on 2015-07-10.
  */
 public class GolfGame {

@@ -8,7 +8,7 @@ import ca.claytonrogers.Common.Messages.ReadyForNextRound;
 /**
  * This scene displays only the text "Waiting for all players to be ready." and then waits
  * for a message from the other players.
- *
+ * <p>
  * Created by clayton on 2015-08-16.
  */
 public class WaitingScreen extends Scene<SceneChange.NullPayloadType> {

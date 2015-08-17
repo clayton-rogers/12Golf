@@ -5,6 +5,11 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 
 /**
+ * This is the generic message which all real messages must implement in order to be sent over
+ * {@link ca.claytonrogers.Common.Connection}s.
+ * <p>
+ * It also has a static method to parse the next message from an input stream.
+ * <p>
  * Created by clayton on 2015-07-05.
  */
 public abstract class Message {

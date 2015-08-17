@@ -1,6 +1,9 @@
 package ca.claytonrogers.Common;
 
 /**
+ * This is a two dimensional vector with int internal representation. It is generally used to
+ * position and size items on the screen in units of pixels.
+ * <p>
  * Created by clayton on 2015-07-05.
  */
 public class IntVector {

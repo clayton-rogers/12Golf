@@ -5,6 +5,9 @@ import ca.claytonrogers.Common.Constants;
 import java.awt.*;
 
 /**
+ * This is a GUI string which is printed on the screen in a particular position and which can be
+ * updated to give the player instructions.
+ * <p>
  * Created by clayton on 2015-07-12.
  */
 public class GUIStatusString extends GUIObject {

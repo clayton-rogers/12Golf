@@ -5,6 +5,9 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 
 /**
+ * This message is sent by the server to the client when it receives a version information message
+ * from the client that has different version information than the server has.
+ * <p>
  * Created by clayton on 2015-07-05.
  */
 public class VersionInformationMismatch extends Message {

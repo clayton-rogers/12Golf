@@ -13,6 +13,9 @@ import java.net.Socket;
 import java.util.*;
 
 /**
+ * The main application class than handles the changing from one scene to another, performs the draw
+ * loop and captures input.
+ * <p>
  * Created by clayton on 2015-07-05.
  */
 class Application extends JFrame implements Runnable {

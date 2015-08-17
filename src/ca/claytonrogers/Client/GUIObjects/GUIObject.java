@@ -5,6 +5,11 @@ import ca.claytonrogers.Common.IntVector;
 import java.awt.*;
 
 /**
+ * This is the generic GUI object which must be extended to use with the generic scene.
+ * <p>
+ * It handles disabling click when isClickable is false or when the item is not visible. It handles
+ * only drawing the item when it is visible. The default on creation is visible but not clickable.
+ * <p>
  * Created by clayton on 2015-07-05.
  */
 public abstract class GUIObject {
@@ -21,8 +26,8 @@ public abstract class GUIObject {
     protected IntVector location;
     protected IntVector size;
     private final Type type;
-    protected boolean isVisible;
-    protected boolean isClickable;
+    private boolean isVisible;
+    private boolean isClickable;
 
     public GUIObject (IntVector location, IntVector size, Type type) {
         this.location = new IntVector(location);

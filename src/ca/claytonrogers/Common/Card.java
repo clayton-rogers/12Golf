@@ -1,6 +1,9 @@
 package ca.claytonrogers.Common;
 
 /**
+ * Represent a single card on the table. Can be face up or down. Can have a value between 1 and 13
+ * (Ace and King).
+ * <p>
  * Created by clayton on 2015-07-05.
  */
 public class Card {
