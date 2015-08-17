@@ -242,9 +242,9 @@ public class GameScreen extends Scene<SceneChange.NullPayloadType> {
                 }
             }
             if (isTie) {
-                statusMsg = "Game Over! " + usernames[winner] + " won!";
-            } else {
                 statusMsg = "Game Over! Game was a tie!";
+            } else {
+                statusMsg = "Game Over! " + usernames[winner] + " won!";
             }
         }
         statusString.setString(statusMsg);
