@@ -89,13 +89,14 @@ public class Application extends JFrame implements Runnable {
                 return;
             }
         }
-
-        // Create a connection object from the socket
         serverConnection = new Connection(socket);
 
-        // By now, we're connected, so tell the user we're just waiting on the other users.
-        // TODO this should be a scene too
-        drawWaitingForOtherPlayersScreen();
+        // By now we're connected, so tell the user we're just waiting on the other users.
+        waitingScreen = new WaitingScreen(serverConnection);
+        waitingScreen.drawScreen(this, WINDOW_BOUNDS);
+        // draw screen should now generally be used in this way, but we don't have the main
+        // loop up yet so we don't have much choice.
+        // When a main menu is implemented we can incorporate it into that.
 
         // Send the version information
         VersionInformation version = new VersionInformation(Constants.VERSION);
@@ -154,6 +155,7 @@ public class Application extends JFrame implements Runnable {
             usernameMessage = (Username)serverConnection.waitForNextMessage();
             usernames[usernameMessage.getPlayerNumber()] = usernameMessage.getUsername();
         }
+        scoreScreen = new ScoreScreen(usernames);
 
         drawLoop();
 
@@ -165,10 +167,7 @@ public class Application extends JFrame implements Runnable {
     }
 
     private void drawLoop () {
-        // Since the score card is persistent across rounds,
-        // it is initialized outsize the main initialization method.
-        scoreScreen = new ScoreScreen(usernames);
-        waitingScreen = new WaitingScreen(serverConnection);
+
         initialiseGame();
         currentScene = gameScreen;
 
@@ -229,34 +228,7 @@ public class Application extends JFrame implements Runnable {
     }
 
     private void initialiseGame() {
+        // TODO FUTURE this should be integrated into the game screen start method.
         gameScreen = new GameScreen(serverConnection, usernames, playerNumber, totalPlayers);
-    }
-
-    private void drawWaitingForOtherPlayersScreen() {
-        // TODO make scene
-
-        BufferStrategy bf = getBufferStrategy();
-        Graphics g = null;
-
-        try {
-            g = bf.getDrawGraphics();
-
-            g.setColor(Constants.BACKGROUND_COLOR);
-            g.fillRect(0, 0, WINDOW_BOUNDS.x, WINDOW_BOUNDS.y);
-
-            g.setColor(Constants.CARD_FOREGROUND_COLOR);
-            g.drawString(
-                    "Waiting for leader to start the game...",
-                    Constants.WAITING_FOR_PLAYERS.x,
-                    Constants.WAITING_FOR_PLAYERS.y);
-
-        } finally {
-            if (g != null) {
-                g.dispose();
-            }
-        }
-
-        bf.show();
-        Toolkit.getDefaultToolkit().sync();
     }
 }
