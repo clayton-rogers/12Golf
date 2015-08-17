@@ -117,7 +117,9 @@ public abstract class Scene<T> {
      * @return The scene change to be performed, or null if non is required.
      */
     public SceneChange getNextScene() {
-        return nextScene;
+        SceneChange temp = nextScene;
+        nextScene = null;
+        return temp;
     }
 
     /**
