@@ -232,6 +232,7 @@ public class GameScreen extends Scene<SceneChange.NullPayloadType> {
             int winner = -1;
             int winnerScore = 1000; // Best scores are low
             boolean isTie = false;
+            // TODO erroneous "Game was a tie!"
             for (int i = 0; i < scores.length; i++) {
                 if (scores[i] < winnerScore) {
                     winner = i;

@@ -20,6 +20,7 @@ public class GUIStatusString extends GUIObject {
 
     @Override
     protected void internalDraw(Graphics g) {
+        g.setColor(Constants.BUTTON_FOREGROUND_COLOR);
         g.drawString(string, location.x, location.y);
     }
 
