@@ -44,6 +44,7 @@ public class ScoreScreen extends Scene<int[]> {
                 break;
             case NextRoundButton:
                 nextScene = new SceneChange<>(SceneType.Waiting, null);
+                mouseClickList.poll(); // Since we have handled the click remove it.
                 break;
             default:
                 System.out.println("Got a click in the score screen that wasn't expected: " + clickType);

@@ -127,7 +127,9 @@ public abstract class Scene<T> {
      * against GUI objects in the GUI object list. It will return the type of object if a hit is
      * found. If there are no clicks queued or the clicks do not hit anything then it will return
      * GUIObject.Type.None.
-     *
+     * <p>
+     * NOTE: This does not remove the click, only peek()s at it.
+     * <p>
      * @return The type of GUI object hit. "None" if no objects are hit.
      */
     protected GUIObject.Type getNextGoodClickLocation() {
