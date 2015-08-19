@@ -24,13 +24,13 @@ public class GameScreen extends Scene<SceneChange.NullPayloadType> {
     private final int playerNumber;
     private final int totalPlayers;
 
-    private final GolfGame game;
+    private GolfGame game;
 
-    private final GUIHand[] guiHands;
-    private final GUIDeck drawPile;
-    private final GUIDeck discardPile;
-    private final GUIStatusString statusString;
-    private final GUIButton scoreScreenButton;
+    private GUIHand[] guiHands;
+    private GUIDeck drawPile;
+    private GUIDeck discardPile;
+    private GUIStatusString statusString;
+    private GUIButton scoreScreenButton;
 
     public GameScreen(
             Connection serverConnection,
@@ -42,6 +42,21 @@ public class GameScreen extends Scene<SceneChange.NullPayloadType> {
         this.playerNumber = playerNumber;
         this.totalPlayers = totalPlayers;
 
+        initGame();
+    }
+
+    @Override
+    public void startScene(SceneChange<SceneChange.NullPayloadType> sceneChange) {
+        // If we already finished the game then we need to initialize a new one.
+        // Otherwise there is nothing to do.
+        if (game.isGameOver()) {
+            initGame();
+        }
+    }
+
+    private void initGame() {
+
+        guiObjectList.clear();
         // The next game state can be independently generated on each client because
         // they were all seeded with the same value and have all kept the same state.
         State state = new State(totalPlayers);
@@ -84,12 +99,6 @@ public class GameScreen extends Scene<SceneChange.NullPayloadType> {
                 GUIObject.Type.ScoreScreenButton
         );
         guiObjectList.add(scoreScreenButton);
-    }
-
-    @Override
-    public void startScene(SceneChange<SceneChange.NullPayloadType> sceneChange) {
-        // Don't need to do anything when switching to the game screen since it
-        // should always be a new one.
     }
 
     @Override
@@ -136,7 +145,15 @@ public class GameScreen extends Scene<SceneChange.NullPayloadType> {
                 serverConnection.send(msg);
                 break;
             case ScoreScreenButton:
-                nextScene = new SceneChange<>(SceneType.Score, game.getScores());
+                if (game.isGameOver()) {
+                    nextScene = new SceneChange<>(
+                            SceneType.Score,
+                            new ScoreScreen.OptionalScores(true, game.getScores()));
+                } else {
+                    nextScene = new SceneChange<>(
+                            SceneType.Score,
+                            new ScoreScreen.OptionalScores(false, null));
+                }
                 break;
         }
         // Since we have now handled the click, throw it out.
@@ -187,8 +204,6 @@ public class GameScreen extends Scene<SceneChange.NullPayloadType> {
 
     @Override
     public void processState() {
-
-        scoreScreenButton.setVisibility(game.isGameOver());
 
         // Clickability update
         if (game.getPlayerTurn() != playerNumber ||

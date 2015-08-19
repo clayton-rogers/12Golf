@@ -114,6 +114,11 @@ public class GolfGame {
     }
 
     public int[] getScores () {
+        if (!isGameOver()) {
+            throw new IllegalStateException("Should not be getting the scores of a game " +
+            "before it is over.");
+        }
+
         int[] scores = new int[state.getNumberOfPlayers()];
         for (int i = 0; i < state.getNumberOfPlayers(); i++) {
             scores[i] = state.getPlayerHands()[i].getHandScore();
