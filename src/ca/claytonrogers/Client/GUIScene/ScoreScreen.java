@@ -11,7 +11,17 @@ import ca.claytonrogers.Common.ScoreCard;
  * <p>
  * Created by clayton on 2015-08-16.
  */
-public class ScoreScreen extends Scene<int[]> {
+public class ScoreScreen extends Scene<ScoreScreen.OptionalScores> {
+
+    public static class OptionalScores {
+        private boolean exists = false;
+        private int[] scores = null;
+
+        public OptionalScores(boolean exists, int[] scores) {
+            this.exists = exists;
+            this.scores = scores;
+        }
+    }
 
     private final ScoreCard scoreCard;
 
@@ -30,9 +40,10 @@ public class ScoreScreen extends Scene<int[]> {
     }
 
     @Override
-    public void startScene(SceneChange<int[]> sceneChange) {
-        int[] scores = sceneChange.getPayload();
-        scoreCard.add(scores);
+    public void startScene(SceneChange<OptionalScores> sceneChange) {
+        if (sceneChange.getPayload().exists) {
+            scoreCard.add(sceneChange.getPayload().scores);
+        }
     }
 
     @Override

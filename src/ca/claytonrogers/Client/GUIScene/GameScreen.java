@@ -136,7 +136,15 @@ public class GameScreen extends Scene<SceneChange.NullPayloadType> {
                 serverConnection.send(msg);
                 break;
             case ScoreScreenButton:
-                nextScene = new SceneChange<>(SceneType.Score, game.getScores());
+                if (game.isGameOver()) {
+                    nextScene = new SceneChange<>(
+                            SceneType.Score,
+                            new ScoreScreen.OptionalScores(true, game.getScores()));
+                } else {
+                    nextScene = new SceneChange<>(
+                            SceneType.Score,
+                            new ScoreScreen.OptionalScores(false, null));
+                }
                 break;
         }
         // Since we have now handled the click, throw it out.
