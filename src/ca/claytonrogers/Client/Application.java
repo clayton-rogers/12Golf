@@ -167,7 +167,6 @@ class Application extends JFrame implements Runnable {
 
     private void drawLoop () {
 
-        initialiseGame();
         currentScene = gameScreen;
 
         while (isRunning) {
@@ -183,7 +182,6 @@ class Application extends JFrame implements Runnable {
                         currentScene = scoreScreen;
                         break;
                     case Game:
-                        initialiseGame();
                         currentScene = gameScreen;
                         break;
                     case MainMenu:
@@ -225,10 +223,5 @@ class Application extends JFrame implements Runnable {
         } catch (InterruptedException e) {
             System.out.println("The draw loop was interrupted: " + e);
         }
-    }
-
-    private void initialiseGame() {
-        // TODO FUTURE this should be integrated into the game screen start method.
-        gameScreen = new GameScreen(serverConnection, usernames, playerNumber, totalPlayers);
     }
 }
