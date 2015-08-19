@@ -155,6 +155,7 @@ class Application extends JFrame implements Runnable {
             usernames[usernameMessage.getPlayerNumber()] = usernameMessage.getUsername();
         }
         scoreScreen = new ScoreScreen(usernames);
+        gameScreen = new GameScreen(serverConnection, usernames, playerNumber, totalPlayers);
 
         drawLoop();
 

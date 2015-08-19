@@ -24,9 +24,11 @@ public class ScoreScreen extends Scene<ScoreScreen.OptionalScores> {
     }
 
     private final ScoreCard scoreCard;
+    private boolean isEndOfRound = true;
+    private GUIButton nextRoundButton;
 
     public ScoreScreen (String[] usernames) {
-        GUIButton nextRoundButton = new GUIButton(
+        nextRoundButton = new GUIButton(
                 Constants.NEXT_ROUND_BUTTON_LOCATION,
                 Constants.NEXT_ROUND_BUTTON_SIZE,
                 Constants.NEXT_ROUND_BUTTON_TEXT,
@@ -43,6 +45,11 @@ public class ScoreScreen extends Scene<ScoreScreen.OptionalScores> {
     public void startScene(SceneChange<OptionalScores> sceneChange) {
         if (sceneChange.getPayload().exists) {
             scoreCard.add(sceneChange.getPayload().scores);
+            isEndOfRound = true;
+            nextRoundButton.setButtonText(Constants.NEXT_ROUND_BUTTON_TEXT);
+        } else {
+            isEndOfRound = false;
+            nextRoundButton.setButtonText(Constants.NEXT_ROUND_BACK_TEXT);
         }
     }
 
@@ -54,7 +61,11 @@ public class ScoreScreen extends Scene<ScoreScreen.OptionalScores> {
             case None:
                 break;
             case NextRoundButton:
-                nextScene = new SceneChange<>(SceneType.Waiting, null);
+                if (isEndOfRound) {
+                    nextScene = new SceneChange<>(SceneType.Waiting, null);
+                } else {
+                    nextScene = new SceneChange<>(SceneType.Game, null);
+                }
                 mouseClickList.poll(); // Since we have handled the click remove it.
                 break;
             default:

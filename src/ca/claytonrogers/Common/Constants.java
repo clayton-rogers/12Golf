@@ -55,6 +55,7 @@ public class Constants {
     public static final IntVector NEXT_ROUND_BUTTON_LOCATION = FIELD_OFFSET.add(new IntVector(20,0));
     public static final IntVector NEXT_ROUND_BUTTON_SIZE = new IntVector(70, 15);
     public static final String    NEXT_ROUND_BUTTON_TEXT = "Next Round";
+    public static final String    NEXT_ROUND_BACK_TEXT = "Go Back";
 
     // GUI Score Card constants
     public static final int SCORE_SCREEN_TAB_SIZE = 80;

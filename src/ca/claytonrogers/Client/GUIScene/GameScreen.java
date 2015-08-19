@@ -55,6 +55,8 @@ public class GameScreen extends Scene<SceneChange.NullPayloadType> {
     }
 
     private void initGame() {
+
+        guiObjectList.clear();
         // The next game state can be independently generated on each client because
         // they were all seeded with the same value and have all kept the same state.
         State state = new State(totalPlayers);
