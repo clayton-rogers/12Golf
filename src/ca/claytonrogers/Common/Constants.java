@@ -20,6 +20,9 @@ public class Constants {
     public static final boolean NET_DEBUG = false;
     public static Random random;
 
+    // Resources
+    public static final String ICON_PATH = "/res/Golf Icon.png";
+
     // GUI general constants
     public static final IntVector CARD_SIZE = new IntVector(30,60);
     public static final int       CARD_CORNER_RADIUS = 3;

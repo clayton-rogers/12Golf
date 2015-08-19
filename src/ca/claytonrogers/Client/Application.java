@@ -10,6 +10,7 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.Socket;
+import java.net.URL;
 import java.util.*;
 
 /**
@@ -62,11 +63,14 @@ class Application extends JFrame implements Runnable {
 
         // Set the Icon
         Image icon;
+        URL iconPath = getClass().getResource(Constants.ICON_PATH);
         try {
-            icon = ImageIO.read(new File("res/Golf Icon.png"));
-            setIconImage(icon);
+            if (iconPath != null) {
+                icon = ImageIO.read(iconPath);
+                setIconImage(icon);
+            }
         } catch (IOException e) {
-            System.out.println("Could not find the icon.");
+            System.out.println("Problem reading the icon: " + e);
         }
     }
 
@@ -163,7 +167,9 @@ class Application extends JFrame implements Runnable {
     }
 
     public void addClick(IntVector clickLocation) {
-        currentScene.addClick(clickLocation);
+        if (currentScene != null) {
+            currentScene.addClick(clickLocation);
+        }
     }
 
     private void drawLoop () {
