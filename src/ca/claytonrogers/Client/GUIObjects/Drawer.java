@@ -13,6 +13,9 @@ import java.awt.*;
  */
 class Drawer {
 
+    public  static final IntVector CARD_SIZE = new IntVector(30,60);
+    private static final int       CARD_CORNER_RADIUS = 3;
+
     public static void drawCard(Graphics g, Card card, IntVector location) {
 
         // Draw the background.
@@ -20,20 +23,20 @@ class Drawer {
         g.fillRoundRect(
                 location.x,
                 location.y,
-                Constants.CARD_SIZE.x,
-                Constants.CARD_SIZE.y,
-                Constants.CARD_CORNER_RADIUS,
-                Constants.CARD_CORNER_RADIUS);
+                CARD_SIZE.x,
+                CARD_SIZE.y,
+                CARD_CORNER_RADIUS,
+                CARD_CORNER_RADIUS);
 
         // Draw the outline
         g.setColor(Constants.CARD_FOREGROUND_COLOR);
         g.drawRoundRect(
                 location.x,
                 location.y,
-                Constants.CARD_SIZE.x,
-                Constants.CARD_SIZE.y,
-                Constants.CARD_CORNER_RADIUS,
-                Constants.CARD_CORNER_RADIUS);
+                CARD_SIZE.x,
+                CARD_SIZE.y,
+                CARD_CORNER_RADIUS,
+                CARD_CORNER_RADIUS);
 
         // Draw either the number or the back
         if (card.isFaceUp) {
@@ -49,16 +52,16 @@ class Drawer {
     public static void drawX(Graphics g, IntVector location) {
         // Top left to bottom right
         g.drawLine(
-                location.x + Constants.CARD_CORNER_RADIUS,
-                location.y + Constants.CARD_CORNER_RADIUS,
-                location.x + Constants.CARD_SIZE.x - Constants.CARD_CORNER_RADIUS,
-                location.y + Constants.CARD_SIZE.y - Constants.CARD_CORNER_RADIUS);
+                location.x + CARD_CORNER_RADIUS,
+                location.y + CARD_CORNER_RADIUS,
+                location.x + CARD_SIZE.x - CARD_CORNER_RADIUS,
+                location.y + CARD_SIZE.y - CARD_CORNER_RADIUS);
 
         // Bottom left to top right
         g.drawLine(
-                location.x + Constants.CARD_SIZE.x - Constants.CARD_CORNER_RADIUS,
-                location.y + Constants.CARD_CORNER_RADIUS,
-                location.x + Constants.CARD_CORNER_RADIUS,
-                location.y + Constants.CARD_SIZE.y - Constants.CARD_CORNER_RADIUS);
+                location.x + CARD_SIZE.x - CARD_CORNER_RADIUS,
+                location.y + CARD_CORNER_RADIUS,
+                location.x + CARD_CORNER_RADIUS,
+                location.y + CARD_SIZE.y - CARD_CORNER_RADIUS);
     }
 }

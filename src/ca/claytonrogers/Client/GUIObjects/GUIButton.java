@@ -14,6 +14,8 @@ import java.awt.*;
  */
 public class GUIButton extends GUIObject {
 
+    private static final int BUTTON_CORNER_RADIUS = 3;
+
     private String buttonText;
 
     public GUIButton(IntVector location, IntVector size, String buttonText, Type type) {
@@ -35,8 +37,8 @@ public class GUIButton extends GUIObject {
                 location.y,
                 size.x,
                 size.y,
-                Constants.BUTTON_CORNER_RADIUS,
-                Constants.BUTTON_CORNER_RADIUS);
+                BUTTON_CORNER_RADIUS,
+                BUTTON_CORNER_RADIUS);
 
         // Draw the outline
         g.setColor(Constants.BUTTON_FOREGROUND_COLOR);
@@ -45,8 +47,8 @@ public class GUIButton extends GUIObject {
                 location.y,
                 size.x,
                 size.y,
-                Constants.BUTTON_CORNER_RADIUS,
-                Constants.BUTTON_CORNER_RADIUS);
+                BUTTON_CORNER_RADIUS,
+                BUTTON_CORNER_RADIUS);
 
         // Draw the button text
         g.drawString(

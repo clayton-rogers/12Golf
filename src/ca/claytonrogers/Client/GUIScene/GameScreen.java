@@ -1,14 +1,11 @@
 package ca.claytonrogers.Client.GUIScene;
 
 import ca.claytonrogers.Client.GUIObjects.*;
-import ca.claytonrogers.Common.Connection;
-import ca.claytonrogers.Common.Constants;
-import ca.claytonrogers.Common.GolfGame;
+import ca.claytonrogers.Common.*;
 import ca.claytonrogers.Common.Messages.DiscardCardClicked;
 import ca.claytonrogers.Common.Messages.DrawCardClicked;
 import ca.claytonrogers.Common.Messages.HandSelection;
 import ca.claytonrogers.Common.Messages.Message;
-import ca.claytonrogers.Common.State;
 
 import java.util.Collections;
 
@@ -18,6 +15,20 @@ import java.util.Collections;
  * Created by clayton on 2015-08-16.
  */
 public class GameScreen extends Scene<SceneChange.NullPayloadType> {
+
+    private static final IntVector DISCARD_PILE_LOCATION = Constants.FIELD_OFFSET.add(new IntVector(100, 180));
+    private static final IntVector DRAW_PILE_LOCATION = Constants.FIELD_OFFSET.add(new IntVector(150, 180));
+    private static final IntVector STATUS_STRING_LOCATION = Constants.FIELD_OFFSET.add(new IntVector(  0, 280));
+    private static final IntVector[] HAND_LOCATIONS = new IntVector[4];
+    static {
+        HAND_LOCATIONS[0] = Constants.FIELD_OFFSET.add(new IntVector(  0,300));  // Bottom
+        HAND_LOCATIONS[1] = Constants.FIELD_OFFSET.add(new IntVector(100,100));  // Left
+        HAND_LOCATIONS[2] = Constants.FIELD_OFFSET.add(new IntVector(  0,  0));  // Top
+        HAND_LOCATIONS[3] = Constants.FIELD_OFFSET.add(new IntVector(600,100));  // Right
+    }
+    private static final IntVector SCORE_SCREEN_BUTTON_LOCATION = Constants.FIELD_OFFSET.add(new IntVector(100,144));
+    private static final IntVector SCORE_SCREEN_BUTTON_SIZE = new IntVector(80, 15);
+    private static final String    SCORE_SCREEN_BUTTON_TEXT = "Score Screen";
 
     private final Connection serverConnection;
     private final String[] usernames;
@@ -68,34 +79,35 @@ public class GameScreen extends Scene<SceneChange.NullPayloadType> {
             // If there's only two players, we want them sitting across from each other.
             // With the self player on the bottom.
             if (playerNumber == 0) {
-                guiHands[0] = new GUIHand(state.getPlayerHands()[0], 0);
-                guiHands[1] = new GUIHand(state.getPlayerHands()[1], 2);
+                guiHands[0] = new GUIHand(state.getPlayerHands()[0], 0, getHandLocation(0));
+                guiHands[1] = new GUIHand(state.getPlayerHands()[1], 2, getHandLocation(2));
             } else {
-                guiHands[0] = new GUIHand(state.getPlayerHands()[0], 2);
-                guiHands[1] = new GUIHand(state.getPlayerHands()[1], 0);
+                guiHands[0] = new GUIHand(state.getPlayerHands()[0], 2, getHandLocation(2));
+                guiHands[1] = new GUIHand(state.getPlayerHands()[1], 0, getHandLocation(0));
             }
         } else {
             int numPlayers = state.getNumberOfPlayers();
             for (int i = 0; i < numPlayers; i++) {
-                guiHands[i] = new GUIHand(state.getPlayerHands()[i], (i-playerNumber+numPlayers)%numPlayers);
+                int playerRelativePositionNumber = (i-playerNumber+numPlayers)%numPlayers;
+                guiHands[i] = new GUIHand(state.getPlayerHands()[i], playerRelativePositionNumber, getHandLocation(playerRelativePositionNumber));
             }
         }
         Collections.addAll(guiObjectList, guiHands);
 
-        drawPile = new GUIDeck(Constants.DRAW_PILE_LOCATION, state.getDrawPile(), GUIObject.Type.DrawPile);
+        drawPile = new GUIDeck(DRAW_PILE_LOCATION, state.getDrawPile(), GUIObject.Type.DrawPile);
         guiObjectList.add(drawPile);
 
-        discardPile = new GUIDeck(Constants.DISCARD_PILE_LOCATION, state.getDiscardPile(), GUIObject.Type.DiscardPile);
+        discardPile = new GUIDeck(DISCARD_PILE_LOCATION, state.getDiscardPile(), GUIObject.Type.DiscardPile);
         discardPile.setIsFaceUp(true); // The discard pile should always be face up and never change.
         guiObjectList.add(discardPile);
 
-        statusString = new GUIString(Constants.STATUS_STRING_LOCATION);
+        statusString = new GUIString(STATUS_STRING_LOCATION);
         guiObjectList.add(statusString);
 
         scoreScreenButton = new GUIButton(
-                Constants.SCORE_SCREEN_BUTTON_LOCATION,
-                Constants.SCORE_SCREEN_BUTTON_SIZE,
-                Constants.SCORE_SCREEN_BUTTON_TEXT,
+                SCORE_SCREEN_BUTTON_LOCATION,
+                SCORE_SCREEN_BUTTON_SIZE,
+                SCORE_SCREEN_BUTTON_TEXT,
                 GUIObject.Type.ScoreScreenButton
         );
         guiObjectList.add(scoreScreenButton);
@@ -262,5 +274,9 @@ public class GameScreen extends Scene<SceneChange.NullPayloadType> {
             }
         }
         statusString.setString(statusMsg);
+    }
+
+    private static IntVector getHandLocation(int position) {
+        return HAND_LOCATIONS[position];
     }
 }

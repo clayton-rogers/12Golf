@@ -15,11 +15,14 @@ import java.awt.*;
  */
 public class GUIDeck extends GUIObject {
 
+    private static final IntVector DECK_SIZE = Drawer.CARD_SIZE.add(new IntVector(6,6)); // The 6 is to allow for the height of the deck
+    private static final IntVector DECK_OFFSET = new IntVector(-1, 1);
+
     private final Deck deck;
     private boolean isFaceUp = false;
 
     public GUIDeck(IntVector location, Deck deck, Type type) {
-        super(location, Constants.DECK_SIZE, type);
+        super(location, DECK_SIZE, type);
         this.deck = deck;
     }
 
@@ -40,7 +43,7 @@ public class GUIDeck extends GUIObject {
             // Draw all the bottom cards
             for (int i = 0; i < numberCardsToDraw; i++) {
                 Drawer.drawCard(g, bottomCard, offsetLocation);
-                offsetLocation = offsetLocation.sub(Constants.DECK_OFFSET); // The offset location should work like a drop shadow
+                offsetLocation = offsetLocation.sub(DECK_OFFSET); // The offset location should work like a drop shadow
             }
             // And the top face card
             Drawer.drawCard(g, topCard, offsetLocation);

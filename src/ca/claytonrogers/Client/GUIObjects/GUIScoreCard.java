@@ -14,6 +14,10 @@ import java.awt.*;
  */
 public class GUIScoreCard extends GUIObject {
 
+    private static final int SCORE_SCREEN_TAB_SIZE = 80;
+    private static final int SCORE_SCREEN_LINE_HEIGHT = 20;
+    private static final IntVector SCORE_SCREEN_INITIAL_OFFSET = Constants.FIELD_OFFSET.add(new IntVector(0,40));
+
     private ScoreCard scoreCard;
     private String[] playerNames;
 
@@ -31,7 +35,7 @@ public class GUIScoreCard extends GUIObject {
     @Override
     protected void internalDraw(Graphics g) {
 
-        IntVector drawLocation = Constants.SCORE_SCREEN_INITIAL_OFFSET;
+        IntVector drawLocation = SCORE_SCREEN_INITIAL_OFFSET;
         int numPlayers = scoreCard.getNumPlayers();
 
         // Draw the header
@@ -70,7 +74,7 @@ public class GUIScoreCard extends GUIObject {
         }
 
         // Draw the header underline
-        drawLocation = Constants.SCORE_SCREEN_INITIAL_OFFSET;
+        drawLocation = SCORE_SCREEN_INITIAL_OFFSET;
         g.drawLine(
                 drawLocation.x,
                 drawLocation.y,
@@ -80,20 +84,20 @@ public class GUIScoreCard extends GUIObject {
         // Draw the vertical lines
         for (int i = 0; i < numPlayers; i++) {
             g.drawLine(
-                    drawLocation.x -5 + Constants.SCORE_SCREEN_TAB_SIZE + i * Constants.SCORE_SCREEN_TAB_SIZE,
+                    drawLocation.x -5 + SCORE_SCREEN_TAB_SIZE + i * SCORE_SCREEN_TAB_SIZE,
                     drawLocation.y,
-                    drawLocation.x -5 + Constants.SCORE_SCREEN_TAB_SIZE + i * Constants.SCORE_SCREEN_TAB_SIZE,
+                    drawLocation.x -5 + SCORE_SCREEN_TAB_SIZE + i * SCORE_SCREEN_TAB_SIZE,
                     drawLocation.y + 500);
         }
     }
 
     private IntVector nextDrawLine (IntVector drawLocation) {
         return new IntVector( // Reset the x and increment the line
-                Constants.SCORE_SCREEN_INITIAL_OFFSET.x,
-                drawLocation.y + Constants.SCORE_SCREEN_LINE_HEIGHT
+                SCORE_SCREEN_INITIAL_OFFSET.x,
+                drawLocation.y + SCORE_SCREEN_LINE_HEIGHT
         );
     }
     private IntVector nextTab (IntVector drawLocation) {
-        return drawLocation.add(new IntVector(Constants.SCORE_SCREEN_TAB_SIZE,0));
+        return drawLocation.add(new IntVector(SCORE_SCREEN_TAB_SIZE,0));
     }
 }

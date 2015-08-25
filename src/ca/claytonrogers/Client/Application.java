@@ -22,6 +22,8 @@ import java.util.*;
  */
 class Application extends JFrame implements Runnable {
 
+    private static final String ICON_PATH = "/res/Golf Icon.png";
+
     private static final int FRAME_TIME = 17;  // Frame time in ms
     private static final IntVector WINDOW_BOUNDS = new IntVector(400,550);
 
@@ -64,7 +66,7 @@ class Application extends JFrame implements Runnable {
 
         // Set the Icon
         Image icon;
-        URL iconPath = getClass().getResource(Constants.ICON_PATH);
+        URL iconPath = getClass().getResource(ICON_PATH);
         try {
             if (iconPath != null) {
                 icon = ImageIO.read(iconPath);

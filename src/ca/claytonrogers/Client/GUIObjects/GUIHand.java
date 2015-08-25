@@ -15,20 +15,22 @@ import java.awt.*;
  */
 public class GUIHand extends GUIObject {
 
+    private static final int SPACE_BETWEEN_CARDS = 10;
+    private static final IntVector HAND_SIZE =
+            new IntVector(
+                    6*Drawer.CARD_SIZE.x + 5*SPACE_BETWEEN_CARDS,
+                    2*Drawer.CARD_SIZE.y +   SPACE_BETWEEN_CARDS);
+
     private final Hand hand;
     private int position = 0; // 0-3 for the different players
 
-    public GUIHand(Hand hand, int position) {
+    public GUIHand(Hand hand, int positionNumber, IntVector position) {
         super(
-                getHandLocation(position),
-                Constants.HAND_SIZE,
+                position,
+                HAND_SIZE,
                 Type.Hand);
         this.hand = hand;
-        this.position = position;
-    }
-
-    private static IntVector getHandLocation(int position) {
-        return Constants.HAND_LOCATIONS[position];
+        this.position = positionNumber;
     }
 
     public int getClickedCard(IntVector clickLocation) {
@@ -58,10 +60,10 @@ public class GUIHand extends GUIObject {
         for (int x = 0; x < handWidth; x++) {
             for (int y = 0; y < 2; y++) {
                 if (
-                        relativePos.x > x*(Constants.CARD_SIZE.x+Constants.SPACE_BETWEEN_CARDS) &&
-                        relativePos.x < (x*(Constants.CARD_SIZE.x+Constants.SPACE_BETWEEN_CARDS)+Constants.CARD_SIZE.x) &&
-                        relativePos.y > y*(Constants.CARD_SIZE.y+Constants.SPACE_BETWEEN_CARDS) &&
-                        relativePos.y < (y*(Constants.CARD_SIZE.y+Constants.SPACE_BETWEEN_CARDS)+Constants.CARD_SIZE.y)
+                        relativePos.x > x*(Drawer.CARD_SIZE.x+SPACE_BETWEEN_CARDS) &&
+                        relativePos.x < (x*(Drawer.CARD_SIZE.x+SPACE_BETWEEN_CARDS)+Drawer.CARD_SIZE.x) &&
+                        relativePos.y > y*(Drawer.CARD_SIZE.y+SPACE_BETWEEN_CARDS) &&
+                        relativePos.y < (y*(Drawer.CARD_SIZE.y+SPACE_BETWEEN_CARDS)+Drawer.CARD_SIZE.y)
                         ) {
                     return x + y*handWidth;
                 }
@@ -90,18 +92,18 @@ public class GUIHand extends GUIObject {
                 Drawer.drawCard(g, card, cardLocation);
 
                 // Increment the card location to the right
-                cardLocation = cardLocation.add(new IntVector(Constants.SPACE_BETWEEN_CARDS + Constants.CARD_SIZE.x,0));
+                cardLocation = cardLocation.add(new IntVector(SPACE_BETWEEN_CARDS + Drawer.CARD_SIZE.x,0));
             }
             // Increment the card location down a row
-            cardLocation = location.add(new IntVector(0,Constants.SPACE_BETWEEN_CARDS + Constants.CARD_SIZE.y));
+            cardLocation = location.add(new IntVector(0,SPACE_BETWEEN_CARDS + Drawer.CARD_SIZE.y));
         }
 
         // Finally, draw the score next to the hand.
         String score = "Score: " + hand.getHandScore();
         IntVector scoreLocation = location.add(
                 new IntVector(
-                        handWidth*(Constants.SPACE_BETWEEN_CARDS + Constants.CARD_SIZE.x),
-                        2 * (Constants.SPACE_BETWEEN_CARDS)));
+                        handWidth*(SPACE_BETWEEN_CARDS + Drawer.CARD_SIZE.x),
+                        2 * (SPACE_BETWEEN_CARDS)));
         g.drawString(score, scoreLocation.x, scoreLocation.y);
     }
 

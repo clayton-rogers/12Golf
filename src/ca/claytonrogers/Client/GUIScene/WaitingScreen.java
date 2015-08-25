@@ -3,6 +3,7 @@ package ca.claytonrogers.Client.GUIScene;
 import ca.claytonrogers.Client.GUIObjects.GUIString;
 import ca.claytonrogers.Common.Connection;
 import ca.claytonrogers.Common.Constants;
+import ca.claytonrogers.Common.IntVector;
 import ca.claytonrogers.Common.Messages.Message;
 import ca.claytonrogers.Common.Messages.ReadyForNextRound;
 
@@ -14,12 +15,14 @@ import ca.claytonrogers.Common.Messages.ReadyForNextRound;
  */
 public class WaitingScreen extends Scene<SceneChange.NullPayloadType> {
 
+    public static final IntVector WAITING_FOR_PLAYERS_LOCATION = Constants.FIELD_OFFSET.add(new IntVector(100, 100));
+
     private Connection serverConnection;
 
     public WaitingScreen(Connection serverConnection) {
         this.serverConnection = serverConnection;
 
-        GUIString statusString = new GUIString(Constants.STATUS_STRING_LOCATION);
+        GUIString statusString = new GUIString(WAITING_FOR_PLAYERS_LOCATION);
         statusString.setString("Waiting for all players to be ready...");
         guiObjectList.add(statusString);
     }

@@ -4,6 +4,7 @@ import ca.claytonrogers.Client.GUIObjects.GUIButton;
 import ca.claytonrogers.Client.GUIObjects.GUIObject;
 import ca.claytonrogers.Client.GUIObjects.GUIScoreCard;
 import ca.claytonrogers.Common.Constants;
+import ca.claytonrogers.Common.IntVector;
 import ca.claytonrogers.Common.ScoreCard;
 
 /**
@@ -12,6 +13,11 @@ import ca.claytonrogers.Common.ScoreCard;
  * Created by clayton on 2015-08-16.
  */
 public class ScoreScreen extends Scene<ScoreScreen.OptionalScores> {
+
+    private static final IntVector NEXT_ROUND_BUTTON_LOCATION = Constants.FIELD_OFFSET.add(new IntVector(20,0));
+    private static final IntVector NEXT_ROUND_BUTTON_SIZE = new IntVector(70, 15);
+    private static final String    NEXT_ROUND_BUTTON_TEXT = "Next Round";
+    private static final String    NEXT_ROUND_BACK_TEXT = "Go Back";
 
     public static class OptionalScores {
         private boolean exists = false;
@@ -29,9 +35,9 @@ public class ScoreScreen extends Scene<ScoreScreen.OptionalScores> {
 
     public ScoreScreen (String[] usernames) {
         nextRoundButton = new GUIButton(
-                Constants.NEXT_ROUND_BUTTON_LOCATION,
-                Constants.NEXT_ROUND_BUTTON_SIZE,
-                Constants.NEXT_ROUND_BUTTON_TEXT,
+                NEXT_ROUND_BUTTON_LOCATION,
+                NEXT_ROUND_BUTTON_SIZE,
+                NEXT_ROUND_BUTTON_TEXT,
                 GUIObject.Type.NextRoundButton
         );
         guiObjectList.add(nextRoundButton);
@@ -46,10 +52,10 @@ public class ScoreScreen extends Scene<ScoreScreen.OptionalScores> {
         if (sceneChange.getPayload().exists) {
             scoreCard.add(sceneChange.getPayload().scores);
             isEndOfRound = true;
-            nextRoundButton.setButtonText(Constants.NEXT_ROUND_BUTTON_TEXT);
+            nextRoundButton.setButtonText(NEXT_ROUND_BUTTON_TEXT);
         } else {
             isEndOfRound = false;
-            nextRoundButton.setButtonText(Constants.NEXT_ROUND_BACK_TEXT);
+            nextRoundButton.setButtonText(NEXT_ROUND_BACK_TEXT);
         }
     }
 
