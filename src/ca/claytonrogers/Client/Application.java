@@ -7,6 +7,7 @@ import ca.claytonrogers.Common.Messages.*;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
 import java.net.Socket;
@@ -179,6 +180,9 @@ class Application extends JFrame implements Runnable {
         while (isRunning) {
             long frameStartTime = System.currentTimeMillis();
 
+            if (!serverConnection.isGood()) {
+                displayDisconnectAndExit();
+            }
             currentScene.handleInputs();
             currentScene.processState();
             currentScene.drawScreen(this, WINDOW_BOUNDS);
@@ -199,9 +203,7 @@ class Application extends JFrame implements Runnable {
                         currentScene = waitingScreen;
                         break;
                     case LostConnection:
-                        JOptionPane.showMessageDialog(this, "Connection to the server has been lost...");
-                        isRunning = false;
-                        currentScene = null;
+                       displayDisconnectAndExit();
                         break;
                     case Quit:
                         isRunning = false;
@@ -217,6 +219,13 @@ class Application extends JFrame implements Runnable {
             long frameEndTime = System.currentTimeMillis();
             waitForNextFrame(frameStartTime, frameEndTime);
         }
+    }
+
+    private void displayDisconnectAndExit() {
+        JOptionPane.showMessageDialog(this, "Connection to the server has been lost...");
+        isRunning = false;
+        currentScene = null;
+        dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
     }
 
     private void waitForNextFrame (long startTime, long endTime) {
