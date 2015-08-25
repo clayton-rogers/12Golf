@@ -29,7 +29,7 @@ public class GameScreen extends Scene<SceneChange.NullPayloadType> {
     private GUIHand[] guiHands;
     private GUIDeck drawPile;
     private GUIDeck discardPile;
-    private GUIStatusString statusString;
+    private GUIString statusString;
     private GUIButton scoreScreenButton;
 
     public GameScreen(
@@ -89,7 +89,7 @@ public class GameScreen extends Scene<SceneChange.NullPayloadType> {
         discardPile.setIsFaceUp(true); // The discard pile should always be face up and never change.
         guiObjectList.add(discardPile);
 
-        statusString = new GUIStatusString();
+        statusString = new GUIString(Constants.STATUS_STRING_LOCATION);
         guiObjectList.add(statusString);
 
         scoreScreenButton = new GUIButton(

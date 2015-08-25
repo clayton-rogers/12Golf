@@ -1,7 +1,8 @@
 package ca.claytonrogers.Client.GUIScene;
 
-import ca.claytonrogers.Client.GUIObjects.GUIStatusString;
+import ca.claytonrogers.Client.GUIObjects.GUIString;
 import ca.claytonrogers.Common.Connection;
+import ca.claytonrogers.Common.Constants;
 import ca.claytonrogers.Common.Messages.Message;
 import ca.claytonrogers.Common.Messages.ReadyForNextRound;
 
@@ -18,7 +19,7 @@ public class WaitingScreen extends Scene<SceneChange.NullPayloadType> {
     public WaitingScreen(Connection serverConnection) {
         this.serverConnection = serverConnection;
 
-        GUIStatusString statusString = new GUIStatusString();
+        GUIString statusString = new GUIString(Constants.STATUS_STRING_LOCATION);
         statusString.setString("Waiting for all players to be ready...");
         guiObjectList.add(statusString);
     }
