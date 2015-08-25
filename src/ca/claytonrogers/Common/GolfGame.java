@@ -15,6 +15,7 @@ public class GolfGame {
 
     public GolfGame(State state) {
         this.state = state;
+        playerTurn = Constants.random.nextInt(2);
     }
 
     public void chooseDrawPile() {
