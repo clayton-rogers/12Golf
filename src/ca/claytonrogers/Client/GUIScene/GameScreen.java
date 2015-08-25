@@ -237,9 +237,9 @@ public class GameScreen extends Scene<SceneChange.NullPayloadType> {
         String statusMsg;
         if (!game.isGameOver()) {
             if (game.getPlayerTurn() == playerNumber) {
-                statusMsg = "Your turn: " + game.getGameState();
+                statusMsg = game.getGameState().toString();
             } else {
-                statusMsg = "Not your turn. Waiting for " + usernames[game.getPlayerTurn()] + "...";
+                statusMsg = usernames[game.getPlayerTurn()] + "'s turn.";
             }
         } else {
             int[] scores = game.getScores();
