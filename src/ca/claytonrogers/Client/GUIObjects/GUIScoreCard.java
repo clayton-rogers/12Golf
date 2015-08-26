@@ -51,11 +51,28 @@ public class GUIScoreCard extends GUIObject {
         for (int round = 0; round < scoreCard.getNumberOfRoundsPlayed(); round++) {
             g.drawString("Round " + (round+1), drawLocation.x, drawLocation.y);
             drawLocation = nextTab(drawLocation);
+            int roundWinnerID = -1;
+            int roundWinnerScore = -9999;  // The minimum round score is -4 (for now) thus we must start with something lower than that.
             for (int player = 0; player < numPlayers; player++) {
+                int score = scoreCard.getScore(round, player);
+                if (score > roundWinnerScore) {
+                    roundWinnerID = player;
+                    roundWinnerScore = score;
+                }
+            }
+            for (int player = 0; player < numPlayers; player++) {
+                if (roundWinnerID == player) {
+                    Font boldFont = g.getFont().deriveFont(Font.BOLD);
+                    g.setFont(boldFont);
+                }
                 g.drawString(
                         String.valueOf(scoreCard.getScore(round,player)),
                         drawLocation.x,
                         drawLocation.y);
+                if (roundWinnerID == player) {
+                    Font font = g.getFont().deriveFont(Font.PLAIN);
+                    g.setFont(font);
+                }
                 drawLocation = nextTab(drawLocation);
             }
 
