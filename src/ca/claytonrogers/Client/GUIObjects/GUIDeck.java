@@ -37,8 +37,8 @@ public class GUIDeck extends GUIObject {
         if (deck.size() == 0) {
             Drawer.drawX(g, location);
         } else {
-            Card bottomCard = new Card(-1, true); // Card with -1 is blank.
-            Card topCard = new Card(deck.peek().value, isFaceUp);
+            Card bottomCard = new Card(-1, true, Card.Suit.clubs); // Card with -1 is blank.
+            Card topCard = new Card(deck.peek().value, isFaceUp, deck.peek().suit);
 
             // Draw all the bottom cards
             for (int i = 0; i < numberCardsToDraw; i++) {

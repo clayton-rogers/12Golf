@@ -9,10 +9,19 @@ package ca.claytonrogers.Common;
 public class Card {
     public int value = 0;
     public boolean isFaceUp = false;
+    public Suit suit;
 
-    public Card(int value, boolean isFaceUp) {
+    public enum Suit {
+        spades,
+        clubs,
+        hearts,
+        diamonds
+    }
+
+    public Card(int value, boolean isFaceUp, Suit suit) {
         this.value = value;
         this.isFaceUp = isFaceUp;
+        this.suit = suit;
     }
 
     public int score() {
