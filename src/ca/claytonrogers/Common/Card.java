@@ -9,10 +9,35 @@ package ca.claytonrogers.Common;
 public class Card {
     public int value = 0;
     public boolean isFaceUp = false;
+    public Suit suit;
 
-    public Card(int value, boolean isFaceUp) {
+    public enum Suit {
+        spades,
+        clubs,
+        hearts,
+        diamonds;
+
+        @Override
+        public String toString() {
+            switch (this) {
+                case spades:
+                    return "\u2660";
+                case clubs:
+                    return "\u2663";
+                case hearts:
+                    return "\u2665";
+                case diamonds:
+                    return "\u2666";
+            }
+
+            throw new IllegalStateException("");
+        }
+    }
+
+    public Card(int value, boolean isFaceUp, Suit suit) {
         this.value = value;
         this.isFaceUp = isFaceUp;
+        this.suit = suit;
     }
 
     public int score() {
