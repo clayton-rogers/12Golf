@@ -11,7 +11,7 @@ v1.3 (22 Jul 2015):
 - Fine tuned the location of a number of GUI elements.
 - Other GUI improvements.
 - Deck now shows how many cards are in it.
-- Discard pile is not shuffled back into the draw pile when the draw pile is empty.
+- Discard pile is now shuffled back into the draw pile when the draw pile is empty.
 
 v1.2 (19 Jul 2015):
 - Added a score screen which is displayed when the round finishes.
