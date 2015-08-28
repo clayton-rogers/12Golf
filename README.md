@@ -5,6 +5,19 @@ Starting with an initially face down hand, your goal is to accumulate the least 
 
 
 ### Release History
+v1.4 (27 Aug 2015):
+- Fixed an issue where if a player went to the next round before the other player had gotten to the 
+score screen then the game would get into an unrecoverable state.
+- Fixed an issue where the client wouldn't recognize tied games.
+- Improved the network utilization by only sending the seed of the game, rather than the whole state.
+- Updated the server so that clients disconnecting before the game starts doesn't break the server.
+- Implemented a GUI scene toolkit. This will allow multiple screens to be handled better. 
+(ex. game screen, score screen, menu screen, etc.)
+- Added an icon.
+- Randomized which player goes first for a given round.
+- Added suits to the cards.
+- Variety of code cleanup, GUI, and documentation improvements.
+
 v1.3 (22 Jul 2015):
 - Fixed an issue where all players would show up as "Joe Luigi".
 - Made it so that a player's cards appear directly in front of them.

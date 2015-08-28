@@ -16,12 +16,12 @@ soon to be implemented, or deferred for a future release.
 - Card piles visually show how many cards they contain.
 - Current score is displayed for all players (with/without randoms (option set assumed random value, default 5.5)).
 - Instruction text line guides the player on what action to do next.
+- Win screen which shows who won the game.
+- Send only the seed instead of the whole state.
 
 === Planned ===
 - Server takes number of players as command line argument.
-- Win screen which shows who won the game.
 - Highlight cards which indicate the next place to click.
-- Send only the seed instead of the whole state.
 
 === Future ===
 - Joker cards which can be anything.
