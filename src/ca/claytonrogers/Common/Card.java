@@ -15,7 +15,23 @@ public class Card {
         spades,
         clubs,
         hearts,
-        diamonds
+        diamonds;
+
+        @Override
+        public String toString() {
+            switch (this) {
+                case spades:
+                    return "\u2660";
+                case clubs:
+                    return "\u2663";
+                case hearts:
+                    return "\u2665";
+                case diamonds:
+                    return "\u2666";
+            }
+
+            throw new IllegalStateException("");
+        }
     }
 
     public Card(int value, boolean isFaceUp, Suit suit) {

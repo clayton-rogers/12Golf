@@ -45,7 +45,7 @@ public class Deck {
 
         for (int i = 1; i <= 13; i++) {
             for (int j = 0; j < 4; j++) {
-                deck.push(new Card(i, false, Card.Suit.values()[i]));
+                deck.push(new Card(i, false, Card.Suit.values()[j]));
             }
         }
         //deck.add(new Card(14));   // TODO FUTURE And the jokers

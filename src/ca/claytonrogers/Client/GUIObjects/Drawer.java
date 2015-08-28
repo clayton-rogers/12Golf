@@ -40,10 +40,43 @@ class Drawer {
 
         // Draw either the number or the back
         if (card.isFaceUp) {
+            g.setFont(g.getFont().deriveFont(16.0F));
+            // Value
+            if (card.value == 10) {
+                // 10 is the only two character card string, so we must move it over a
+                // bit to keep it centered.
+                g.drawString(
+                        card.faceValue(),
+                        location.x + 6,
+                        location.y + 22);
+            } else if (card.value == 13) {
+                g.drawString(
+                        card.faceValue(),
+                        location.x + 10,
+                        location.y + 22);
+            } else if (card.value == 12) {
+                g.drawString(
+                        card.faceValue(),
+                        location.x + 9,
+                        location.y + 22);
+            } else if (card.value == 1) {
+                g.drawString(
+                        card.faceValue(),
+                        location.x + 10,
+                        location.y + 22);
+            } else {
+                g.drawString(
+                        card.faceValue(),
+                        location.x + 11,
+                        location.y + 22);
+            }
+            g.setFont(g.getFont().deriveFont(20.0F));
+            // Suit
             g.drawString(
-                    card.faceValue(),
-                    location.x+12,
-                    location.y+20);
+                    card.suit.toString(),
+                    location.x + 7,
+                    location.y + 47);
+            g.setFont(g.getFont().deriveFont(12.0F));
         } else {
             drawX(g, location);
         }
