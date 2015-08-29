@@ -4,7 +4,7 @@
     <root id="archive" name="12GolfServer.jar">
       <element id="module-output" name="12Golf" />
       <element id="directory" name="META-INF">
-        <element id="file-copy" path="$PROJECT_DIR$/src/ca/claytonrogers/Server/META-INF/MANIFEST.MF" />
+        <element id="file-copy" path="$PROJECT_DIR$/src/ca/claytonrogers/Golf12/Server/META-INF/MANIFEST.MF" />
       </element>
     </root>
   </artifact>
