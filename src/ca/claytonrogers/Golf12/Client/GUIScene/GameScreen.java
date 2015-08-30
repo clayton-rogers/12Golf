@@ -43,6 +43,10 @@ public class GameScreen extends Scene<SceneChange.NullPayloadType> {
     private GUIString statusString;
     private GUIButton scoreScreenButton;
 
+    private GUIObject.GUIType DRAW_PILE = new GUIObject.GUIType("DRAW_PILE");
+    private GUIObject.GUIType DISCARD_PILE = new GUIObject.GUIType("DISCARD_PILE");
+    private GUIObject.GUIType SCORE_SCREEN_BUTTON = new GUIObject.GUIType("SCORE_SCREEN_BUTTON");
+
     public GameScreen(
             Connection serverConnection,
             String[] usernames,
@@ -94,10 +98,10 @@ public class GameScreen extends Scene<SceneChange.NullPayloadType> {
         }
         Collections.addAll(guiObjectList, guiHands);
 
-        drawPile = new GUIDeck(DRAW_PILE_LOCATION, state.getDrawPile(), GUIObject.Type.DrawPile);
+        drawPile = new GUIDeck(DRAW_PILE_LOCATION, state.getDrawPile(), DRAW_PILE);
         guiObjectList.add(drawPile);
 
-        discardPile = new GUIDeck(DISCARD_PILE_LOCATION, state.getDiscardPile(), GUIObject.Type.DiscardPile);
+        discardPile = new GUIDeck(DISCARD_PILE_LOCATION, state.getDiscardPile(), DISCARD_PILE);
         discardPile.setIsFaceUp(true); // The discard pile should always be face up and never change.
         guiObjectList.add(discardPile);
 
@@ -108,7 +112,7 @@ public class GameScreen extends Scene<SceneChange.NullPayloadType> {
                 SCORE_SCREEN_BUTTON_LOCATION,
                 SCORE_SCREEN_BUTTON_SIZE,
                 SCORE_SCREEN_BUTTON_TEXT,
-                GUIObject.Type.ScoreScreenButton
+                SCORE_SCREEN_BUTTON
         );
         guiObjectList.add(scoreScreenButton);
     }
@@ -123,50 +127,44 @@ public class GameScreen extends Scene<SceneChange.NullPayloadType> {
         // If it is not our turn then getNextGoodClick should not return anything.
         // This method handles one click each time it's called.
 
-        GUIObject.Type clickType = getNextGoodClickLocation();
-        if (clickType == GUIObject.Type.None) {
+        GUIObject.GUIType clickType = getNextGoodClickLocation();
+        if (clickType == GUIObject.NONE_TYPE) {
             return;
         }
 
         Message msg;
-        switch (clickType) {
-            case DrawPile:
-                game.chooseDrawPile();
-                drawPile.setIsFaceUp(true);
+        if (clickType.is(DRAW_PILE)) {
+            game.chooseDrawPile();
+            drawPile.setIsFaceUp(true);
 
-                msg = new DrawCardClicked();
-                serverConnection.send(msg);
-                break;
-            case DiscardPile:
-                game.chooseDiscardPile();
-                drawPile.setIsFaceUp(false);
+            msg = new DrawCardClicked();
+            serverConnection.send(msg);
+        } else if (clickType.is(DISCARD_PILE)) {
+            game.chooseDiscardPile();
+            drawPile.setIsFaceUp(false);
 
-                msg = new DiscardCardClicked();
-                serverConnection.send(msg);
-                break;
-            case Hand:
-                int cardIndex = guiHands[playerNumber].getClickedCard(mouseClickList.peek());
-                if (cardIndex == -1) {
-                    // This means that the hand area was clicked but an actual card wasn't.
-                    break;
-                }
+            msg = new DiscardCardClicked();
+            serverConnection.send(msg);
+        } else if (clickType.is(GUIHand.HAND_TYPE)) {
+            int cardIndex = guiHands[playerNumber].getClickedCard(mouseClickList.peek());
+            if (cardIndex != -1) {
+                // This means that the hand area was clicked but an actual card wasn't.
                 game.chooseHandCard(cardIndex);
                 drawPile.setIsFaceUp(false);
 
                 msg = new HandSelection(cardIndex);
                 serverConnection.send(msg);
-                break;
-            case ScoreScreenButton:
-                if (game.isGameOver()) {
-                    nextScene = new SceneChange<>(
-                            SceneType.Score,
-                            new ScoreScreen.OptionalScores(true, game.getScores()));
-                } else {
-                    nextScene = new SceneChange<>(
-                            SceneType.Score,
-                            new ScoreScreen.OptionalScores(false, null));
-                }
-                break;
+            }
+        } else if (clickType.is(SCORE_SCREEN_BUTTON)) {
+            if (game.isGameOver()) {
+                nextScene = new SceneChange<>(
+                        SceneType.Score,
+                        new ScoreScreen.OptionalScores(true, game.getScores()));
+            } else {
+                nextScene = new SceneChange<>(
+                        SceneType.Score,
+                        new ScoreScreen.OptionalScores(false, null));
+            }
         }
         // Since we have now handled the click, throw it out.
         mouseClickList.poll();
