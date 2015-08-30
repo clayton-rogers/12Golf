@@ -14,22 +14,32 @@ import java.awt.*;
  */
 public abstract class GUIObject {
 
-    public enum Type {
-        Hand,
-        DrawPile,
-        DiscardPile,
-        ScoreScreenButton,
-        NextRoundButton,
-        None
+    public static class GUIType {
+        private String type;
+
+        public GUIType(String type) {
+            this.type = type;
+        }
+
+        public boolean is(GUIType other) {
+            return other.type.equals(this.type);
+        }
+
+        @Override
+        public String toString() {
+            return type;
+        }
     }
+
+    public static final GUIType NONE_TYPE = new GUIType("NONE");
 
     protected IntVector location;
     protected IntVector size;
-    private final Type type;
+    private final GUIType type;
     private boolean isVisible;
     private boolean isClickable;
 
-    public GUIObject (IntVector location, IntVector size, Type type) {
+    public GUIObject (IntVector location, IntVector size, GUIType type) {
         this.location = new IntVector(location);
         this.size = new IntVector(size);
         this.type = type;
@@ -67,7 +77,7 @@ public abstract class GUIObject {
         return false;
     }
 
-    public Type getType() {
+    public GUIType getType() {
         return type;
     }
 }

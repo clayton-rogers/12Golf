@@ -33,12 +33,14 @@ public class ScoreScreen extends Scene<ScoreScreen.OptionalScores> {
     private boolean isEndOfRound = true;
     private GUIButton nextRoundButton;
 
+    private GUIObject.GUIType NEXT_ROUND_BUTTON = new GUIObject.GUIType("NEXT_ROUND_BUTTON");
+
     public ScoreScreen (String[] usernames) {
         nextRoundButton = new GUIButton(
                 NEXT_ROUND_BUTTON_LOCATION,
                 NEXT_ROUND_BUTTON_SIZE,
                 NEXT_ROUND_BUTTON_TEXT,
-                GUIObject.Type.NextRoundButton
+                NEXT_ROUND_BUTTON
         );
         guiObjectList.add(nextRoundButton);
 
@@ -61,21 +63,17 @@ public class ScoreScreen extends Scene<ScoreScreen.OptionalScores> {
 
     @Override
     public void handleInputs() {
-        GUIObject.Type clickType = getNextGoodClickLocation();
+        GUIObject.GUIType clickType = getNextGoodClickLocation();
 
-        switch (clickType) {
-            case None:
-                break;
-            case NextRoundButton:
-                if (isEndOfRound) {
-                    nextScene = new SceneChange<>(SceneType.Waiting, null);
-                } else {
-                    nextScene = new SceneChange<>(SceneType.Game, null);
-                }
-                mouseClickList.poll(); // Since we have handled the click remove it.
-                break;
-            default:
-                System.out.println("Got a click in the score screen that wasn't expected: " + clickType);
+        if (clickType.is(NEXT_ROUND_BUTTON)) {
+            if (isEndOfRound) {
+                nextScene = new SceneChange<>(SceneType.Waiting, null);
+            } else {
+                nextScene = new SceneChange<>(SceneType.Game, null);
+            }
+            mouseClickList.poll(); // Since we have handled the click remove it.
+        } else if (!clickType.is(GUIObject.NONE_TYPE)) {
+            System.out.println("Got a click in the score screen that wasn't expected: " + clickType);
         }
     }
 
