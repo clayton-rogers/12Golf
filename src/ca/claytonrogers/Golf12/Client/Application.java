@@ -2,6 +2,7 @@ package ca.claytonrogers.Golf12.Client;
 
 import ca.claytonrogers.Golf12.Client.GUIScene.*;
 import ca.claytonrogers.Golf12.Common.*;
+import ca.claytonrogers.Golf12.Common.FileOps.Config;
 import ca.claytonrogers.Golf12.Common.Messages.*;
 
 import javax.imageio.ImageIO;
@@ -25,6 +26,10 @@ class Application extends JFrame implements Runnable {
 
     private static final int FRAME_TIME = 17;  // Frame time in ms
     private static final IntVector WINDOW_BOUNDS = new IntVector(400,550);
+    private static final String CONFIG_FILENAME = "12golf.ini";
+
+    private static final String USERNAME_KEY = "username_key";
+    private static final String USERNAME_DEFAULT = "username_default";
 
     private Connection serverConnection;
     private String[] usernames;
@@ -37,6 +42,8 @@ class Application extends JFrame implements Runnable {
     private Scene scoreScreen;
     private Scene gameScreen;
     private Scene waitingScreen;
+
+    private Config configFile;
 
     public Application() {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -74,11 +81,17 @@ class Application extends JFrame implements Runnable {
         } catch (IOException e) {
             System.out.println("Problem reading the icon: " + e);
         }
+
+        configFile = new Config(CONFIG_FILENAME);
     }
 
     @Override
     public void run() {
-        String username = JOptionPane.showInputDialog("Enter a username:");
+        String username = configFile.getStringValue(USERNAME_KEY, USERNAME_DEFAULT);
+        if (username.equals(USERNAME_DEFAULT)) {
+            username = JOptionPane.showInputDialog("Enter a username:");
+            configFile.write(USERNAME_KEY, username);
+        }
 
         // Try to get a socket open with the server
         Socket socket;
