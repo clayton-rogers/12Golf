@@ -1,6 +1,7 @@
 package ca.claytonrogers.Golf12.Common.FileOps;
 
 import java.io.*;
+import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -23,7 +24,14 @@ public class Config {
         }
 
         file = new File(filename);
-
+        if (!Files.isReadable(file.toPath()) || !Files.isWritable(file.toPath())) {
+            try {
+                FileWriter fileWriter = new FileWriter(file);
+                fileWriter.close();
+            } catch (IOException e) {
+                throw new IllegalStateException("There was a problem creating the file: " + file.getAbsolutePath());
+            }
+        }
         internalRead();
     }
 
@@ -48,12 +56,19 @@ public class Config {
 
         Set<Map.Entry<String, String>> setEntries = entries.entrySet();
         for (Map.Entry<String, String> entry : setEntries) {
-            String line = entry.getKey() + " " + entry.getValue() + '\n';
+            String line = entry.getKey() + '\t' + entry.getValue() + '\n';
             try {
                 out.write(line);
             } catch (IOException e) {
                 throw new IllegalStateException("There was an issue writing to file: " + e);
             }
+        }
+
+        try {
+            out.flush();
+            out.close();
+        } catch (IOException e) {
+            throw new IllegalStateException("Problem closing the file after writing: " + file.getAbsolutePath());
         }
     }
 
@@ -78,14 +93,23 @@ public class Config {
             } catch (IOException e) {
                 break;
             }
+            if (line == null) {
+                break;
+            }
 
-            String[] tokens = line.split("\\s+");
+            String[] tokens = line.split("\\t+");
             if (tokens.length != 2) {
                 System.out.println("Incorrect number of tokens on line: " + lineNumber);
                 System.out.println("Incorrect number of tokens: " + line);
             } else {
                 entries.put(tokens[0], tokens[1]);
             }
+        }
+
+        try {
+            fileReader.close();
+        } catch (IOException e) {
+            throw new IllegalStateException("Problem closing the file after reading: " + file.getAbsolutePath());
         }
     }
 
