@@ -132,10 +132,10 @@ public abstract class Scene<T> {
      * <p>
      * @return The type of GUI object hit. "None" if no objects are hit.
      */
-    protected GUIObject.Type getNextGoodClickLocation() {
+    protected String getNextGoodClickLocation() {
         IntVector clickLocation = mouseClickList.peek();
         if (clickLocation == null) {
-            return GUIObject.Type.None;
+            return "NONE";
         }
         for (GUIObject object : guiObjectList) {
             if (object.checkClicked(clickLocation)) {

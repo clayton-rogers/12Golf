@@ -123,8 +123,8 @@ public class GameScreen extends Scene<SceneChange.NullPayloadType> {
         // If it is not our turn then getNextGoodClick should not return anything.
         // This method handles one click each time it's called.
 
-        GUIObject.Type clickType = getNextGoodClickLocation();
-        if (clickType == GUIObject.Type.None) {
+        String clickType = getNextGoodClickLocation();
+        if (clickType == GUIObject.NONE_TYPE) {
             return;
         }
 

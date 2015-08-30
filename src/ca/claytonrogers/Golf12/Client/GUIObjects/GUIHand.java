@@ -15,6 +15,8 @@ import java.awt.*;
  */
 public class GUIHand extends GUIObject {
 
+    public static final String HAND_TYPE = "HAND";
+
     private static final int SPACE_BETWEEN_CARDS = 10;
     private static final IntVector HAND_SIZE =
             new IntVector(
@@ -28,7 +30,7 @@ public class GUIHand extends GUIObject {
         super(
                 position,
                 HAND_SIZE,
-                Type.Hand);
+                HAND_TYPE);
         this.hand = hand;
         this.position = positionNumber;
     }

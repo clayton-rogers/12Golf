@@ -18,7 +18,7 @@ public class GUIButton extends GUIObject {
 
     private String buttonText;
 
-    public GUIButton(IntVector location, IntVector size, String buttonText, Type type) {
+    public GUIButton(IntVector location, IntVector size, String buttonText, String type) {
         super(location, size, type);
         this.buttonText = buttonText;
         setClickability(true); // We will generally always want buttons to be clickable

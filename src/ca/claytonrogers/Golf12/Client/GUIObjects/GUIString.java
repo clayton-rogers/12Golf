@@ -19,7 +19,7 @@ public class GUIString extends GUIObject {
         super(
                 location,
                 Constants.NULL_SIZE,
-                Type.None);
+                "NONE");
     }
 
     @Override

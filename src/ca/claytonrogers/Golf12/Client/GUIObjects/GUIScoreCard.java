@@ -22,7 +22,7 @@ public class GUIScoreCard extends GUIObject {
     private String[] playerNames;
 
     public GUIScoreCard(String[] playerNames, ScoreCard scoreCard) {
-        super(Constants.FIELD_OFFSET, Constants.NULL_SIZE, Type.None);
+        super(Constants.FIELD_OFFSET, Constants.NULL_SIZE, "NONE");
         // Since we never need to be able to click on the score screen,
         // we set it's size to null.
         if (playerNames.length > 4 || playerNames.length < 2) {
