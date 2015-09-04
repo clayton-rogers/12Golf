@@ -52,11 +52,12 @@ public class GUIScoreCard extends GUIObject {
             g.drawString("Round " + (round+1), drawLocation.x, drawLocation.y);
             drawLocation = nextTab(drawLocation);
             int roundWinnerID = -1;
-            int roundWinnerScore = -9999;  // The minimum round score is -4 (for now) thus we must start with something lower than that.
+            int roundWinnerScore = 9999;  // The maximum round score is <120 (for now) thus we must
+                                          // start with something higher than that.
             boolean isTie = false;
             for (int player = 0; player < numPlayers; player++) {
                 int score = scoreCard.getScore(round, player);
-                if (score > roundWinnerScore) {
+                if (score < roundWinnerScore) {
                     roundWinnerID = player;
                     roundWinnerScore = score;
                     isTie = false;
