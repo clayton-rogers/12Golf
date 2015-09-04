@@ -12,13 +12,13 @@ import java.util.Set;
  *
  * Created by clayton on 2015-08-29.
  */
-public class Config {
+public class SaveFile {
 
     File file;
 
     private Map<String, String> entries = new HashMap<>(15);
 
-    public Config (String filename) {
+    public SaveFile(String filename) {
         if (filename == null) {
             throw new IllegalArgumentException("Filename of a config cannot be null");
         }

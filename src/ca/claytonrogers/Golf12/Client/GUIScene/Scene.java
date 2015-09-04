@@ -32,7 +32,8 @@ public abstract class Scene<T> {
         Options,
         Quit,
         LostConnection,
-        Waiting
+        Waiting,
+        SaveScreen
     }
 
     /**

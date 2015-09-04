@@ -2,7 +2,7 @@ package ca.claytonrogers.Golf12.Client;
 
 import ca.claytonrogers.Golf12.Client.GUIScene.*;
 import ca.claytonrogers.Golf12.Common.*;
-import ca.claytonrogers.Golf12.Common.FileOps.Config;
+import ca.claytonrogers.Golf12.Common.FileOps.SaveFile;
 import ca.claytonrogers.Golf12.Common.Messages.*;
 
 import javax.imageio.ImageIO;
@@ -43,7 +43,7 @@ class Application extends JFrame implements Runnable {
     private Scene gameScreen;
     private Scene waitingScreen;
 
-    private Config configFile;
+    private SaveFile saveFile;
 
     public Application() {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -82,15 +82,15 @@ class Application extends JFrame implements Runnable {
             System.out.println("Problem reading the icon: " + e);
         }
 
-        configFile = new Config(CONFIG_FILENAME);
+        saveFile = new SaveFile(CONFIG_FILENAME);
     }
 
     @Override
     public void run() {
-        String username = configFile.getStringValue(USERNAME_KEY, USERNAME_DEFAULT);
+        String username = saveFile.getStringValue(USERNAME_KEY, USERNAME_DEFAULT);
         if (username.equals(USERNAME_DEFAULT)) {
             username = JOptionPane.showInputDialog("Enter a username:");
-            configFile.write(USERNAME_KEY, username);
+            saveFile.write(USERNAME_KEY, username);
         }
 
         // Try to get a socket open with the server
