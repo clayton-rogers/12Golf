@@ -49,6 +49,10 @@ public class GolfGame {
             Card cardToBeDiscarded = state.getPlayerHands()[playerTurn].replaceCard(cardIndex, drawCard);
             state.getDiscardPile().push(cardToBeDiscarded);
         } else if (gameState == GameState.Draw_card_discarded) {
+            if (state.getPlayerHands()[playerTurn].getCard(cardIndex).isFaceUp) {
+                // If the card to be flipped is already flipped over, then just ignore it.
+                return;
+            }
             state.getPlayerHands()[playerTurn].flipCard(cardIndex);
         } else {
             System.out.println("Tried to choose a card from the hand while in state: " + gameState);
