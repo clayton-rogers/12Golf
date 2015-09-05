@@ -42,6 +42,7 @@ class Application extends JFrame implements Runnable {
     private Scene scoreScreen;
     private Scene gameScreen;
     private Scene waitingScreen;
+    private Scene saveScreen;
 
     private SaveFile saveFile;
 
@@ -175,6 +176,7 @@ class Application extends JFrame implements Runnable {
         }
         scoreScreen = new ScoreScreen(usernames);
         gameScreen = new GameScreen(serverConnection, usernames, playerNumber, totalPlayers);
+        saveScreen = new SaveScreen();
 
         drawLoop();
 
@@ -209,9 +211,8 @@ class Application extends JFrame implements Runnable {
                     case Game:
                         currentScene = gameScreen;
                         break;
-                    case MainMenu:
-                        break;
-                    case Options:
+                    case SaveScreen:
+                        currentScene = saveScreen;
                         break;
                     case Waiting:
                         currentScene = waitingScreen;
@@ -223,6 +224,9 @@ class Application extends JFrame implements Runnable {
                         isRunning = false;
                         currentScene = null;
                         break;
+                    default:
+                        throw new IllegalStateException("Tried to switch to a scene that " +
+                                "does not exist: " + sceneChange.getNextScene());
                 }
                 if (currentScene != null) {
                     // TODO FUTURE there must be a better way of using Generics here.
