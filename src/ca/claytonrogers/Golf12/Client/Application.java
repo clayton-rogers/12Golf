@@ -191,7 +191,9 @@ class Application extends JFrame implements Runnable {
 
     private void drawLoop () {
 
-        currentScene = gameScreen;
+        //currentScene = gameScreen;
+        currentScene = saveScreen;
+        currentScene.startScene(new SceneChange<SaveScreen.OptionalScoreCard>(Scene.SceneType.Game, new SaveScreen.OptionalScoreCard(false, null)));
 
         while (isRunning) {
             long frameStartTime = System.currentTimeMillis();

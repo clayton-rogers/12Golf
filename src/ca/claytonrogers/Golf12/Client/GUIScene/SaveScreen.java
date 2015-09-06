@@ -26,15 +26,15 @@ public class SaveScreen extends Scene<SaveScreen.OptionalScoreCard> {
 
     private static final int SAVE_SLOTS = 5;
 
-    private SaveFile[] saveFiles = new SaveFile[SAVE_SLOTS];
+    private final SaveFile[] saveFiles = new SaveFile[SAVE_SLOTS];
     private ScoreCard scoreCardToBeSaved;
-    private ScoreCard[] scoreCards = new ScoreCard[SAVE_SLOTS];
-    private GUIButton[] saveButtons = new GUIButton[SAVE_SLOTS];
-    private GUIButton[] loadButtons = new GUIButton[SAVE_SLOTS];
-    private GUIString[] labels      = new GUIString[SAVE_SLOTS];
+    private final ScoreCard[] scoreCards = new ScoreCard[SAVE_SLOTS];
+    private final GUIButton[] saveButtons = new GUIButton[SAVE_SLOTS];
+    private final GUIButton[] loadButtons = new GUIButton[SAVE_SLOTS];
+    private final GUIString[] labels      = new GUIString[SAVE_SLOTS];
 
-    private GUIObject.GUIType[] SAVE_BUTTON_KEYS =  new GUIObject.GUIType[SAVE_SLOTS];
-    private GUIObject.GUIType[] LOAD_BUTTON_KEYS =  new GUIObject.GUIType[SAVE_SLOTS];
+    private final GUIObject.GUIType[] SAVE_BUTTON_KEYS =  new GUIObject.GUIType[SAVE_SLOTS];
+    private final GUIObject.GUIType[] LOAD_BUTTON_KEYS =  new GUIObject.GUIType[SAVE_SLOTS];
 
     public static class OptionalScoreCard {
         private boolean exists = false;
@@ -72,7 +72,6 @@ public class SaveScreen extends Scene<SaveScreen.OptionalScoreCard> {
         Collections.addAll(guiObjectList, saveButtons);
         Collections.addAll(guiObjectList, loadButtons);
 
-
         for (int i = 0; i < SAVE_SLOTS; i++) {
             saveFiles[i] = new SaveFile(SAVE_FILENAME_BASE + String.valueOf(i) + SAVE_FILENAME_EXT);
         }
@@ -108,7 +107,24 @@ public class SaveScreen extends Scene<SaveScreen.OptionalScoreCard> {
 
     @Override
     public void handleInputs() {
-        // TODO
+
+        GUIObject.GUIType click = getNextGoodClickLocation();
+
+        // Check if it was a save command.
+        for (int i = 0; i < SAVE_SLOTS; i++) {
+            if (click.is(SAVE_BUTTON_KEYS[i])) {
+                scoreCardToBeSaved.save(saveFiles[i]);
+                nextScene = new SceneChange<SceneChange.NullPayloadType>(SceneType.Score, null);
+            }
+        }
+
+        // Check if it was a load command.
+        // Note: We have already validated the save files so any load command is a good one.
+        for (int i = 0; i < SAVE_SLOTS; i++) {
+            if (click.is(LOAD_BUTTON_KEYS[i])) {
+                nextScene = new SceneChange<>(SceneType.Score, scoreCards[i]);
+            }
+        }
     }
 
     @Override

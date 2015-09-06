@@ -1,5 +1,8 @@
 package ca.claytonrogers.Golf12.Common;
 
+import ca.claytonrogers.Golf12.Client.GUIScene.Scene;
+import ca.claytonrogers.Golf12.Common.FileOps.SaveFile;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,14 +14,44 @@ import java.util.List;
  */
 public class ScoreCard {
 
+    public static class SaveVersionMismatchException extends Exception {
+        public SaveVersionMismatchException(String message) {
+            super(message);
+        }
+    }
+    private static final int SAVE_VERSION = 1;
+
     private final int numPlayers;
     private final List<int[]> scores = new ArrayList<>(Constants.NUMBER_OF_ROUNDS);
 
-    public ScoreCard(int numPlayers) {
+    public ScoreCard (int numPlayers) {
         this.numPlayers = numPlayers;
     }
 
-    public void add(int[] scores) {
+    public ScoreCard (SaveFile saveFile) throws SaveVersionMismatchException{
+        numPlayers = 2;
+//        // TODO parse the save game into the
+//        String[] pieces = saveGame.split(",");
+//        int index = 0;
+//
+//        if (Integer.parseInt(pieces[index]) != SAVE_VERSION) {
+//            throw new SaveVersionMismatchException("Save version: " + Integer.parseInt(pieces[index]) + " Expected version: " + SAVE_VERSION);
+//        }
+//        index++;
+//
+//        numPlayers = Integer.parseInt(pieces[index]);
+//        index++;
+//
+//        int numberOfRounds = Integer.parseInt(pieces[index]);
+//        index++;
+//        // TODO
+    }
+
+    public void save (SaveFile saveFile) {
+        // TODO
+    }
+
+    public void add (int[] scores) {
         if (scores.length != numPlayers) {
             throw new IllegalArgumentException("Called add scores with an incorrect number of scores.");
         }
